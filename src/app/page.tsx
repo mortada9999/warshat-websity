@@ -15,6 +15,7 @@ export default function HomePage() {
   const [loading, setLoading]       = useState(true);
   const [category, setCategory]     = useState<Category | 'all'>('all');
   const [branch, setBranch]         = useState<Branch | 'all'>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const fetchWorkshops = useCallback(async () => {
     setLoading(true);
@@ -23,7 +24,7 @@ export default function HomePage() {
       if (category !== 'all') params.set('category', category);
       if (branch   !== 'all') params.set('branch',   branch);
       const res  = await fetch(`/api/workshops?${params}`);
-      const data: any = await res.json();
+      const data = (await res.json()) as { workshops?: Workshop[] };
       setWorkshops(data.workshops ?? []);
     } catch {
       setWorkshops([]);
@@ -32,7 +33,17 @@ export default function HomePage() {
     }
   }, [category, branch]);
 
-  useEffect(() => { fetchWorkshops(); }, [fetchWorkshops]);
+  useEffect(() => {
+    void fetchWorkshops();
+  }, [fetchWorkshops]);
+
+  const filteredWorkshops = workshops.filter(w => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return true;
+    const titleAr = w.title_ar?.toLowerCase() ?? '';
+    const titleEn = w.title_en?.toLowerCase() ?? '';
+    return titleAr.includes(query) || titleEn.includes(query);
+  });
 
   return (
     <>
@@ -82,6 +93,33 @@ export default function HomePage() {
             <BranchFilter active={branch}   onChange={setBranch}   />
           </div>
 
+          {/* Search bar */}
+          <div className={styles.searchRow}>
+            <div className={styles.searchContainer}>
+              <span className={styles.searchIcon}>🔍</span>
+              <input
+                id="search-input"
+                type="text"
+                className={styles.searchInput}
+                placeholder={t('ابحث عن ورشة بالاسم...', 'Search workshops by name...')}
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                aria-label={t('ابحث عن ورشة', 'Search workshops')}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  id="clear-search"
+                  className={styles.clearButton}
+                  onClick={() => setSearchQuery('')}
+                  aria-label={t('مسح البحث', 'Clear search')}
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          </div>
+
           {/* Results header */}
           <div className={styles.resultsHeader}>
             <h2 className="section-title">
@@ -94,7 +132,7 @@ export default function HomePage() {
               }
             </h2>
             <span className={styles.count}>
-              {loading ? '' : t(`${workshops.length} نتيجة`, `${workshops.length} results`)}
+              {loading ? '' : t(`${filteredWorkshops.length} نتيجة`, `${filteredWorkshops.length} results`)}
             </span>
           </div>
 
@@ -105,14 +143,29 @@ export default function HomePage() {
                 <div key={i} className={`card ${styles.skeleton}`} aria-hidden />
               ))}
             </div>
-          ) : workshops.length === 0 ? (
+          ) : filteredWorkshops.length === 0 ? (
             <div className={styles.empty} role="status">
-              <span className={styles.emptyIcon}>✦</span>
-              <p>{t('لا توجد ورش في هذا التصنيف', 'No workshops in this category')}</p>
+              <span className={styles.emptyIcon}>{searchQuery ? '🔍' : '✦'}</span>
+              <p>
+                {searchQuery
+                  ? t('لا توجد ورش تطابق بحثك', 'No workshops match your search')
+                  : t('لا توجد ورش في هذا التصنيف', 'No workshops in this category')
+                }
+              </p>
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="btn btn-ghost btn-sm"
+                  style={{ marginTop: '1rem' }}
+                >
+                  {t('مسح البحث', 'Clear search')}
+                </button>
+              )}
             </div>
           ) : (
             <div className={styles.grid}>
-              {workshops.map((w, i) => (
+              {filteredWorkshops.map((w, i) => (
                 <div
                   key={w.id}
                   className={styles.cardWrap}
