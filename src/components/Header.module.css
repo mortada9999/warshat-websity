@@ -25,9 +25,14 @@
 }
 
 .logoIcon {
-  font-size: 1.2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--clr-olive-dim);
   color: var(--clr-olive);
-  animation: pulse-glow 3s ease-in-out infinite;
 }
 
 .logoText {

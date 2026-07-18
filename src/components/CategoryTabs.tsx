@@ -11,12 +11,12 @@ interface CategoryTabsProps {
   onChange: (cat: Category | 'all') => void;
 }
 
-const ALL_TABS: { value: Category | 'all'; icon: string }[] = [
-  { value: 'all',           icon: '✦' },
-  { value: 'open_activity', icon: '🎨' },
-  { value: 'workshop',      icon: '🛠' },
-  { value: 'kids',          icon: '🌟' },
-  { value: 'course',        icon: '📚' },
+const ALL_TABS: { value: Category | 'all' }[] = [
+  { value: 'all' },
+  { value: 'open_activity' },
+  { value: 'workshop' },
+  { value: 'kids' },
+  { value: 'course' },
 ];
 
 export default function CategoryTabs({ active, onChange }: CategoryTabsProps) {
@@ -24,7 +24,7 @@ export default function CategoryTabs({ active, onChange }: CategoryTabsProps) {
 
   return (
     <div className={styles.tabs} role="tablist" aria-label={t('التصنيفات', 'Categories')}>
-      {ALL_TABS.map(({ value, icon }) => {
+      {ALL_TABS.map(({ value }) => {
         const label =
           value === 'all'
             ? t('الكل', 'All')
@@ -39,7 +39,6 @@ export default function CategoryTabs({ active, onChange }: CategoryTabsProps) {
             className={`${styles.tab} ${isActive ? styles.active : ''}`}
             onClick={() => onChange(value)}
           >
-            <span className={styles.icon}>{icon}</span>
             <span>{label}</span>
           </button>
         );

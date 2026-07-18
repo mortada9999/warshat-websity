@@ -5,18 +5,12 @@ import Link from 'next/link';
 import type { Workshop } from '@/lib/types';
 import { CATEGORY_LABELS, BRANCH_LABELS } from '@/lib/types';
 import { useLanguage } from './LanguageProvider';
+import { PinIcon, UsersIcon, SparkIcon } from './Icons';
 import styles from './WorkshopCard.module.css';
 
 interface WorkshopCardProps {
   workshop: Workshop;
 }
-
-const CATEGORY_ICONS: Record<string, string> = {
-  open_activity: '🎨',
-  workshop:      '🛠',
-  kids:          '🌟',
-  course:        '📚',
-};
 
 export default function WorkshopCard({ workshop }: WorkshopCardProps) {
   const { lang, t } = useLanguage();
@@ -40,14 +34,12 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
           />
         ) : (
           <div className={styles.imagePlaceholder}>
-            <span className={styles.placeholderIcon}>
-              {CATEGORY_ICONS[workshop.category] ?? '✦'}
-            </span>
+            <SparkIcon size={40} className={styles.placeholderIcon} />
           </div>
         )}
         {/* Category badge overlay */}
         <span className={`badge badge-orange ${styles.catBadge}`}>
-          {CATEGORY_ICONS[workshop.category]} {catLabel}
+          {catLabel}
         </span>
       </div>
 
@@ -77,12 +69,12 @@ export default function WorkshopCard({ workshop }: WorkshopCardProps) {
           <div className={styles.meta}>
             {branchLabel && (
               <span className={styles.branch}>
-                📍 {branchLabel}
+                <PinIcon size={14} /> {branchLabel}
               </span>
             )}
             {workshop.seats != null && (
               <span className={styles.seats}>
-                👥 {t(`${workshop.seats} مقعداً`, `${workshop.seats} seats`)}
+                <UsersIcon size={14} /> {t(`${workshop.seats} مقعداً`, `${workshop.seats} seats`)}
               </span>
             )}
           </div>

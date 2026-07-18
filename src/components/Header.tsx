@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
+import { SparkIcon } from './Icons';
 import styles from './Header.module.css';
 
 export default function Header() {
@@ -13,7 +14,9 @@ export default function Header() {
       <div className={`container ${styles.inner}`}>
         {/* Logo / Brand */}
         <Link href="/" className={styles.logo} id="site-logo">
-          <span className={styles.logoIcon}>✦</span>
+          <span className={styles.logoIcon}>
+            <SparkIcon size={20} strokeWidth={2} />
+          </span>
           <span className={styles.logoText}>
             {t('ورشة فن', 'Warshat Fan')}
           </span>

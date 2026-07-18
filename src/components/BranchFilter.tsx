@@ -4,6 +4,7 @@ import React from 'react';
 import type { Branch } from '@/lib/types';
 import { BRANCH_LABELS } from '@/lib/types';
 import { useLanguage } from './LanguageProvider';
+import { PinIcon, MapIcon } from './Icons';
 import styles from './BranchFilter.module.css';
 
 interface BranchFilterProps {
@@ -11,10 +12,10 @@ interface BranchFilterProps {
   onChange: (b: Branch | 'all') => void;
 }
 
-const BRANCHES: { value: Branch | 'all'; icon: string }[] = [
-  { value: 'all',     icon: '🗺' },
-  { value: 'zayouna', icon: '📍' },
-  { value: 'yarmouk', icon: '📍' },
+const BRANCHES: { value: Branch | 'all' }[] = [
+  { value: 'all' },
+  { value: 'zayouna' },
+  { value: 'yarmouk' },
 ];
 
 export default function BranchFilter({ active, onChange }: BranchFilterProps) {
@@ -22,7 +23,7 @@ export default function BranchFilter({ active, onChange }: BranchFilterProps) {
 
   return (
     <div className={styles.filter} role="group" aria-label={t('الفرع', 'Branch')}>
-      {BRANCHES.map(({ value, icon }) => {
+      {BRANCHES.map(({ value }) => {
         const label =
           value === 'all'
             ? t('كل الفروع', 'All Branches')
@@ -36,7 +37,7 @@ export default function BranchFilter({ active, onChange }: BranchFilterProps) {
             onClick={() => onChange(value)}
             aria-pressed={isActive}
           >
-            <span>{icon}</span>
+            {value === 'all' ? <MapIcon size={15} /> : <PinIcon size={15} />}
             <span>{label}</span>
           </button>
         );

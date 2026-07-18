@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import CategoryTabs from '@/components/CategoryTabs';
 import BranchFilter from '@/components/BranchFilter';
 import WorkshopCard from '@/components/WorkshopCard';
+import { SparkIcon } from '@/components/Icons';
 import { useLanguage } from '@/components/LanguageProvider';
 import type { Workshop, Category, Branch } from '@/lib/types';
 import styles from './page.module.css';
@@ -107,7 +108,7 @@ export default function HomePage() {
             </div>
           ) : workshops.length === 0 ? (
             <div className={styles.empty} role="status">
-              <span className={styles.emptyIcon}>✦</span>
+              <SparkIcon size={40} className={styles.emptyIcon} />
               <p>{t('لا توجد ورش في هذا التصنيف', 'No workshops in this category')}</p>
             </div>
           ) : (
