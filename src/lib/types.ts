@@ -15,6 +15,7 @@ export interface Workshop {
   seats: number | null;
   branch: Branch | null;
   created_at: string;
+  sort_order: number;
 }
 
 export interface WorkshopFilters {

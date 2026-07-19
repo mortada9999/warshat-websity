@@ -1,0 +1,125 @@
+.heroContainer {
+  display: flex;
+  flex-direction: row-reverse; /* To have the text on the right and image on the left */
+  width: 100%;
+  min-height: 80vh;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .heroContainer {
+    flex-direction: column;
+  }
+}
+
+.textSide {
+  flex: 1;
+  background-color: var(--bg-pink);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 40px 20px;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 400px;
+}
+
+.logo {
+  max-width: 120px;
+  margin-bottom: 24px;
+  /* Add a white filter or use a white version of the logo if possible */
+  filter: brightness(0) invert(1);
+}
+
+.title {
+  color: var(--olive);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.subtitle {
+  color: var(--olive);
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+}
+
+.button {
+  display: inline-block;
+  background-color: var(--olive);
+  color: white;
+  padding: 12px 32px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: opacity 0.3s ease;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.imageSide {
+  flex: 1;
+  position: relative;
+  min-height: 400px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* DECORATIVE BLOBS */
+.blobGreen1 {
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: 40px;
+  height: 40px;
+  background-color: #ABC175;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  z-index: 1;
+}
+
+.blobGreen2 {
+  position: absolute;
+  top: 25%;
+  right: 5%;
+  width: 80px;
+  height: 80px;
+  background-color: #ABC175;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  z-index: 1;
+}
+
+.blobBrush {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  width: 200px;
+  height: 150px;
+  background-color: #D6F1E6;
+  border-radius: 100px;
+  transform: rotate(-30deg);
+  z-index: 1;
+}
+
+.blobYellowLeft {
+  position: absolute;
+  bottom: 20%;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  background-color: #FFD600;
+  border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+  z-index: 10;
+}

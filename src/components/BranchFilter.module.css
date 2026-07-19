@@ -1,35 +1,10 @@
 .filter {
   display: flex;
-  gap: 0.4rem;
   align-items: center;
+  gap: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.filter::-webkit-scrollbar { display: none; }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.4rem 1rem;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid var(--clr-border);
-  color: var(--clr-text-muted);
-  font-family: var(--font-body);
-  font-size: 0.825rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-
-.btn:hover {
-  color: var(--clr-olive);
-  border-color: rgba(122, 128, 66, 0.3);
-  background: var(--clr-olive-dim);
-}
-
-.btn.active {
-  background: var(--clr-olive-dim);
-  border-color: rgba(122, 128, 66, 0.3);
-  color: var(--clr-olive);
-  font-weight: 700;
-}
+.btn { flex-shrink: 0; }

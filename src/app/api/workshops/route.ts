@@ -22,6 +22,7 @@ const createSchema = z.object({
   tags:           z.string().max(500).nullable().optional(),
   seats:          z.number().int().positive().nullable().optional(),
   branch:         z.enum(BRANCH_VALUES).nullable().optional(),
+  sort_order:     z.number().int().optional(),
 });
 
 // GET /api/workshops — public: list active workshops
@@ -87,6 +88,7 @@ export async function POST(req: NextRequest) {
       tags:           data.tags           ?? null,
       seats:          data.seats          ?? null,
       branch:         data.branch         ?? null,
+      sort_order:     data.sort_order     ?? 0,
     });
 
     return NextResponse.json({ id }, { status: 201 });

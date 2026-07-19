@@ -1,0 +1,86 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .banner { flex-direction: row; height: 380px; }
+  .imgRight { flex-direction: row-reverse; }
+}
+
+@media (min-width: 1024px) {
+  .banner { height: 450px; }
+}
+
+/* ── Image Pane ─────────────────────────────────────────────────────────── */
+.imagePane {
+  flex: 0 0 50%;
+  height: 300px;
+}
+@media (min-width: 768px) { .imagePane { height: 100%; } }
+
+.image {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.placeholder { width: 100%; height: 100%; background: #ccc; }
+
+/* ── Text Pane ──────────────────────────────────────────────────────────── */
+.textPane {
+  flex: 0 0 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.textInner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--olive);
+  margin: 0;
+}
+
+.button {
+  background: var(--olive);
+  color: #fff;
+  padding: 10px 40px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 4px;
+  transition: background var(--ease);
+}
+
+.button:hover {
+  background: var(--olive-dark);
+}
+
+/* ── Blobs ──────────────────────────────────────────────────────────────── */
+.blob1, .blob2 {
+  position: absolute;
+  border-radius: var(--radius-blob);
+  opacity: 0.8;
+  z-index: 1;
+}
+
+/* Top right blob */
+.imgLeft .blob1 { top: 20%; right: 5%; width: 50px; height: 50px; }
+/* Middle right large blob */
+.imgLeft .blob2 { top: 40%; right: -20px; width: 100px; height: 120px; }
+
+/* Reverse positions for imgRight */
+.imgRight .blob1 { top: 20%; left: 5%; width: 50px; height: 50px; }
+.imgRight .blob2 { bottom: 10%; left: -30px; width: 140px; height: 120px; }

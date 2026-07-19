@@ -17,6 +17,7 @@ const updateSchema = z.object({
   tags:           z.string().max(500).nullable().optional(),
   seats:          z.number().int().positive().nullable().optional(),
   branch:         z.enum(['zayouna', 'yarmouk', 'both']).nullable().optional(),
+  sort_order:     z.number().int().optional(),
 });
 
 // GET /api/workshops/[id] — public

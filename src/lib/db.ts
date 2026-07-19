@@ -23,7 +23,7 @@ export async function listWorkshops(filters: WorkshopFilters = {}): Promise<Work
   if (category && branch) {
     const result = await db
       .prepare(
-        "SELECT * FROM workshops WHERE is_active = 1 AND category = ? AND (branch = ? OR branch = 'both') ORDER BY created_at DESC"
+        "SELECT * FROM workshops WHERE is_active = 1 AND category = ? AND (branch = ? OR branch = 'both') ORDER BY sort_order ASC, created_at DESC"
       )
       .bind(category, branch)
       .all<Workshop>();
@@ -32,7 +32,7 @@ export async function listWorkshops(filters: WorkshopFilters = {}): Promise<Work
 
   if (category) {
     const result = await db
-      .prepare('SELECT * FROM workshops WHERE is_active = 1 AND category = ? ORDER BY created_at DESC')
+      .prepare('SELECT * FROM workshops WHERE is_active = 1 AND category = ? ORDER BY sort_order ASC, created_at DESC')
       .bind(category)
       .all<Workshop>();
     return result.results;
@@ -41,7 +41,7 @@ export async function listWorkshops(filters: WorkshopFilters = {}): Promise<Work
   if (branch) {
     const result = await db
       .prepare(
-        "SELECT * FROM workshops WHERE is_active = 1 AND (branch = ? OR branch = 'both') ORDER BY created_at DESC"
+        "SELECT * FROM workshops WHERE is_active = 1 AND (branch = ? OR branch = 'both') ORDER BY sort_order ASC, created_at DESC"
       )
       .bind(branch)
       .all<Workshop>();
@@ -49,7 +49,7 @@ export async function listWorkshops(filters: WorkshopFilters = {}): Promise<Work
   }
 
   const result = await db
-    .prepare('SELECT * FROM workshops WHERE is_active = 1 ORDER BY created_at DESC')
+    .prepare('SELECT * FROM workshops WHERE is_active = 1 ORDER BY sort_order ASC, created_at DESC')
     .all<Workshop>();
   return result.results;
 }
@@ -58,7 +58,7 @@ export async function listWorkshops(filters: WorkshopFilters = {}): Promise<Work
 export async function listAllWorkshopsAdmin(): Promise<Workshop[]> {
   const db = getDB();
   const result = await db
-    .prepare('SELECT * FROM workshops ORDER BY created_at DESC')
+    .prepare('SELECT * FROM workshops ORDER BY sort_order ASC, created_at DESC')
     .all<Workshop>();
   return result.results;
 }
@@ -90,6 +90,7 @@ export interface CreateWorkshopInput {
   tags: string | null;
   seats: number | null;
   branch: string | null;
+  sort_order?: number;
 }
 
 export async function createWorkshop(input: CreateWorkshopInput): Promise<void> {
@@ -98,8 +99,8 @@ export async function createWorkshop(input: CreateWorkshopInput): Promise<void> 
     .prepare(
       `INSERT INTO workshops
          (id, title_ar, title_en, description_ar, description_en,
-          category, price, image_url, is_active, tags, seats, branch)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+          category, price, image_url, is_active, tags, seats, branch, sort_order)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .bind(
       input.id,
@@ -113,7 +114,8 @@ export async function createWorkshop(input: CreateWorkshopInput): Promise<void> 
       input.is_active,
       input.tags,
       input.seats,
-      input.branch
+      input.branch,
+      input.sort_order ?? 0
     )
     .run();
 }
@@ -130,6 +132,7 @@ export interface UpdateWorkshopInput {
   tags?: string | null;
   seats?: number | null;
   branch?: string | null;
+  sort_order?: number;
 }
 
 export async function updateWorkshop(id: string, input: UpdateWorkshopInput): Promise<void> {
@@ -149,7 +152,8 @@ export async function updateWorkshop(id: string, input: UpdateWorkshopInput): Pr
          is_active      = COALESCE(?, is_active),
          tags           = ?,
          seats          = ?,
-         branch         = ?
+         branch         = ?,
+         sort_order     = COALESCE(?, sort_order)
        WHERE id = ?`
     )
     .bind(
@@ -164,6 +168,7 @@ export async function updateWorkshop(id: string, input: UpdateWorkshopInput): Pr
       input.tags        !== undefined ? input.tags    : null,
       input.seats       !== undefined ? input.seats   : null,
       input.branch      !== undefined ? input.branch  : null,
+      input.sort_order  ?? null,
       id
     )
     .run();
@@ -177,3 +182,4 @@ export async function deactivateWorkshop(id: string): Promise<void> {
     .bind(id)
     .run();
 }
+
