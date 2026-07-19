@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
+import SmoothScroll from '@/components/SmoothScroll';
 
 export const metadata: Metadata = {
   title: 'ورشة فن — مساحة الإبداع والتعلم',
@@ -17,11 +18,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="ar" dir="rtl" style={{ backgroundColor: '#EFE7D6' }}>
       <head />
       <body>
         <LanguageProvider>
-          {children}
+          <SmoothScroll>
+            {children}
+          </SmoothScroll>
         </LanguageProvider>
       </body>
     </html>

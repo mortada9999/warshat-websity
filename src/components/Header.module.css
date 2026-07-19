@@ -2,11 +2,11 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(122, 128, 66, 0.1);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  background: rgba(78, 90, 46, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 3px solid var(--clr-honey);
+  box-shadow: 0 3px 16px rgba(58, 46, 28, 0.18);
 }
 
 .inner {
@@ -24,22 +24,11 @@
   text-decoration: none;
 }
 
-.logoIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--clr-olive-dim);
-  color: var(--clr-olive);
-}
-
 .logoText {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  color: var(--clr-heading);
+  color: #F6F0E2;
   letter-spacing: 0.01em;
 }
 
@@ -54,7 +43,7 @@
 .navLink {
   padding: 0.4rem 0.9rem;
   border-radius: var(--radius-sm);
-  color: var(--clr-text-muted);
+  color: rgba(246, 240, 226, 0.82);
   font-size: 0.9rem;
   font-weight: 500;
   transition: all var(--transition);
@@ -62,8 +51,8 @@
 }
 
 .navLink:hover {
-  color: var(--clr-olive);
-  background: var(--clr-olive-dim);
+  color: #fff;
+  background: rgba(246, 240, 226, 0.12);
 }
 
 .actions {
@@ -74,9 +63,9 @@
 }
 
 .langBtn {
-  background: var(--clr-olive-dim);
-  border: 1px solid rgba(122, 128, 66, 0.25);
-  color: var(--clr-olive);
+  background: var(--clr-honey);
+  border: 1px solid var(--clr-honey);
+  color: #3A2E1C;
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   font-size: 0.8rem;
@@ -88,9 +77,8 @@
 }
 
 .langBtn:hover {
-  background: var(--clr-olive);
-  color: #fff;
-  border-color: var(--clr-olive);
+  background: #d69a3e;
+  border-color: #d69a3e;
 }
 
 @media (max-width: 640px) {

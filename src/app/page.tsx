@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import CategoryTabs from '@/components/CategoryTabs';
 import BranchFilter from '@/components/BranchFilter';
 import WorkshopCard from '@/components/WorkshopCard';
+import Reveal from '@/components/Reveal';
 import { SparkIcon } from '@/components/Icons';
 import { useLanguage } from '@/components/LanguageProvider';
 import type { Workshop, Category, Branch } from '@/lib/types';
@@ -42,11 +43,15 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className={styles.hero} aria-labelledby="hero-heading">
         <div className={styles.heroBg} aria-hidden />
-        <div className={`container ${styles.heroContent}`}>
+        <Reveal className={`container ${styles.heroContent}`}>
+          <figure className={styles.heroFrame}>
+            <img src="/textures/brush-strokes.png" alt={t('لوحة فنية بضربات فرشاة', 'Abstract brush-stroke painting')} className={styles.heroFrameImg} />
+          </figure>
           <p className={styles.heroEyebrow}>{t('مرحباً بك في', 'Welcome to')}</p>
           <h1 id="hero-heading" className={styles.heroTitle}>
             {t('ورشة فن', 'Warshat Fan')}
           </h1>
+          <p className={styles.heroTagline}>{t('تذوّق الفن', 'taste the Art')}</p>
           <p className={styles.heroSub}>
             {t(
               'مساحة الإبداع والتعلم في بغداد — فرعا الزيونة واليرموك',
@@ -71,7 +76,7 @@ export default function HomePage() {
               <span className={styles.statLabel}>{t('ورشة متاحة', 'Workshops')}</span>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ── Workshops Section ── */}
@@ -114,13 +119,9 @@ export default function HomePage() {
           ) : (
             <div className={styles.grid}>
               {workshops.map((w, i) => (
-                <div
-                  key={w.id}
-                  className={styles.cardWrap}
-                  style={{ animationDelay: `${i * 60}ms` }}
-                >
+                <Reveal key={w.id} delay={(i % 3) * 0.08}>
                   <WorkshopCard workshop={w} />
-                </div>
+                </Reveal>
               ))}
             </div>
           )}
