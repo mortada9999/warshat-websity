@@ -1,40 +1,97 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import CategoryTabs from '@/components/CategoryTabs';
 import BranchFilter from '@/components/BranchFilter';
 import WorkshopCard from '@/components/WorkshopCard';
-import Reveal from '@/components/Reveal';
 import { SparkIcon } from '@/components/Icons';
 import { useLanguage } from '@/components/LanguageProvider';
 import type { Workshop, Category, Branch } from '@/lib/types';
 import styles from './page.module.css';
 
+// Mock workshop data for preview
+const MOCK_WORKSHOPS: Workshop[] = [
+  {
+    id: '1',
+    title_ar: 'ورشة الرسم الحديث',
+    title_en: 'Modern Painting Workshop',
+    description_ar: 'تعلم تقنيات الرسم الحديثة والألوان المائية',
+    description_en: 'Learn modern painting techniques and watercolor methods',
+    category: 'workshop',
+    branch: 'zayouna',
+    price: 50000,
+    seats: 12,
+    image_url: 'https://picsum.photos/600/400?random=1',
+    is_active: 1,
+    tags: null,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    title_ar: 'نشاط فني مفتوح للجميع',
+    title_en: 'Open Art Activity for All',
+    description_ar: 'ساعة من الفن الحر والإبداع بدون قيود',
+    description_en: 'One hour of free art and unlimited creativity',
+    category: 'open_activity',
+    branch: 'yarmouk',
+    price: 25000,
+    seats: 20,
+    image_url: 'https://picsum.photos/600/400?random=2',
+    is_active: 1,
+    tags: null,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '3',
+    title_ar: 'دورة النحت والتشكيل',
+    title_en: 'Sculpture & Modeling Course',
+    description_ar: 'دورة متقدمة في فنون النحت والتشكيل بالطين',
+    description_en: 'Advanced course in sculpture and clay modeling',
+    category: 'course',
+    branch: 'zayouna',
+    price: 120000,
+    seats: 8,
+    image_url: 'https://picsum.photos/600/400?random=3',
+    is_active: 1,
+    tags: null,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '4',
+    title_ar: 'ورشة فن للأطفال',
+    title_en: 'Art Workshop for Kids',
+    description_ar: 'تعليم الفن للأطفال من 5-12 سنة بطرق مرحة',
+    description_en: 'Fun art classes for children ages 5-12',
+    category: 'kids',
+    branch: 'yarmouk',
+    price: 35000,
+    seats: 15,
+    image_url: 'https://picsum.photos/600/400?random=4',
+    is_active: 1,
+    tags: null,
+    created_at: new Date().toISOString(),
+  },
+];
+
 export default function HomePage() {
   const { t } = useLanguage();
-  const [workshops, setWorkshops]   = useState<Workshop[]>([]);
-  const [loading, setLoading]       = useState(true);
+  const [workshops, setWorkshops]   = useState<Workshop[]>(MOCK_WORKSHOPS);
+  const [loading, setLoading]       = useState(false);
   const [category, setCategory]     = useState<Category | 'all'>('all');
   const [branch, setBranch]         = useState<Branch | 'all'>('all');
 
-  const fetchWorkshops = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params = new URLSearchParams();
-      if (category !== 'all') params.set('category', category);
-      if (branch   !== 'all') params.set('branch',   branch);
-      const res  = await fetch(`/api/workshops?${params}`);
-      const data: any = await res.json();
-      setWorkshops(data.workshops ?? []);
-    } catch {
-      setWorkshops([]);
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    // Filter mock data based on category and branch
+    let filtered = MOCK_WORKSHOPS;
+    if (category !== 'all') {
+      filtered = filtered.filter(w => w.category === category);
     }
+    if (branch !== 'all') {
+      filtered = filtered.filter(w => w.branch === branch);
+    }
+    setWorkshops(filtered);
   }, [category, branch]);
-
-  useEffect(() => { fetchWorkshops(); }, [fetchWorkshops]);
 
   return (
     <>
@@ -43,7 +100,7 @@ export default function HomePage() {
       {/* ── Hero ── */}
       <section className={styles.hero} aria-labelledby="hero-heading">
         <div className={styles.heroBg} aria-hidden />
-        <Reveal className={`container ${styles.heroContent}`}>
+        <div className={`container ${styles.heroContent}`}>
           <figure className={styles.heroFrame}>
             <img src="/textures/brush-strokes.png" alt={t('لوحة فنية بضربات فرشاة', 'Abstract brush-stroke painting')} className={styles.heroFrameImg} />
           </figure>
@@ -76,7 +133,7 @@ export default function HomePage() {
               <span className={styles.statLabel}>{t('ورشة متاحة', 'Workshops')}</span>
             </div>
           </div>
-        </Reveal>
+        </div>
       </section>
 
       {/* ── Workshops Section ── */}
@@ -118,10 +175,8 @@ export default function HomePage() {
             </div>
           ) : (
             <div className={styles.grid}>
-              {workshops.map((w, i) => (
-                <Reveal key={w.id} delay={(i % 3) * 0.08}>
-                  <WorkshopCard workshop={w} />
-                </Reveal>
+              {workshops.map((w) => (
+                <WorkshopCard key={w.id} workshop={w} />
               ))}
             </div>
           )}
