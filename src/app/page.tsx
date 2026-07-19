@@ -2,186 +2,184 @@
 
 import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
-import CategoryTabs from '@/components/CategoryTabs';
-import BranchFilter from '@/components/BranchFilter';
-import WorkshopCard from '@/components/WorkshopCard';
-import { SparkIcon } from '@/components/Icons';
+import WixHero from '@/components/WixHero';
+import WixActivityCard from '@/components/WixActivityCard';
+import WixTrainingCard from '@/components/WixTrainingCard';
+import WixBanner from '@/components/WixBanner';
 import { useLanguage } from '@/components/LanguageProvider';
-import type { Workshop, Category, Branch } from '@/lib/types';
+import type { Workshop } from '@/lib/types';
 import styles from './page.module.css';
 
-// Mock workshop data for preview
+// Mock workshop data for preview (adjusted to match design)
 const MOCK_WORKSHOPS: Workshop[] = [
   {
     id: '1',
-    title_ar: 'ورشة الرسم الحديث',
-    title_en: 'Modern Painting Workshop',
-    description_ar: 'تعلم تقنيات الرسم الحديثة والألوان المائية',
-    description_en: 'Learn modern painting techniques and watercolor methods',
-    category: 'workshop',
+    title_ar: 'الرسم على الاكواب الفخارية',
+    title_en: 'Pottery Mug Painting',
+    description_ar: '',
+    description_en: '',
+    category: 'open_activity',
     branch: 'zayouna',
-    price: 50000,
-    seats: 12,
-    image_url: 'https://picsum.photos/600/400?random=1',
+    price: 10000,
+    seats: 20,
+    image_url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=400',
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
   },
   {
     id: '2',
-    title_ar: 'نشاط فني مفتوح للجميع',
-    title_en: 'Open Art Activity for All',
-    description_ar: 'ساعة من الفن الحر والإبداع بدون قيود',
-    description_en: 'One hour of free art and unlimited creativity',
+    title_ar: 'الرسم على الحقائب القماشية',
+    title_en: 'Tote Bag Painting',
+    description_ar: '',
+    description_en: '',
     category: 'open_activity',
     branch: 'yarmouk',
-    price: 25000,
+    price: 15000,
     seats: 20,
-    image_url: 'https://picsum.photos/600/400?random=2',
+    image_url: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=400',
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
   },
   {
     id: '3',
-    title_ar: 'دورة النحت والتشكيل',
-    title_en: 'Sculpture & Modeling Course',
-    description_ar: 'دورة متقدمة في فنون النحت والتشكيل بالطين',
-    description_en: 'Advanced course in sculpture and clay modeling',
-    category: 'course',
+    title_ar: 'الرسم على المراية',
+    title_en: 'Mirror Painting',
+    description_ar: '',
+    description_en: '',
+    category: 'open_activity',
     branch: 'zayouna',
-    price: 120000,
-    seats: 8,
-    image_url: 'https://picsum.photos/600/400?random=3',
+    price: 15000,
+    seats: 20,
+    image_url: 'https://images.unsplash.com/photo-1497942304796-b8bc2cc898f3?auto=format&fit=crop&q=80&w=400',
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
   },
   {
     id: '4',
-    title_ar: 'ورشة فن للأطفال',
-    title_en: 'Art Workshop for Kids',
-    description_ar: 'تعليم الفن للأطفال من 5-12 سنة بطرق مرحة',
-    description_en: 'Fun art classes for children ages 5-12',
-    category: 'kids',
+    title_ar: 'صناعة الاكسسوارات',
+    title_en: 'Accessories Making',
+    description_ar: '',
+    description_en: '',
+    category: 'open_activity',
     branch: 'yarmouk',
-    price: 35000,
-    seats: 15,
-    image_url: 'https://picsum.photos/600/400?random=4',
+    price: 15000,
+    seats: 20,
+    image_url: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=400',
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
   },
+  {
+    id: '5',
+    title_ar: 'ورشة الفخار',
+    title_en: 'Pottery Workshop',
+    description_ar: 'ورشة الفخار',
+    description_en: 'Pottery Workshop',
+    category: 'workshop',
+    branch: 'zayouna',
+    price: 0,
+    seats: 12,
+    image_url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=800',
+    is_active: 1,
+    tags: null,
+    created_at: new Date().toISOString(),
+  },
+  {
+    id: '6',
+    title_ar: 'needle felting',
+    title_en: 'Needle Felting',
+    description_ar: 'needle felting',
+    description_en: 'Needle Felting',
+    category: 'workshop',
+    branch: 'yarmouk',
+    price: 0,
+    seats: 12,
+    image_url: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&q=80&w=800',
+    is_active: 1,
+    tags: null,
+    created_at: new Date().toISOString(),
+  }
 ];
 
 export default function HomePage() {
-  const { t } = useLanguage();
-  const [workshops, setWorkshops]   = useState<Workshop[]>(MOCK_WORKSHOPS);
-  const [loading, setLoading]       = useState(false);
-  const [category, setCategory]     = useState<Category | 'all'>('all');
-  const [branch, setBranch]         = useState<Branch | 'all'>('all');
-
-  useEffect(() => {
-    // Filter mock data based on category and branch
-    let filtered = MOCK_WORKSHOPS;
-    if (category !== 'all') {
-      filtered = filtered.filter(w => w.category === category);
-    }
-    if (branch !== 'all') {
-      filtered = filtered.filter(w => w.branch === branch);
-    }
-    setWorkshops(filtered);
-  }, [category, branch]);
+  const { t, lang } = useLanguage();
+  const [workshops, setWorkshops] = useState<Workshop[]>(MOCK_WORKSHOPS);
 
   return (
     <>
       <Header />
 
-      {/* ── Hero ── */}
-      <section className={styles.hero} aria-labelledby="hero-heading">
-        <div className={styles.heroBg} aria-hidden />
-        <div className={`container ${styles.heroContent}`}>
-          <figure className={styles.heroFrame}>
-            <img src="/textures/brush-strokes.png" alt={t('لوحة فنية بضربات فرشاة', 'Abstract brush-stroke painting')} className={styles.heroFrameImg} />
-          </figure>
-          <p className={styles.heroEyebrow}>{t('مرحباً بك في', 'Welcome to')}</p>
-          <h1 id="hero-heading" className={styles.heroTitle}>
-            {t('ورشة فن', 'Warshat Fan')}
-          </h1>
-          <p className={styles.heroTagline}>{t('تذوّق الفن', 'taste the Art')}</p>
-          <p className={styles.heroSub}>
-            {t(
-              'مساحة الإبداع والتعلم في بغداد — فرعا الزيونة واليرموك',
-              "Baghdad\u2019s creative learning space \u2014 Zayouna & Yarmouk branches"
-            )}
-          </p>
+      <WixHero />
 
-          {/* Stats */}
-          <div className={styles.stats}>
-            <div className={styles.stat}>
-              <span className={styles.statNum}>4</span>
-              <span className={styles.statLabel}>{t('تصنيفات', 'Categories')}</span>
-            </div>
-            <div className={styles.statDivider} />
-            <div className={styles.stat}>
-              <span className={styles.statNum}>2</span>
-              <span className={styles.statLabel}>{t('فروع', 'Branches')}</span>
-            </div>
-            <div className={styles.statDivider} />
-            <div className={styles.stat}>
-              <span className={styles.statNum}>{workshops.length}</span>
-              <span className={styles.statLabel}>{t('ورشة متاحة', 'Workshops')}</span>
-            </div>
+      {/* النشاطات الترفيهية المفتوحة */}
+      <section style={{ backgroundColor: 'var(--olive-light)', padding: '4rem 1rem', textAlign: 'center' }}>
+        <div className="container">
+          <h2 style={{ color: 'var(--olive)', marginBottom: '0.5rem', fontSize: '2rem', fontWeight: 'bold' }}>
+            {t('النشاطات الترفيهية المفتوحة', 'Open Recreational Activities')}
+          </h2>
+          <p style={{ color: 'var(--olive)', marginBottom: '3rem', fontSize: '1.2rem' }}>
+            {t('يومياً و بدون حجز!', 'Daily & No Reservation Required!')}
+          </p>
+          
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', 
+            gap: '2rem',
+            maxWidth: '1000px',
+            margin: '0 auto'
+          }}>
+            {workshops.filter(w => w.category === 'open_activity').map((w) => (
+              <WixActivityCard key={w.id} workshop={w} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── Workshops Section ── */}
-      <main id="workshops" className={styles.main}>
+      {/* الورش التدريبية */}
+      <section style={{ backgroundColor: '#fff', padding: '4rem 1rem', textAlign: 'center' }}>
         <div className="container">
-          {/* Filters */}
-          <div className={styles.filtersRow}>
-            <CategoryTabs active={category} onChange={setCategory} />
-            <BranchFilter active={branch}   onChange={setBranch}   />
+          <h2 style={{ color: 'var(--olive)', marginBottom: '3rem', fontSize: '2.5rem', fontWeight: 'bold' }}>
+            {t('الورش التدريبية', 'Training Workshops')}
+          </h2>
+          
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            gap: '3rem',
+            maxWidth: '800px',
+            margin: '0 auto'
+          }}>
+            {workshops.filter(w => w.category === 'workshop').map((w) => (
+              <WixTrainingCard key={w.id} workshop={w} />
+            ))}
           </div>
-
-          {/* Results header */}
-          <div className={styles.resultsHeader}>
-            <h2 className="section-title">
-              {category === 'all'
-                ? t('كل الورش', 'All Workshops')
-                : t(
-                    { open_activity: 'الأنشطة المفتوحة', workshop: 'ورش العمل', kids: 'أنشطة الأطفال', course: 'الدورات' }[category],
-                    { open_activity: 'Open Activities', workshop: 'Workshops', kids: 'Kids Activities', course: 'Courses' }[category]
-                  )
-              }
-            </h2>
-            <span className={styles.count}>
-              {loading ? '' : t(`${workshops.length} نتيجة`, `${workshops.length} results`)}
-            </span>
-          </div>
-
-          {/* Grid */}
-          {loading ? (
-            <div className={styles.grid}>
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className={`card ${styles.skeleton}`} aria-hidden />
-              ))}
-            </div>
-          ) : workshops.length === 0 ? (
-            <div className={styles.empty} role="status">
-              <SparkIcon size={40} className={styles.emptyIcon} />
-              <p>{t('لا توجد ورش في هذا التصنيف', 'No workshops in this category')}</p>
-            </div>
-          ) : (
-            <div className={styles.grid}>
-              {workshops.map((w) => (
-                <WorkshopCard key={w.id} workshop={w} />
-              ))}
-            </div>
-          )}
         </div>
-      </main>
+      </section>
+
+      {/* كورسات الحياكة */}
+      <WixBanner 
+        titleAr="كورسات الحياكة" 
+        titleEn="Knitting Courses" 
+        href="/?category=course" 
+        panelBg="var(--bg-paper)" 
+        imageUrl="https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&q=80&w=800" 
+        imageFirst={false} 
+        lang={lang as 'ar' | 'en'} 
+      />
+
+      {/* ورش و اشتراكات الاطفال */}
+      <WixBanner 
+        titleAr="ورش و اشتراكات الاطفال" 
+        titleEn="Kids Workshops & Subscriptions" 
+        href="/?category=kids" 
+        panelBg="var(--blush-light)" 
+        imageUrl="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800" 
+        imageFirst={true} 
+        lang={lang as 'ar' | 'en'} 
+      />
 
       {/* ── Footer ── */}
       <footer className={styles.footer}>

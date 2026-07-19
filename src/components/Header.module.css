@@ -2,86 +2,45 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(78, 90, 46, 0.96);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 3px solid var(--clr-honey);
-  box-shadow: 0 3px 16px rgba(58, 46, 28, 0.18);
+  background: #ffffff;
+  border-bottom: 1px solid #d96f4b; /* var(--clr-clay) approximation, based on screenshots */
 }
 
 .inner {
   display: flex;
   align-items: center;
-  gap: 2rem;
-  height: 68px;
+  justify-content: space-between;
+  height: 70px;
+  padding: 0 1rem;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
   text-decoration: none;
 }
 
-.logoText {
-  font-family: var(--font-heading);
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: #F6F0E2;
-  letter-spacing: 0.01em;
+.logoImg {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
 }
 
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  flex: 1;
-  justify-content: center;
-}
-
-.navLink {
-  padding: 0.4rem 0.9rem;
-  border-radius: var(--radius-sm);
-  color: rgba(246, 240, 226, 0.82);
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: all var(--transition);
-  white-space: nowrap;
-}
-
-.navLink:hover {
-  color: #fff;
-  background: rgba(246, 240, 226, 0.12);
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-shrink: 0;
-}
-
-.langBtn {
-  background: var(--clr-honey);
-  border: 1px solid var(--clr-honey);
-  color: #3A2E1C;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 0.3rem 0.75rem;
+.hamburger {
+  background: none;
+  border: none;
   cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
 }
 
-.langBtn:hover {
-  background: #d69a3e;
-  border-color: #d69a3e;
+.hamburger span {
+  display: block;
+  width: 30px;
+  height: 2px;
+  background-color: #8c9b58; /* green color from the screenshot */
+  border-radius: 2px;
 }
 
-@media (max-width: 640px) {
-  .nav { display: none; }
-  .logoText { font-size: 1.1rem; }
-}
