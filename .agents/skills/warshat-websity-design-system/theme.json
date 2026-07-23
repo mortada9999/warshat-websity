@@ -1,0 +1,28 @@
+{
+  "name": "Warshat Fan",
+  "appearance": "light",
+  "colors": {
+    "background": "#EFE7D6",
+    "surface": "#F6F0E2",
+    "foreground": "#3A2E1C",
+    "muted": "#8A7A5C",
+    "border": "rgba(93, 74, 45, 0.18)",
+    "primary": "#4E5A2E",
+    "primaryForeground": "#ffffff",
+    "secondary": "#C08A2D",
+    "accent": "#C85A3C",
+    "destructive": "#d94040",
+    "success": "#1a9957"
+  },
+  "fonts": {
+    "heading": "Aref Ruqaa",
+    "body": "Tajawal",
+    "mono": "ui-monospace"
+  },
+  "radius": {
+    "sm": 10,
+    "md": 9999,
+    "lg": 18,
+    "xl": 26
+  }
+}

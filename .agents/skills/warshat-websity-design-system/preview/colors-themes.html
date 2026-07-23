@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Colors — Warshat Fan</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    body { padding: 2rem; }
+    h1 { font-size: 1.25rem; margin-bottom: 1.25rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+    .swatch { border: 1px solid var(--clr-border); border-radius: var(--radius-lg); overflow: hidden; background: var(--clr-surface); box-shadow: var(--shadow-card); }
+    .chip { height: 88px; }
+    .meta { padding: 0.75rem; font-size: 0.78rem; font-family: var(--font-body); }
+    .name { font-weight: 700; color: var(--clr-text); }
+    .hex { color: var(--clr-text-dim); direction: ltr; text-align: left; margin-top: 0.2rem; }
+    .sec { margin-top: 2rem; }
+    .sec h2 { font-size: 1rem; margin-bottom: 0.75rem; }
+  </style>
+</head>
+<body>
+  <h1 data-od-id="colors-title">Palette · لوحة الألوان</h1>
+  <div class="grid" data-od-id="colors-core">
+    <div class="swatch"><div class="chip" style="background:#EFE7D6"></div><div class="meta"><div class="name">bg canvas</div><div class="hex">#EFE7D6</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#F6F0E2"></div><div class="meta"><div class="name">surface</div><div class="hex">#F6F0E2</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#E7DCC6"></div><div class="meta"><div class="name">surface-2</div><div class="hex">#E7DCC6</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#4E5A2E"></div><div class="meta"><div class="name">olive / accent</div><div class="hex">#4E5A2E</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#6E7A3E"></div><div class="meta"><div class="name">olive light</div><div class="hex">#6E7A3E</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#C08A2D"></div><div class="meta"><div class="name">honey</div><div class="hex">#C08A2D</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#C85A3C"></div><div class="meta"><div class="name">coral</div><div class="hex">#C85A3C</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#3A2E1C"></div><div class="meta"><div class="name">text ink</div><div class="hex">#3A2E1C</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#5D4A2D"></div><div class="meta"><div class="name">brown / muted</div><div class="hex">#5D4A2D</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#8A7A5C"></div><div class="meta"><div class="name">text dim</div><div class="hex">#8A7A5C</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#1a9957"></div><div class="meta"><div class="name">success</div><div class="hex">#1a9957</div></div></div>
+    <div class="swatch"><div class="chip" style="background:#d94040"></div><div class="meta"><div class="name">danger</div><div class="hex">#d94040</div></div></div>
+  </div>
+
+  <div class="sec" data-od-id="colors-usage">
+    <h2>Usage on canvas</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center">
+      <button class="btn btn-primary">حجز الآن</button>
+      <button class="btn btn-ghost">المزيد</button>
+      <span class="badge badge-orange">ورشة عمل</span>
+      <span class="badge badge-beige">الزيونة</span>
+      <span class="badge badge-green">مجاني</span>
+    </div>
+  </div>
+</body>
+</html>

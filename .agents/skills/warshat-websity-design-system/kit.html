@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ورشة فن — Brand Kit</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <style>
+    body { padding: 2rem; max-width: 1100px; margin: 0 auto; }
+    header { display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; }
+    header img { height: 56px; }
+    h1 { font-size: 1.75rem; margin: 0; }
+    .tag { color: var(--clr-text-muted); margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; }
+    .sw { height: 72px; border-radius: 12px; border: 1px solid var(--clr-border); }
+    section { margin-top: 2rem; }
+    h2 { font-size: 1rem; margin-bottom: 0.75rem; }
+    .links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .links a { display: inline-flex; padding: 0.5rem 0.9rem; border: 1px solid var(--clr-border); border-radius: 999px; background: var(--clr-surface); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <header data-od-id="kit-head">
+    <img src="assets/logo.png" alt="ورشة فن" />
+    <div>
+      <h1>ورشة فن · Brand Kit</h1>
+      <p class="tag">Canvas cream · olive · honey · coral · RTL Arabic craft studio</p>
+    </div>
+  </header>
+
+  <section>
+    <h2>Palette</h2>
+    <div class="grid">
+      <div class="sw" style="background:#EFE7D6" title="bg"></div>
+      <div class="sw" style="background:#F6F0E2" title="surface"></div>
+      <div class="sw" style="background:#4E5A2E" title="olive"></div>
+      <div class="sw" style="background:#C08A2D" title="honey"></div>
+      <div class="sw" style="background:#C85A3C" title="coral"></div>
+      <div class="sw" style="background:#3A2E1C" title="ink"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Type</h2>
+    <p style="font-family:var(--font-heading);font-size:2rem;color:var(--clr-heading);margin:0">Aref Ruqaa — عناوين</p>
+    <p style="font-family:var(--font-body);margin:0.5rem 0 0;color:var(--clr-text-muted)">Tajawal — نص الجسم للقراءة المريحة بالعربية والإنجليزية</p>
+  </section>
+
+  <section>
+    <h2>Explore</h2>
+    <div class="links">
+      <a href="preview/colors-themes.html">Colors</a>
+      <a href="preview/typography-specimens.html">Type</a>
+      <a href="preview/components-cards.html">Cards</a>
+      <a href="preview/brand-assets.html">Logo</a>
+      <a href="ui_kits/app/index.html">UI kit</a>
+      <a href="system/artifacts/landing.html">Landing</a>
+      <a href="system/artifacts/deck.html">Deck</a>
+      <a href="DESIGN.md">DESIGN.md</a>
+    </div>
+  </section>
+</body>
+</html>

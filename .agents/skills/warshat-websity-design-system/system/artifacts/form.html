@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ورشة فن — نموذج تواصل</title>
+  <link rel="stylesheet" href="../../colors_and_type.css" />
+  <style>
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem 1rem; }
+    .card-form {
+      width: min(480px, 100%);
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-card);
+      padding: 2rem;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; }
+    .brand img { height: 44px; }
+    h1 { font-size: 1.6rem; margin: 0 0 0.35rem; }
+    .lead { font-size: 0.95rem; color: var(--clr-text-muted); margin: 0 0 1.5rem; }
+    form { display: flex; flex-direction: column; gap: 1rem; }
+    .actions { display: flex; gap: 0.75rem; justify-content: flex-end; margin-top: 0.5rem; }
+  </style>
+</head>
+<body>
+  <div class="card-form" data-od-id="contact-form">
+    <div class="brand">
+      <img src="../../assets/logo.png" alt="ورشة فن" />
+      <div>
+        <h1>انضم إلى ورشة</h1>
+        <p class="lead">اترك بياناتك وسنتواصل لتأكيد المقعد في الزيونة أو اليرموك.</p>
+      </div>
+    </div>
+    <form onsubmit="event.preventDefault(); this.querySelector('[data-ok]').hidden=false;">
+      <div class="form-group">
+        <label class="form-label">الاسم</label>
+        <input class="form-input" name="name" required placeholder="اسمك الكامل" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">الهاتف</label>
+        <input class="form-input" name="phone" type="tel" required placeholder="07xx xxx xxxx" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">الورشة</label>
+        <select class="form-select" name="workshop">
+          <option>الرسم على الاكواب الفخارية</option>
+          <option>ورشة الفخار</option>
+          <option>كورسات الحياكة</option>
+          <option>ورش الأطفال</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">الفرع</label>
+        <select class="form-select" name="branch">
+          <option>الزيونة</option>
+          <option>اليرموك</option>
+          <option>أي فرع</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ملاحظة</label>
+        <textarea class="form-textarea" name="note" placeholder="عدد الأشخاص أو وقت مفضّل"></textarea>
+      </div>
+      <p data-ok hidden class="badge badge-green" style="align-self:flex-start">تم استلام طلبك ✓</p>
+      <div class="actions">
+        <button type="reset" class="btn btn-ghost">مسح</button>
+        <button type="submit" class="btn btn-primary" data-od-id="form-submit">إرسال</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

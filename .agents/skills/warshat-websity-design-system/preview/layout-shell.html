@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Layout shell — Warshat Fan</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    .header {
+      position: sticky; top: 0; z-index: 10;
+      background: #fff; border-bottom: 1px solid #d96f4b;
+    }
+    .inner {
+      max-width: 1280px; margin: 0 auto; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1rem;
+    }
+    .logo img { height: 50px; width: auto; }
+    .burger { background: none; border: none; display: flex; flex-direction: column; gap: 5px; padding: 10px; cursor: pointer; }
+    .burger span { display: block; width: 30px; height: 2px; background: #8c9b58; border-radius: 2px; }
+    .hero {
+      display: grid; grid-template-columns: 1fr 1fr; min-height: 420px;
+    }
+    .hero-text {
+      background: #f3ddd4; display: flex; align-items: center; justify-content: center;
+      padding: 2.5rem 1.5rem; text-align: center; position: relative;
+    }
+    .hero-text h1 { font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--clr-olive); margin-bottom: 0.75rem; }
+    .hero-text p { color: var(--clr-olive); margin-bottom: 1.25rem; }
+    .hero-img { min-height: 280px; background: center/cover no-repeat url('https://images.unsplash.com/photo-1560421711-8f5eb53d2657?auto=format&fit=crop&q=80&w=1000'); }
+    .band { background: #8c9b58; padding: 3rem 1.5rem; text-align: center; }
+    .band h2 { color: var(--clr-olive); font-size: 1.75rem; }
+    .band p { color: var(--clr-olive); margin: 0.35rem 0 1.5rem; }
+    .footer {
+      background: var(--clr-olive); border-top: 4px solid var(--clr-honey);
+      padding: 2.5rem 1rem; text-align: center; color: rgba(246,240,226,0.85); font-size: 0.9rem;
+    }
+    @media (max-width: 768px) { .hero { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="header" data-od-id="shell-header">
+    <div class="inner">
+      <a class="logo" href="#"><img src="../assets/logo.png" alt="ورشة فن" /></a>
+      <button class="burger" aria-label="القائمة"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="hero" data-od-id="shell-hero">
+    <div class="hero-text">
+      <div>
+        <img src="../assets/logo.png" alt="" style="height:56px;margin:0 auto 1rem;filter:brightness(0) invert(1);opacity:.9" />
+        <h1>المكان المثالي للترفيه عن طريق الفن</h1>
+        <p>و لتعلم مختلف الفنون بأحترافية!</p>
+        <a class="btn btn-primary" href="#band">our menu</a>
+      </div>
+    </div>
+    <div class="hero-img" role="img" aria-label="مرسم"></div>
+  </section>
+
+  <section class="band" id="band" data-od-id="shell-band">
+    <h2 class="section-title" style="color:var(--clr-olive)">النشاطات الترفيهية المفتوحة</h2>
+    <p>يومياً و بدون حجز!</p>
+    <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap">
+      <span class="badge badge-beige">الزيونة</span>
+      <span class="badge badge-beige">اليرموك</span>
+    </div>
+  </section>
+
+  <footer class="footer" data-od-id="shell-footer">© ورشة فن — جميع الحقوق محفوظة</footer>
+</body>
+</html>

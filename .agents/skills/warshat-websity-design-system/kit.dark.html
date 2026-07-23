@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ورشة فن — Brand Kit (olive night)</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <style>
+    :root {
+      --bg: #2a3218;
+      --surface: #3a4424;
+      --fg: #F6F0E2;
+      --muted: #c8b896;
+      --border: rgba(246, 240, 226, 0.16);
+      --accent: #C08A2D;
+    }
+    body { padding: 2rem; max-width: 1100px; margin: 0 auto; background: #2a3218; color: #F6F0E2; }
+    header { display: flex; gap: 1rem; align-items: center; margin-bottom: 2rem; }
+    header img { height: 56px; filter: brightness(0) invert(1); }
+    h1 { font-size: 1.75rem; margin: 0; color: #F6F0E2; font-family: var(--font-heading); }
+    .tag { color: #c8b896; margin: 0; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.75rem; }
+    .sw { height: 72px; border-radius: 12px; border: 1px solid rgba(246,240,226,0.16); }
+    section { margin-top: 2rem; }
+    h2 { font-size: 1rem; margin-bottom: 0.75rem; color: #C08A2D; }
+    p { color: #c8b896; }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="assets/logo.png" alt="ورشة فن" />
+    <div>
+      <h1>ورشة فن · Night olive</h1>
+      <p class="tag">Dark companion for footers, decks, and evening promo</p>
+    </div>
+  </header>
+  <section>
+    <h2>On olive night</h2>
+    <div class="grid">
+      <div class="sw" style="background:#2a3218"></div>
+      <div class="sw" style="background:#4E5A2E"></div>
+      <div class="sw" style="background:#C08A2D"></div>
+      <div class="sw" style="background:#C85A3C"></div>
+      <div class="sw" style="background:#F6F0E2"></div>
+    </div>
+    <p style="margin-top:1rem">Use cream type on deep olive; honey for accents; coral sparingly for CTAs.</p>
+  </section>
+</body>
+</html>

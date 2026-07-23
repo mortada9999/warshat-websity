@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ورشة فن — Deck</title>
+  <link rel="stylesheet" href="../../colors_and_type.css" />
+  <style>
+    body { margin: 0; background: #2a2418; color: var(--clr-text); overflow: hidden; font-family: var(--font-body); }
+    .deck { width: 100vw; height: 100vh; position: relative; }
+    .slide {
+      position: absolute; inset: 0; display: none; padding: 64px 80px;
+      background: var(--clr-bg); flex-direction: column; justify-content: center;
+    }
+    .slide.active { display: flex; }
+    .slide h1 { font-size: 56px; line-height: 1.2; color: var(--clr-heading); margin: 0 0 16px; }
+    .slide h2 { font-size: 42px; color: var(--clr-heading); margin: 0 0 20px; }
+    .slide p, .slide li { font-size: 26px; color: var(--clr-text-muted); line-height: 1.55; }
+    .slide ul { margin: 0; padding: 0 1.25rem 0 0; }
+    .slide li { margin-bottom: 12px; }
+    .tag { color: var(--clr-honey); font-weight: 700; letter-spacing: 0.08em; font-size: 18px; text-transform: uppercase; margin-bottom: 12px; }
+    .accent { color: var(--clr-coral); }
+    .footer-bar {
+      position: absolute; bottom: 28px; left: 80px; right: 80px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 14px; color: var(--clr-text-dim);
+    }
+    .dots { display: flex; gap: 8px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--clr-border); }
+    .dot.on { background: var(--clr-olive); }
+    .split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; height: 100%; }
+    .swatches { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+    .sw { width: 72px; height: 72px; border-radius: 14px; border: 1px solid var(--clr-border); }
+    .logo { height: 72px; }
+    .olive-slide { background: var(--clr-olive); color: #F6F0E2; }
+    .olive-slide h1, .olive-slide h2 { color: #F6F0E2; }
+    .olive-slide p { color: rgba(246,240,226,0.88); }
+  </style>
+</head>
+<body>
+  <div class="deck" data-od-id="deck-root">
+    <section class="slide active" data-slide="0">
+      <div class="tag">Warshat Fan</div>
+      <img class="logo" src="../../assets/logo.png" alt="ورشة فن" />
+      <h1 style="margin-top:24px">ورشة فن</h1>
+      <p>مساحة الإبداع والتعلم في بغداد<br />فرعا الزيونة واليرموك</p>
+      <div class="footer-bar"><span>Brand deck</span><div class="dots" data-dots></div></div>
+    </section>
+
+    <section class="slide" data-slide="1">
+      <div class="tag">Problem</div>
+      <h2>اكتشاف الورش الإبداعية يجب أن يكون دافئاً وواضحاً</h2>
+      <ul>
+        <li>عائلات تبحث عن نشاط يومي بدون تعقيد الحجز</li>
+        <li>دورات وورش تحتاج حضوراً بصرياً حقيقياً</li>
+        <li>هوية عربية RTL — لا قوالب SaaS باردة</li>
+      </ul>
+      <div class="footer-bar"><span>02</span><div class="dots" data-dots></div></div>
+    </section>
+
+    <section class="slide" data-slide="2">
+      <div class="tag">System</div>
+      <h2>استوديو فني على قماش كريمي</h2>
+      <div class="swatches">
+        <div class="sw" style="background:#EFE7D6" title="bg"></div>
+        <div class="sw" style="background:#4E5A2E" title="olive"></div>
+        <div class="sw" style="background:#C08A2D" title="honey"></div>
+        <div class="sw" style="background:#C85A3C" title="coral"></div>
+        <div class="sw" style="background:#3A2E1C" title="ink"></div>
+      </div>
+      <p style="margin-top:28px">Aref Ruqaa للعناوين · Tajawal للنص · أزرار كبسولة زيتونية</p>
+      <div class="footer-bar"><span>03</span><div class="dots" data-dots></div></div>
+    </section>
+
+    <section class="slide" data-slide="3">
+      <div class="tag">Product</div>
+      <h2>أربعة مسارات اكتشاف</h2>
+      <ul>
+        <li><span class="accent">نشاط مفتوح</span> — يومياً بدون حجز</li>
+        <li><span class="accent">ورشة عمل</span> — تدريب عملي</li>
+        <li><span class="accent">أطفال</span> — ورش واشتراكات</li>
+        <li><span class="accent">دورات</span> — برامج أطول مثل الحياكة</li>
+      </ul>
+      <div class="footer-bar"><span>04</span><div class="dots" data-dots></div></div>
+    </section>
+
+    <section class="slide olive-slide" data-slide="4">
+      <div class="tag" style="color:#C08A2D">Close</div>
+      <h1> quantل · اصنع · ارجع</h1>
+      <p>ورشة فن — حيث يصبح الإبداع عادة يومية في بغداد.</p>
+      <div class="footer-bar" style="color:rgba(246,240,226,.7)"><span>05</span><div class="dots" data-dots></div></div>
+    </section>
+  </div>
+  <script>
+    const KEY = 'warshat-deck-idx';
+    const slides = [...document.querySelectorAll('.slide')];
+    let i = Math.min(parseInt(localStorage.getItem(KEY) || '0', 10) || 0, slides.length - 1);
+    function render() {
+      slides.forEach((s, n) => s.classList.toggle('active', n === i));
+      document.querySelectorAll('[data-dots]').forEach((el) => {
+        el.innerHTML = slides.map((_, n) => `<span class="dot${n === i ? ' on' : ''}"></span>`).join('');
+      });
+      localStorage.setItem(KEY, String(i));
+    }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === ' ') { i = Math.min(i + 1, slides.length - 1); render(); }
+      if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { i = Math.max(i - 1, 0); render(); }
+    });
+    render();
+  </script>
+</body>
+</html>

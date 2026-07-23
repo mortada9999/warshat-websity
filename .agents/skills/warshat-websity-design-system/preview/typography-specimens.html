@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Typography — Warshat Fan</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    body { padding: 2rem; }
+    .label { font-size: 0.75rem; color: var(--clr-text-dim); margin-bottom: 0.35rem; font-family: var(--font-body); }
+    .row { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--clr-border); }
+    .hero { font-size: clamp(2.5rem, 6vw, 4rem); font-family: var(--font-heading); color: var(--clr-heading); line-height: 1.15; }
+    .section { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+    .card-t { font-size: 1.4rem; font-family: var(--font-heading); color: var(--clr-heading); }
+    .body { font-size: 1rem; color: var(--clr-text-muted); max-width: 40rem; }
+    .eyebrow { font-size: 0.875rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--clr-honey); font-weight: 700; font-family: var(--font-body); }
+    .meta { font-size: 0.78rem; color: var(--clr-text-dim); }
+    h1.page { font-size: 1.25rem; margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+  <h1 class="page" data-od-id="type-title">Typography · الخطوط</h1>
+
+  <div class="row" data-od-id="type-hero">
+    <div class="label">Hero / Aref Ruqaa 700 · clamp(3rem–5.5rem)</div>
+    <div class="hero">ورشة فن</div>
+    <div class="hero" style="font-size:clamp(1.5rem,4vw,2.5rem);font-weight:400;color:var(--clr-coral);margin-top:.5rem">مساحة الإبداع والتعلم</div>
+  </div>
+
+  <div class="row" data-od-id="type-section">
+    <div class="label">Section title + honey brush</div>
+    <h2 class="section-title section">النشاطات الترفيهية المفتوحة</h2>
+  </div>
+
+  <div class="row" data-od-id="type-card">
+    <div class="label">Card title</div>
+    <div class="card-t">الرسم على الاكواب الفخارية</div>
+  </div>
+
+  <div class="row" data-od-id="type-body">
+    <div class="label">Body · Tajawal · line-height 1.7</div>
+    <p class="body">اكتشف ورش العمل والدورات والفعاليات الإبداعية في بغداد. فرعا الزيونة واليرموك — يومياً وبدون حجز للنشاطات المفتوحة.</p>
+    <p class="body" style="margin-top:0.75rem;direction:ltr;text-align:left;font-family:var(--font-body)">Discover creative workshops and courses in Baghdad. Branches in Zayouna and Yarmouk.</p>
+  </div>
+
+  <div class="row" data-od-id="type-eyebrow">
+    <div class="label">Eyebrow</div>
+    <div class="eyebrow">Baghdad · Craft Studio</div>
+  </div>
+
+  <div class="row" data-od-id="type-meta">
+    <div class="label">Meta / caption</div>
+    <div class="meta">الزيونة · 20 مقعداً · 15,000 د.ع</div>
+  </div>
+</body>
+</html>

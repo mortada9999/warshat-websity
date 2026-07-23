@@ -1,0 +1,29 @@
+{
+  "font": {
+    "heading": {
+      "value": "'Aref Ruqaa', 'Tajawal', Georgia, serif",
+      "type": "fontFamilies"
+    },
+    "body": {
+      "value": "'Tajawal', 'Segoe UI', Tahoma, sans-serif",
+      "type": "fontFamilies"
+    },
+    "mono": {
+      "value": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace",
+      "type": "fontFamilies"
+    }
+  },
+  "fontSize": {
+    "xs": { "value": "0.75rem", "type": "fontSizes" },
+    "sm": { "value": "0.85rem", "type": "fontSizes" },
+    "md": { "value": "0.9375rem", "type": "fontSizes" },
+    "lg": { "value": "1.15rem", "type": "fontSizes" },
+    "xl": { "value": "1.4rem", "type": "fontSizes" },
+    "2xl": { "value": "clamp(1.6rem, 3vw, 2.4rem)", "type": "fontSizes" },
+    "hero": { "value": "clamp(3rem, 8vw, 5.5rem)", "type": "fontSizes" }
+  },
+  "lineHeight": {
+    "tight": { "value": "1.3", "type": "lineHeights" },
+    "body": { "value": "1.7", "type": "lineHeights" }
+  }
+}

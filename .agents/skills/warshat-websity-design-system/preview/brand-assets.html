@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Brand assets — Warshat Fan</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    body { padding: 2rem; }
+    h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .sub { color: var(--clr-text-dim); font-size: 0.85rem; margin-bottom: 1.5rem; }
+    .stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+    .stage { border: 1px solid var(--clr-border); border-radius: var(--radius-lg); padding: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; box-shadow: var(--shadow-card); }
+    .stage img { max-height: 120px; max-width: 100%; object-fit: contain; }
+    .stage.on-olive { background: var(--clr-olive); }
+    .stage.on-olive img { filter: brightness(0) invert(1); }
+    .stage.on-white { background: #fff; }
+    .stage.on-canvas { background: var(--clr-bg); }
+    .cap { font-size: 0.8rem; color: var(--clr-text-muted); text-align: center; }
+    .stage.on-olive .cap { color: rgba(246,240,226,0.85); }
+    code { font-family: var(--font-mono); font-size: 0.75rem; direction: ltr; }
+  </style>
+</head>
+<body>
+  <h1 data-od-id="assets-title">Brand assets · الشعار</h1>
+  <p class="sub">Preserved from <code>public/logo.png</code> → <code>assets/logo.png</code> · <code>build/logo.png</code></p>
+
+  <div class="stages" data-od-id="logo-stages">
+    <div class="stage on-canvas">
+      <img src="../assets/logo.png" alt="ورشة فن logo" />
+      <div class="cap">On canvas bg<br /><code>assets/logo.png</code></div>
+    </div>
+    <div class="stage on-white">
+      <img src="../build/logo.png" alt="ورشة فن logo white" />
+      <div class="cap">On white · header style<br /><code>build/logo.png</code></div>
+    </div>
+    <div class="stage on-olive">
+      <img src="../assets/logo.png" alt="ورشة فن logo inverted" />
+      <div class="cap">On olive (inverted filter · hero)</div>
+    </div>
+  </div>
+</body>
+</html>

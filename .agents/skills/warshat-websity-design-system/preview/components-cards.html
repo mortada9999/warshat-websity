@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cards — Warshat Fan</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    body { padding: 2rem; }
+    h1 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    .sub { font-size: 0.85rem; color: var(--clr-text-dim); margin-bottom: 1.5rem; }
+    h2 { font-size: 0.95rem; margin: 1.5rem 0 0.75rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+    .w-card { display: flex; flex-direction: column; text-decoration: none; }
+    .img-wrap { position: relative; aspect-ratio: 16/10; overflow: hidden; background: var(--clr-surface-2); }
+    .img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+    .cat { position: absolute; top: 0.75rem; right: 0.75rem; }
+    .content { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+    .title { font-family: var(--font-heading); font-size: 1.25rem; color: var(--clr-heading); }
+    .desc { font-size: 0.88rem; color: var(--clr-text-muted); }
+    .footer { margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--clr-border); display: flex; justify-content: space-between; align-items: flex-end; font-size: 0.8rem; color: var(--clr-text-dim); }
+    .price { color: var(--clr-coral); font-weight: 700; font-size: 1.1rem; }
+
+    .act-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+    .act { background: #fff; padding: 1.25rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; border: 1px solid var(--clr-border); border-radius: var(--radius-lg); transition: transform var(--transition); }
+    .act:hover { transform: translateY(-5px); }
+    .circle { width: 110px; height: 110px; border-radius: 50%; overflow: hidden; }
+    .circle img { width: 100%; height: 100%; object-fit: cover; }
+    .act-title { font-size: 0.95rem; font-weight: 700; color: var(--olive-light); text-align: center; }
+    .brush { background: var(--clr-coral); color: #fff; padding: 4px 18px; font-weight: 700; border-radius: var(--radius-brush); transform: rotate(-2deg); font-size: 0.95rem; }
+
+    .train { background: #fff; border: 1px solid var(--clr-olive); padding: 1.25rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; max-width: 720px; }
+    .train img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+    .train-body { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 0.75rem; }
+    .train-body h3 { font-size: 1.4rem; color: var(--clr-olive); }
+    .book { background: var(--clr-olive); color: #fff; padding: 0.6rem 2rem; font-weight: 700; border-radius: 4px; }
+    @media (max-width: 640px) { .train { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1 data-od-id="cards-title">Cards · البطاقات</h1>
+  <p class="sub">Source-backed: WorkshopCard · WixActivityCard · WixTrainingCard</p>
+
+  <h2>Workshop card</h2>
+  <div class="grid" data-od-id="workshop-cards">
+    <a class="card w-card" href="#">
+      <div class="img-wrap">
+        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=600" alt="فخار" />
+        <span class="badge badge-orange cat">ورشة عمل</span>
+      </div>
+      <div class="content">
+        <div class="title">ورشة الفخار</div>
+        <p class="desc">تعلّم تشكيل الطين والتزجيج في أجواء مرسم دافئة.</p>
+        <div class="footer">
+          <span>الزيونة · 12 مقعداً</span>
+          <span class="price">مجاني</span>
+        </div>
+      </div>
+    </a>
+    <a class="card w-card" href="#">
+      <div class="img-wrap">
+        <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=600" alt="حقيبة" />
+        <span class="badge badge-orange cat">نشاط مفتوح</span>
+      </div>
+      <div class="content">
+        <div class="title">الرسم على الحقائب القماشية</div>
+        <p class="desc">جلسة مفتوحة يومياً بدون حجز مسبق.</p>
+        <div class="footer">
+          <span>اليرموك · 20 مقعداً</span>
+          <span class="price">15,000 <span style="font-size:0.75rem;font-weight:400;color:var(--clr-text-muted)">د.ع</span></span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <h2>Open activity (circle)</h2>
+  <div class="act-grid" data-od-id="activity-cards">
+    <div class="act">
+      <div class="circle"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?auto=format&fit=crop&q=80&w=300" alt="" /></div>
+      <div class="act-title">الرسم على الاكواب الفخارية</div>
+      <span class="brush">10,000</span>
+    </div>
+    <div class="act">
+      <div class="circle"><img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=300" alt="" /></div>
+      <div class="act-title">صناعة الاكسسوارات</div>
+      <span class="brush">15,000</span>
+    </div>
+  </div>
+
+  <h2>Training card</h2>
+  <div class="train" data-od-id="training-card">
+    <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?auto=format&fit=crop&q=80&w=700" alt="حياكة" />
+    <div class="train-body">
+      <h3>needle felting</h3>
+      <p class="desc">ورشة تدريبية متخصصة في التلبيد بالإبرة.</p>
+      <a class="book" href="#">Book Now</a>
+    </div>
+  </div>
+</body>
+</html>

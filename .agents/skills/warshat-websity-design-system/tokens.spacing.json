@@ -1,0 +1,28 @@
+{
+  "space": {
+    "1": { "value": "0.25rem", "type": "spacing" },
+    "2": { "value": "0.5rem", "type": "spacing" },
+    "3": { "value": "0.75rem", "type": "spacing" },
+    "4": { "value": "1rem", "type": "spacing" },
+    "5": { "value": "1.5rem", "type": "spacing" },
+    "6": { "value": "2rem", "type": "spacing" },
+    "7": { "value": "3rem", "type": "spacing" },
+    "8": { "value": "4rem", "type": "spacing" }
+  },
+  "radius": {
+    "sm": { "value": "10px", "type": "borderRadius" },
+    "md": { "value": "9999px", "type": "borderRadius" },
+    "lg": { "value": "18px", "type": "borderRadius" },
+    "xl": { "value": "26px", "type": "borderRadius" },
+    "brush": { "value": "8px 30px 10px 40px", "type": "borderRadius" }
+  },
+  "shadow": {
+    "card": { "value": "0 8px 22px rgba(58, 46, 28, 0.10)", "type": "boxShadow" },
+    "cardHover": { "value": "0 20px 40px rgba(58, 46, 28, 0.16)", "type": "boxShadow" },
+    "btn": { "value": "0 4px 14px rgba(78, 90, 46, 0.28)", "type": "boxShadow" }
+  },
+  "layout": {
+    "container": { "value": "1280px", "type": "sizing" },
+    "navHeight": { "value": "70px", "type": "sizing" }
+  }
+}

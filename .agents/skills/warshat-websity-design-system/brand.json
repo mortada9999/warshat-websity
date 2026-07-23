@@ -1,0 +1,52 @@
+{
+  "id": "github-708a41",
+  "name": "ورشة فن",
+  "nameEn": "Warshat Fan",
+  "tagline": "مساحة الإبداع والتعلم",
+  "taglineEn": "A space for creativity and learning",
+  "sourceUrl": "https://github.com/mortada9999/warshat-websity",
+  "locale": "ar_IQ",
+  "direction": "rtl",
+  "colors": {
+    "bg": "#EFE7D6",
+    "surface": "#F6F0E2",
+    "surface2": "#E7DCC6",
+    "fg": "#3A2E1C",
+    "muted": "#8A7A5C",
+    "border": "rgba(93, 74, 45, 0.18)",
+    "accent": "#4E5A2E",
+    "olive": "#4E5A2E",
+    "oliveLight": "#6E7A3E",
+    "honey": "#C08A2D",
+    "coral": "#C85A3C",
+    "brown": "#5D4A2D",
+    "heading": "#4E5A2E",
+    "success": "#1a9957",
+    "danger": "#d94040",
+    "headerBorder": "#d96f4b"
+  },
+  "typography": {
+    "display": "'Aref Ruqaa', 'Tajawal', Georgia, serif",
+    "body": "'Tajawal', 'Segoe UI', Tahoma, sans-serif",
+    "mono": "ui-monospace, 'SF Mono', Menlo, Consolas, monospace"
+  },
+  "radius": {
+    "sm": "10px",
+    "md": "9999px",
+    "lg": "18px",
+    "xl": "26px"
+  },
+  "logo": "assets/logo.png",
+  "voice": {
+    "tone": ["warm", "craft", "inviting", "bilingual-ar-first"],
+    "use": ["Real Arabic workshop titles", "IQD prices", "Baghdad branch names"],
+    "avoid": ["Generic SaaS jargon", "Lorem ipsum", "Cool tech blues/purples"]
+  },
+  "posture": [
+    "RTL-first canvas cream studio",
+    "Olive primary CTAs with soft glow",
+    "Honey brush underlines on section titles",
+    "Photo-led craft cards with light tilt hover",
+    "Organic blobs sparingly in hero/banners"
+  ]
+}

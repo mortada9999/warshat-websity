@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Spacing & Radius — Warshat Fan</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <style>
+    body { padding: 2rem; }
+    h1 { font-size: 1.25rem; margin-bottom: 1rem; }
+    h2 { font-size: 0.95rem; margin: 1.5rem 0 0.75rem; }
+    .bars { display: flex; flex-direction: column; gap: 0.5rem; }
+    .bar-row { display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-body); font-size: 0.8rem; color: var(--clr-text-muted); }
+    .bar { height: 14px; background: var(--clr-olive); border-radius: 4px; opacity: 0.85; }
+    .rgrid { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .rbox { width: 88px; height: 88px; background: var(--clr-surface); border: 1px solid var(--clr-border); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: var(--clr-text-dim); box-shadow: var(--shadow-card); }
+    .shadow-demo { width: 160px; height: 100px; background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <h1 data-od-id="space-title">Spacing · Radius · Shadows</h1>
+
+  <h2>Spacing scale</h2>
+  <div class="bars" data-od-id="space-scale">
+    <div class="bar-row"><div class="bar" style="width:0.25rem"></div> space-1 0.25rem</div>
+    <div class="bar-row"><div class="bar" style="width:0.5rem"></div> space-2 0.5rem</div>
+    <div class="bar-row"><div class="bar" style="width:0.75rem"></div> space-3 0.75rem</div>
+    <div class="bar-row"><div class="bar" style="width:1rem"></div> space-4 1rem</div>
+    <div class="bar-row"><div class="bar" style="width:1.5rem"></div> space-5 1.5rem</div>
+    <div class="bar-row"><div class="bar" style="width:2rem"></div> space-6 2rem</div>
+    <div class="bar-row"><div class="bar" style="width:3rem"></div> space-7 3rem</div>
+    <div class="bar-row"><div class="bar" style="width:4rem"></div> space-8 4rem</div>
+  </div>
+
+  <h2>Radius</h2>
+  <div class="rgrid" data-od-id="radius-scale">
+    <div class="rbox" style="border-radius:10px">sm 10</div>
+    <div class="rbox" style="border-radius:9999px;width:120px">md pill</div>
+    <div class="rbox" style="border-radius:18px">lg 18</div>
+    <div class="rbox" style="border-radius:26px">xl 26</div>
+    <div class="rbox" style="border-radius:8px 30px 10px 40px;background:var(--clr-coral);color:#fff;border:none">brush</div>
+  </div>
+
+  <h2>Shadows</h2>
+  <div style="display:flex;gap:1.5rem;flex-wrap:wrap" data-od-id="shadow-scale">
+    <div class="shadow-demo" style="box-shadow:var(--shadow-card)">card</div>
+    <div class="shadow-demo" style="box-shadow:var(--shadow-card-hover)">card hover</div>
+    <div class="shadow-demo" style="box-shadow:var(--shadow-btn);background:var(--clr-olive);color:#fff;border:none">btn glow</div>
+  </div>
+
+  <p style="margin-top:1.5rem;font-size:0.85rem;color:var(--clr-text-dim)">Container max-width 1280px · nav height 70px · grid gap ~1.75rem</p>
+</body>
+</html>

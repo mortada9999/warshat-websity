@@ -1,0 +1,10 @@
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filter::-webkit-scrollbar { display: none; }
+
+.btn { flex-shrink: 0; }
