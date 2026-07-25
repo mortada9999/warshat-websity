@@ -1,8 +1,9 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './tailwind.css';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
 import SmoothScroll from '@/components/SmoothScroll';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'ورشة فن — مساحة الإبداع والتعلم',
@@ -17,13 +18,20 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: '#F6F6F4',
+  width: 'device-width',
+  initialScale: 1,
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" style={{ backgroundColor: '#EFE7D6' }}>
+    <html lang="ar" dir="rtl" className="bg-[#F6F6F4]">
       <head />
       <body>
         <LanguageProvider>
           <SmoothScroll>
+            <Header />
             {children}
           </SmoothScroll>
         </LanguageProvider>

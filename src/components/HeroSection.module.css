@@ -1,0 +1,231 @@
+.hero {
+  display: grid;
+  /* RTL: text right, image left — but we use a grid so image is on left visually */
+  grid-template-columns: 1fr 1.1fr;
+  height: 100%;
+  padding-top: var(--nav-h);
+}
+
+/* ── Content ─────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 3rem 3rem 2rem;
+  gap: 1.5rem;
+  /* In RTL this column is on the RIGHT */
+}
+
+[dir="rtl"] .hero {
+  /* keep text on right naturally */
+}
+
+[dir="ltr"] .content {
+  order: 1;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0;
+}
+
+.accentLine {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 38ch;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.ctaPrimary {
+  font-size: 0.9rem;
+  padding: 0.7rem 1.75rem;
+}
+
+.ctaSecondary {
+  font-size: 0.9rem;
+  padding: 0.7rem 1.75rem;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.25rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+
+.pinSvg {
+  width: 9px;
+  height: 12px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.metaDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* ── Image ───────────────────────────────────────── */
+.imageWrap {
+  position: relative;
+  overflow: hidden;
+}
+
+/* In RTL: image is on the LEFT side of the grid */
+[dir="rtl"] .imageWrap {
+  order: -1;
+}
+
+.heroImage {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 8s ease;
+}
+
+.imageWrap:hover .heroImage {
+  transform: scale(1.04);
+}
+
+.imageBadge {
+  position: absolute;
+  bottom: 1.75rem;
+  /* In RTL: badge on the left (inline-end) */
+  left: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.6rem 1rem;
+}
+
+[dir="rtl"] .imageBadge {
+  left: 1.75rem;
+  right: auto;
+}
+
+[dir="ltr"] .imageBadge {
+  left: auto;
+  right: 1.75rem;
+}
+
+.imageBadgeTitle {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: rgba(246, 246, 244, 0.95);
+}
+
+.imageBadgeSub {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: rgba(246, 246, 244, 0.55);
+  letter-spacing: 0.03em;
+}
+
+/* Scroll hint */
+.scrollHint {
+  position: absolute;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  width: 20px;
+  height: 34px;
+  border: 1.5px solid rgba(246, 246, 244, 0.4);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6px;
+}
+
+[dir="rtl"] .scrollHint {
+  right: auto;
+  left: 1.75rem;
+}
+
+.scrollDot {
+  width: 3px;
+  height: 8px;
+  background: rgba(246, 246, 244, 0.7);
+}
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: 48vw 1fr;
+    padding-top: var(--nav-h);
+  }
+
+  .imageWrap {
+    order: -1 !important;
+  }
+
+  .content {
+    order: 1;
+    padding: 1.5rem 1.25rem 2rem;
+    gap: 1rem;
+  }
+
+  .heading {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    max-width: none;
+  }
+
+  .ctas {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    justify-content: center;
+  }
+
+  .scrollHint {
+    display: none;
+  }
+}
