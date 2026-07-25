@@ -1,10 +1,3 @@
-import type { NextConfig } from 'next';
-import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
-
-if (process.env.NODE_ENV === 'development') {
-  setupDevPlatform();
-}
-
 const securityHeaders = [
   { key: 'X-Frame-Options',              value: 'DENY' },
   { key: 'X-Content-Type-Options',       value: 'nosniff' },
@@ -13,7 +6,10 @@ const securityHeaders = [
   { key: 'Permissions-Policy',           value: 'camera=(), microphone=(), geolocation=()' },
 ];
 
+import type { NextConfig } from 'next';
+
 const nextConfig: NextConfig = {
+  allowedDevOrigins: ['192.168.10.88'],
   headers: async () => [
     {
       source: '/(.*)',

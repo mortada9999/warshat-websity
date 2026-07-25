@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import './tailwind.css';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
 import SmoothScroll from '@/components/SmoothScroll';
