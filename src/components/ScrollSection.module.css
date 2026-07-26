@@ -1,25 +1,27 @@
 /* ─── Outer spacer ──────────────────────────────────────────────────────── */
-/* Creates the scroll distance that "holds" the section visible
-   before the next one slides over it.                                       */
+/* Creates the scroll distance that "holds" the section visible while the
+   next section's sticky panel slides up over it.                            */
 .outer {
   position: relative;
-  /* height is set inline via prop (200vh for non-last, 100vh for last) */
 }
 
 /* ─── Sticky panel ──────────────────────────────────────────────────────── */
-/* This is the actual visible sheet. It sticks to the top of the viewport
-   while the outer spacer scrolls past.                                      */
+/* The visible "sheet of paper". Sticks to top: 0 and stays there while its
+   outer spacer scrolls off-screen — at which point the NEXT section's panel
+   slides up from below and covers it entirely.                              */
 .panel {
   position: sticky;
   top: 0;
   height: 100vh;
   width: 100%;
-  overflow: visible;   /* must be visible so torn edge can protrude above */
-  /* z-index is set inline — later sections are higher */
-  will-change: transform;   /* GPU layer hint — keeps 60fps */
+  /* Must be visible so .tearWrap can protrude above the top edge */
+  overflow: visible;
+  will-change: transform;
 }
 
-/* Content wrapper clips children to panel bounds */
+/* ─── Inner content ─────────────────────────────────────────────────────── */
+/* Sits inside the sticky panel, clipped to its bounds. Position relative
+   so children can use absolute positioning within the section.              */
 .content {
   position: relative;
   width: 100%;
@@ -27,27 +29,32 @@
   overflow: hidden;
 }
 
-/* ─── Torn paper edge wrapper ───────────────────────────────────────────── */
-/* Sits at the very top of the sticky panel. The SVG is drawn in the
-   *current* section's bg color — so as this panel slides over the one below,
-   the jagged SVG edge masks the straight edge of the panel, making it look
-   like torn paper.
-   Overflow visible on .panel is critical so this protrudes upward.          */
-.tornWrap {
+/* ─── Torn-paper edge wrapper ───────────────────────────────────────────── */
+/*
+  Sits at the TOP of the sticky panel.
+  Drawn in THIS section's OWN bg color.
+
+  How it works:
+  - This panel has a higher z-index than the previous section.
+  - As this panel slides up from below, the torn shape (same color as THIS
+    section) is the first thing visible — creating the torn-paper seam against
+    the previous section's color beneath.
+  - No translateY needed — the torn shape starts at y=0 and extends downward
+    ~100px into the panel. The displaced bottom edge IS the torn seam.
+  - The content sits behind this (lower z-index) so the tear covers it.
+*/
+.tearWrap {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 56px;       /* tear height — taller = more drama */
-  z-index: 20;        /* above section content */
+  height: 120px;
+  z-index: 5;
   pointer-events: none;
-  /* The SVG sits at the top, transform moves it UP so the rough peaks
-     overhang the top edge of this panel into the section above */
-  transform: translateY(-70%);
 }
 
-/* ─── Torn edge SVG ─────────────────────────────────────────────────────── */
-.tornSvg {
+/* ─── Torn-paper SVG ────────────────────────────────────────────────────── */
+.tearSvg {
   position: absolute;
   top: 0;
   left: 0;

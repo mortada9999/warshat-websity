@@ -5,30 +5,14 @@ import styles from './ScrollSection.module.css';
 
 interface ScrollSectionProps {
   children: React.ReactNode;
-  /** 0-based index — Hero is 0 */
   sectionIndex: number;
   totalSections: number;
   bgColor?: string;
   className?: string;
-  /** Whether to render a torn-paper top edge (skip on hero) */
   tornEdge?: boolean;
-  /** Color of the torn edge SVG (matches the section bg so it masks correctly) */
   tornColor?: string;
 }
 
-/**
- * Shanesayers-style collage stacking.
- *
- * Mechanic (pure CSS, no JS):
- * - Each section's *outer* wrapper is tall enough to create scroll distance.
- * - The *inner* sticky panel is `position: sticky; top: 0; height: 100vh`.
- * - Sections are stacked by z-index (later sections sit on top).
- * - As you scroll the *next* section's outer wrapper into view, its sticky
- *   panel slides up over the current one — exactly like a new sheet of paper
- *   being pushed from below.
- * - A torn-paper SVG clip sits at the very top of each non-hero section to
- *   give the rough collage edge.
- */
 export default function ScrollSection({
   children,
   sectionIndex,
@@ -39,37 +23,19 @@ export default function ScrollSection({
   tornColor,
 }: ScrollSectionProps) {
   const isLast = sectionIndex === totalSections - 1;
-  // Later sections need MORE z-index so they cover earlier ones
   const zIndex = sectionIndex + 1;
-
-  // Each non-last section needs its own scroll range to "hold" before the
-  // next one covers it. The last section just takes one viewport height.
   const outerHeight = isLast ? '100vh' : '200vh';
-
   const edgeColor = tornColor ?? bgColor;
 
   return (
-    <div
-      className={styles.outer}
-      style={{ height: outerHeight }}
-    >
+    <div className={styles.outer} style={{ height: outerHeight }}>
       <div
         className={`${styles.panel} ${className}`}
-        style={{
-          backgroundColor: bgColor,
-          zIndex,
-        }}
+        style={{ backgroundColor: bgColor, zIndex }}
       >
-        {/* Torn paper top edge — drawn in the section's own bg color so it
-            "tears" away the previous section's color underneath.
-            Lives outside .content so it can overflow above the panel. */}
-        {tornEdge && (
-          <div className={styles.tornWrap} aria-hidden="true">
-            <TornEdge color={edgeColor} seed={sectionIndex} />
-          </div>
+          {tornEdge && (
+          <PaperTear color={edgeColor} seed={sectionIndex} />
         )}
-
-        {/* Content clipped to panel bounds */}
         <div className={styles.content}>
           {children}
         </div>
@@ -78,39 +44,81 @@ export default function ScrollSection({
   );
 }
 
-/* ─── Torn paper edge SVG ──────────────────────────────────────────────────
-   Each section gets a unique tear shape based on its seed.
-   The SVG is full-width, ~40px tall, placed absolutely at the top.
-   It fills with the section's own bg color — so when section N slides over
-   section N-1, the tear "eats" into the previous section's color.
-────────────────────────────────────────────────────────────────────────── */
+/**
+ * Organic torn-paper edge using SVG feTurbulence + feDisplacementMap —
+ * the exact same technique as shanesayers.com.
+ *
+ * How it works:
+ * - A solid rectangle fills the section's own bg color.
+ * - feTurbulence generates fractal noise (unique per seed).
+ * - feDisplacementMap warps the rectangle's edge using that noise.
+ * - Result: a completely natural, non-repeating torn-paper silhouette.
+ * - The SVG is positioned at the TOP of the section panel so the torn
+ *   bottom edge of this shape sits over the previous section.
+ */
+/**
+ * Organic paper-tear SVG — matches shanesayers.com technique exactly.
+ *
+ * Architecture:
+ *   1. feTurbulence generates unique fractal noise per section (seed varies).
+ *   2. feDisplacementMap warps a solid rectangle using that noise.
+ *   3. The displaced rect bottom edge becomes the organic torn-paper seam.
+ *   4. A second un-filtered rect fills from below the torn zone to the SVG
+ *      bottom, ensuring no gaps.
+ *   5. Both rects are in THIS section's own bg color.
+ *
+ * Visual:
+ *   - SVG sits at top: 0 of the sticky panel, height = 120px.
+ *   - As this panel slides up from below, the torn bottom edge is the FIRST
+ *     thing visible — a ragged organic silhouette against the previous
+ *     section's color underneath.
+ */
+function PaperTear({ color, seed }: { color: string; seed: number }) {
+  const filterId = `tf-${seed}`;
+  const noiseSeed = 1000 + seed * 317;
 
-// Pre-computed tear paths — each is a polygon that traces a rough torn edge
-// across a 0–100 viewBox width, then closes at the bottom corners.
-const TEAR_PATHS: string[] = [
-  // Path 1 — gentle jagged
-  'M0,28 L3,18 L8,24 L14,12 L19,22 L25,8 L31,20 L37,14 L43,26 L49,10 L55,22 L61,16 L67,28 L73,12 L79,24 L85,10 L91,20 L97,16 L100,22 L100,40 L0,40 Z',
-  // Path 2 — deeper rip
-  'M0,22 L4,10 L9,20 L15,6 L20,18 L27,4 L33,16 L38,8 L44,20 L50,4 L56,18 L62,8 L68,22 L74,6 L80,18 L86,8 L92,20 L97,10 L100,18 L100,40 L0,40 Z',
-  // Path 3 — wide waves
-  'M0,30 L5,16 L11,26 L18,10 L24,22 L30,14 L36,28 L42,8 L48,24 L54,12 L60,26 L66,14 L72,30 L78,10 L84,22 L90,14 L96,26 L100,18 L100,40 L0,40 Z',
-  // Path 4 — subtle
-  'M0,24 L6,18 L12,26 L18,16 L24,24 L30,12 L36,22 L42,18 L48,28 L54,14 L60,24 L66,16 L72,26 L78,12 L84,22 L90,18 L96,28 L100,20 L100,40 L0,40 Z',
-  // Path 5 — aggressive
-  'M0,20 L4,8 L9,18 L14,4 L19,16 L25,6 L30,22 L35,4 L41,18 L47,8 L53,20 L59,6 L65,22 L70,4 L76,18 L82,8 L88,22 L94,6 L100,20 L100,40 L0,40 Z',
-];
-
-function TornEdge({ color, seed }: { color: string; seed: number }) {
-  const path = TEAR_PATHS[seed % TEAR_PATHS.length];
   return (
-    <svg
-      className={styles.tornSvg}
-      viewBox="0 0 100 40"
-      preserveAspectRatio="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path d={path} fill={color} />
-    </svg>
+    <div className={styles.tearWrap} aria-hidden="true">
+      <svg
+        className={styles.tearSvg}
+        viewBox="0 0 2429 144"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <filter id={filterId} x="-5%" y="-20%" width="110%" height="150%"
+            colorInterpolationFilters="sRGB">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.01 0.01"
+              numOctaves="3"
+              seed={noiseSeed}
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="28"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+
+        {/*
+          Exact same approach as shanesayers.com:
+          - A wide rect covers from y=0 to ~y=112 (the "paper" body).
+          - filter displaces it, creating the torn bottom edge.
+          - A solid rect from y=46 down fills any gaps.
+          Both use THIS section's background color.
+        */}
+        <path
+          d="M2437.62 112.088L2381.62 112.306C1606.78 115.31 854.364 122.328 463.232 125.977L445.164 126.146C59.7545 129.74 52.1082 129.745 44.5684 129.745H-11.4316V17.7451H44.5684C51.4158 17.7451 58.157 17.7498 444.119 14.1504L462.188 13.9814C853.316 10.3328 1606.01 3.3112 2381.18 0.305664L2437.18 0.0888672L2437.62 112.088Z"
+          fill={color}
+          filter={`url(#${filterId})`}
+        />
+        <rect x="-12" y="46" width="2450" height="100" fill={color} />
+      </svg>
+    </div>
   );
 }
