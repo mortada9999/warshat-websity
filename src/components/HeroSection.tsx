@@ -68,7 +68,7 @@ export default function HeroSection() {
                 fill="currentColor"
               />
             </svg>
-            <span>الزيونة، بغداد</span>
+            <span>زيونة، بغداد</span>
           </div>
         </motion.div>
       </div>
