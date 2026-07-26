@@ -1,0 +1,57 @@
+/* ─── Outer spacer ──────────────────────────────────────────────────────── */
+/* Creates the scroll distance that "holds" the section visible
+   before the next one slides over it.                                       */
+.outer {
+  position: relative;
+  /* height is set inline via prop (200vh for non-last, 100vh for last) */
+}
+
+/* ─── Sticky panel ──────────────────────────────────────────────────────── */
+/* This is the actual visible sheet. It sticks to the top of the viewport
+   while the outer spacer scrolls past.                                      */
+.panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: visible;   /* must be visible so torn edge can protrude above */
+  /* z-index is set inline — later sections are higher */
+  will-change: transform;   /* GPU layer hint — keeps 60fps */
+}
+
+/* Content wrapper clips children to panel bounds */
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Torn paper edge wrapper ───────────────────────────────────────────── */
+/* Sits at the very top of the sticky panel. The SVG is drawn in the
+   *current* section's bg color — so as this panel slides over the one below,
+   the jagged SVG edge masks the straight edge of the panel, making it look
+   like torn paper.
+   Overflow visible on .panel is critical so this protrudes upward.          */
+.tornWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;       /* tear height — taller = more drama */
+  z-index: 20;        /* above section content */
+  pointer-events: none;
+  /* The SVG sits at the top, transform moves it UP so the rough peaks
+     overhang the top edge of this panel into the section above */
+  transform: translateY(-70%);
+}
+
+/* ─── Torn edge SVG ─────────────────────────────────────────────────────── */
+.tornSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
