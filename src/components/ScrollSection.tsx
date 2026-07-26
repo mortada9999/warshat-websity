@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import styles from './ScrollSection.module.css';
 
 interface ScrollSectionProps {
   children: React.ReactNode;
@@ -9,80 +9,116 @@ interface ScrollSectionProps {
   totalSections: number;
   bgColor?: string;
   className?: string;
+  tornEdge?: boolean;
+  tornColor?: string;
 }
 
-/**
- * A full-viewport section that participates in the "peel-away" scroll effect.
- *
- * How it works:
- * - Each section is `position: sticky; top: 0` so it sticks to the viewport.
- * - Lower z-index sections sit *behind* higher ones.
- * - As the user scrolls through a section's scroll range, the section
- *   fades out, scales down slightly, and translates upward — "peeling away"
- *   to reveal the next section underneath.
- * - The last section never peels away (it's the final resting place).
- */
 export default function ScrollSection({
   children,
   sectionIndex,
   totalSections,
-  bgColor = 'var(--clr-bg)',
+  bgColor = 'var(--bg)',
   className = '',
+  tornEdge = false,
+  tornColor,
 }: ScrollSectionProps) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-
-  // Each section owns a scroll range proportional to its index
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    // "start start" = when top of section hits top of viewport
-    // "end start"   = when bottom of section hits top of viewport
-    offset: ['start start', 'end start'],
-  });
-
   const isLast = sectionIndex === totalSections - 1;
-
-  // Exit animations — only non-last sections peel away
-  const opacity = useTransform(
-    scrollYProgress,
-    [0, 0.7, 1],
-    isLast ? [1, 1, 1] : [1, 1, 0]
-  );
-  const scale = useTransform(
-    scrollYProgress,
-    [0, 0.7, 1],
-    isLast ? [1, 1, 1] : [1, 1, 0.92]
-  );
-  const y = useTransform(
-    scrollYProgress,
-    [0, 0.7, 1],
-    isLast ? [0, 0, 0] : [0, 0, -60]
-  );
+  const zIndex = sectionIndex + 1;
+  const outerHeight = isLast ? '100vh' : '200vh';
+  const edgeColor = tornColor ?? bgColor;
 
   return (
-    <div
-      ref={sectionRef}
-      style={{
-        // Each section needs enough scroll height for the effect
-        height: isLast ? '100vh' : '200vh',
-      }}
-    >
-      <motion.div
-        style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
-          width: '100%',
-          zIndex: totalSections - sectionIndex,
-          backgroundColor: bgColor,
-          overflow: 'hidden',
-          opacity,
-          scale,
-          y,
-        }}
-        className={className}
+    <div className={styles.outer} style={{ height: outerHeight }}>
+      <div
+        className={`${styles.panel} ${className}`}
+        style={{ backgroundColor: bgColor, zIndex }}
       >
-        {children}
-      </motion.div>
+          {tornEdge && (
+          <PaperTear color={edgeColor} seed={sectionIndex} />
+        )}
+        <div className={styles.content}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Organic torn-paper edge using SVG feTurbulence + feDisplacementMap —
+ * the exact same technique as shanesayers.com.
+ *
+ * How it works:
+ * - A solid rectangle fills the section's own bg color.
+ * - feTurbulence generates fractal noise (unique per seed).
+ * - feDisplacementMap warps the rectangle's edge using that noise.
+ * - Result: a completely natural, non-repeating torn-paper silhouette.
+ * - The SVG is positioned at the TOP of the section panel so the torn
+ *   bottom edge of this shape sits over the previous section.
+ */
+/**
+ * Organic paper-tear SVG — matches shanesayers.com technique exactly.
+ *
+ * Architecture:
+ *   1. feTurbulence generates unique fractal noise per section (seed varies).
+ *   2. feDisplacementMap warps a solid rectangle using that noise.
+ *   3. The displaced rect bottom edge becomes the organic torn-paper seam.
+ *   4. A second un-filtered rect fills from below the torn zone to the SVG
+ *      bottom, ensuring no gaps.
+ *   5. Both rects are in THIS section's own bg color.
+ *
+ * Visual:
+ *   - SVG sits at top: 0 of the sticky panel, height = 120px.
+ *   - As this panel slides up from below, the torn bottom edge is the FIRST
+ *     thing visible — a ragged organic silhouette against the previous
+ *     section's color underneath.
+ */
+function PaperTear({ color, seed }: { color: string; seed: number }) {
+  const filterId = `tf-${seed}`;
+  const noiseSeed = 1000 + seed * 317;
+
+  return (
+    <div className={styles.tearWrap} aria-hidden="true">
+      <svg
+        className={styles.tearSvg}
+        viewBox="0 0 2429 144"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <filter id={filterId} x="-5%" y="-20%" width="110%" height="150%"
+            colorInterpolationFilters="sRGB">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.01 0.01"
+              numOctaves="3"
+              seed={noiseSeed}
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="28"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+
+        {/*
+          Exact same approach as shanesayers.com:
+          - A wide rect covers from y=0 to ~y=112 (the "paper" body).
+          - filter displaces it, creating the torn bottom edge.
+          - A solid rect from y=46 down fills any gaps.
+          Both use THIS section's background color.
+        */}
+        <path
+          d="M2437.62 112.088L2381.62 112.306C1606.78 115.31 854.364 122.328 463.232 125.977L445.164 126.146C59.7545 129.74 52.1082 129.745 44.5684 129.745H-11.4316V17.7451H44.5684C51.4158 17.7451 58.157 17.7498 444.119 14.1504L462.188 13.9814C853.316 10.3328 1606.01 3.3112 2381.18 0.305664L2437.18 0.0888672L2437.62 112.088Z"
+          fill={color}
+          filter={`url(#${filterId})`}
+        />
+        <rect x="-12" y="46" width="2450" height="100" fill={color} />
+      </svg>
     </div>
   );
 }

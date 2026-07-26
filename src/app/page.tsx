@@ -11,62 +11,41 @@ import FooterSection from '@/components/FooterSection';
 
 const TOTAL_SECTIONS = 6;
 
+// Section background colors — each section's tornColor matches its own bg
+// so the torn edge "tears away" the previous section's color beneath it.
+const SECTIONS = [
+  { bg: '#F6F6F4',  torn: false, color: '#F6F6F4'  },   // 0 Hero
+  { bg: '#F0EBD8',  torn: true,  color: '#F0EBD8'  },   // 1 Recreational
+  { bg: '#2C3319',  torn: true,  color: '#2C3319'  },   // 2 Training
+  { bg: '#F6F0E2',  torn: true,  color: '#F6F0E2'  },   // 3 Courses Banner
+  { bg: '#FFF5EB',  torn: true,  color: '#FFF5EB'  },   // 4 Kids Banner
+  { bg: '#121212',  torn: true,  color: '#121212'  },   // 5 Footer
+];
+
+const SECTION_CONTENT = [
+  <HeroSection key="hero" />,
+  <RecreationalSection key="recreational" />,
+  <TrainingSection key="training" />,
+  <CoursesBannerSection key="courses" />,
+  <KidsBannerSection key="kids" />,
+  <FooterSection key="footer" />,
+];
+
 export default function HomePage() {
   return (
     <>
-      {/* ── 1: Hero ── */}
-      <ScrollSection
-        sectionIndex={0}
-        totalSections={TOTAL_SECTIONS}
-        bgColor="var(--bg)"
-      >
-        <HeroSection />
-      </ScrollSection>
-
-      {/* ── 2: Recreational Activities ── */}
-      <ScrollSection
-        sectionIndex={1}
-        totalSections={TOTAL_SECTIONS}
-        bgColor="#F0EBD8"
-      >
-        <RecreationalSection />
-      </ScrollSection>
-
-      {/* ── 3: Training Workshops ── */}
-      <ScrollSection
-        sectionIndex={2}
-        totalSections={TOTAL_SECTIONS}
-        bgColor="#2C3319"
-      >
-        <TrainingSection />
-      </ScrollSection>
-
-      {/* ── 4: Courses Banner ── */}
-      <ScrollSection
-        sectionIndex={3}
-        totalSections={TOTAL_SECTIONS}
-        bgColor="#F6F0E2"
-      >
-        <CoursesBannerSection />
-      </ScrollSection>
-
-      {/* ── 5: Kids Workshops Banner ── */}
-      <ScrollSection
-        sectionIndex={4}
-        totalSections={TOTAL_SECTIONS}
-        bgColor="#FFF5EB"
-      >
-        <KidsBannerSection />
-      </ScrollSection>
-
-      {/* ── 6: Dark Footer ── */}
-      <ScrollSection
-        sectionIndex={5}
-        totalSections={TOTAL_SECTIONS}
-        bgColor="#121212"
-      >
-        <FooterSection />
-      </ScrollSection>
+      {SECTIONS.map((s, i) => (
+        <ScrollSection
+          key={i}
+          sectionIndex={i}
+          totalSections={TOTAL_SECTIONS}
+          bgColor={s.bg}
+          tornEdge={s.torn}
+          tornColor={s.color}
+        >
+          {SECTION_CONTENT[i]}
+        </ScrollSection>
+      ))}
     </>
   );
 }
