@@ -1,0 +1,64 @@
+/* ─── Outer spacer ──────────────────────────────────────────────────────── */
+/* Creates the scroll distance that "holds" the section visible while the
+   next section's sticky panel slides up over it.                            */
+.outer {
+  position: relative;
+}
+
+/* ─── Sticky panel ──────────────────────────────────────────────────────── */
+/* The visible "sheet of paper". Sticks to top: 0 and stays there while its
+   outer spacer scrolls off-screen — at which point the NEXT section's panel
+   slides up from below and covers it entirely.                              */
+.panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  /* Must be visible so .tearWrap can protrude above the top edge */
+  overflow: visible;
+  will-change: transform;
+}
+
+/* ─── Inner content ─────────────────────────────────────────────────────── */
+/* Sits inside the sticky panel, clipped to its bounds. Position relative
+   so children can use absolute positioning within the section.              */
+.content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Torn-paper edge wrapper ───────────────────────────────────────────── */
+/*
+  Sits at the TOP of the sticky panel.
+  Drawn in THIS section's OWN bg color.
+
+  How it works:
+  - This panel has a higher z-index than the previous section.
+  - As this panel slides up from below, the torn shape (same color as THIS
+    section) is the first thing visible — creating the torn-paper seam against
+    the previous section's color beneath.
+  - No translateY needed — the torn shape starts at y=0 and extends downward
+    ~100px into the panel. The displaced bottom edge IS the torn seam.
+  - The content sits behind this (lower z-index) so the tear covers it.
+*/
+.tearWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* ─── Torn-paper SVG ────────────────────────────────────────────────────── */
+.tearSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
