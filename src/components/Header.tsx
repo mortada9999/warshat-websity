@@ -45,16 +45,17 @@ export default function Header() {
             <span className={styles.bar} />
           </button>
 
-          {/* Logo — inline-start (right in RTL) */}
-          <Link href="/" className={styles.logo} aria-label="ورشة فن — الرئيسية">
-            <Image
-              src="/logo.png"
-              alt="ورشة فن"
-              width={44}
-              height={44}
-              className={styles.logoImg}
-              priority
-            />
+          {/* Nav links — center / inline (Figma style) */}
+          <nav className={styles.navLinks} aria-label="التنقل السريع">
+            <a href="#activities" className={styles.navLink}>{t('النشاطات', 'Activities')}</a>
+            <a href="#trainings" className={styles.navLink}>{t('التدريب', 'Training')}</a>
+            <a href="#courses" className={styles.navLink}>{t('الكورسات', 'Courses')}</a>
+            <a href="#kids" className={styles.navLink}>{t('الأطفال', 'Kids')}</a>
+          </nav>
+
+          {/* Loyalty button on the left (inline-end in RTL) */}
+          <Link href="/loyalty" className={styles.loyaltyBtn} aria-label="ورشة فن">
+            {t('بطاقة الولاء', 'Loyalty')}
           </Link>
         </div>
       </header>
