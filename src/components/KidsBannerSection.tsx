@@ -5,95 +5,66 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import styles from './KidsBannerSection.module.css';
 
-const PROGRAMS = [
-  { id: 1, title: 'اشتراك أسبوعي', sessions: 'جلستان في الأسبوع', ageGroup: '٥–١٢ سنة' },
-  { id: 2, title: 'ورش نهاية الأسبوع', sessions: 'السبت والأحد', ageGroup: '٤–١٤ سنة' },
-  { id: 3, title: 'اشتراك شهري', sessions: '٨ جلسات شهرياً', ageGroup: '٥–١٢ سنة' },
-];
-
 export default function KidsBannerSection() {
   return (
     <section id="kids" className={styles.section} aria-label="ورش الأطفال">
+      {/* Decorative playful elements */}
+      <div className={styles.decoStar} aria-hidden="true" />
+      <div className={styles.decoCircle} aria-hidden="true" />
 
-      {/* Left: Content */}
-      <div className={styles.contentCol}>
+      <div className={styles.inner}>
+        {/* Heading */}
+        <div className={styles.headingWrap}>
+          <h2 className={styles.heading}>ورش و اشتراكات الأطفال</h2>
+          <div className={styles.headingLine} aria-hidden="true" />
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className={styles.textBlock}
-        >
-          <p className={styles.eyebrow}>برامج الأطفال</p>
-          <h2 className={styles.title}>ورش وأشتراكات الأطفال</h2>
-          <p className={styles.subtitle}>
-            برامج إبداعية مصممة خصيصاً للأطفال — نبني ثقتهم ونطوّر موهبتهم عبر الفن.
-          </p>
-        </motion.div>
+        {/* Content area: cloud image + text */}
+        <div className={styles.contentGrid}>
+          {/* Cloud image with kid photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className={styles.cloudWrap}
+          >
+            <Image
+              src="/images/figma/kids-cloud.png"
+              alt="ورش فنية للأطفال"
+              width={908}
+              height={684}
+              className={styles.cloudImage}
+            />
 
-        <motion.ul
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-40px' }}
-          variants={{
-            hidden: {},
-            show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
-          }}
-          className={styles.programList}
-          role="list"
-        >
-          {PROGRAMS.map((p) => (
-            <motion.li
-              key={p.id}
-              variants={{
-                hidden: { opacity: 0, x: -16 },
-                show: { opacity: 1, x: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              className={styles.programItem}
-            >
-              <div className={styles.programInfo}>
-                <span className={styles.programTitle}>{p.title}</span>
-                <span className={styles.programMeta}>{p.sessions}</span>
-              </div>
-              <span className={styles.ageTag}>{p.ageGroup}</span>
-            </motion.li>
-          ))}
-        </motion.ul>
+            {/* Text overlay on cloud */}
+            <div className={styles.cloudOverlay}>
+              <h3 className={styles.cloudTitle}>عالم من الإبداع للصغار</h3>
+              <p className={styles.cloudDesc}>
+                نقدم ورش عمل فنية ممتعة ومحفزة لخيال الأطفال، حيث يكتشفون مواهبهم
+                في بيئة مليئة بالألوان والمرح.
+              </p>
+              <button className={styles.bookBtn}>Book Now</button>
+            </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className={styles.ctaRow}
-        >
-          <button className="btn btn-accent" type="button">
-            استعرض البرامج
-          </button>
-        </motion.div>
-
+            {/* Circular kid photo */}
+            <div className={styles.kidPhotoCircle}>
+              <Image
+                src="/images/figma/image1.png"
+                alt="طفل يرسم"
+                width={214}
+                height={214}
+                className={styles.kidPhoto}
+              />
+            </div>
+          </motion.div>
+        </div>
       </div>
 
-      {/* Right: Image */}
-      <motion.div
-        initial={{ opacity: 0, x: 30 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true, margin: '-80px' }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-        className={styles.imageCol}
-        aria-hidden="true"
-      >
-        <Image
-          src="/images/banner-kids.png"
-          alt="ورش فنية للأطفال"
-          fill
-          className={styles.image}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          loading="lazy"
-        />
-      </motion.div>
-
+      {/* Bottom decorative icon (cruelty_free) */}
+      <div className={styles.bottomIcon} aria-hidden="true">
+        <span className={styles.materialIcon}>🕊️</span>
+      </div>
     </section>
   );
 }

@@ -2,110 +2,52 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import styles from './RecreationalSection.module.css';
 
 const ACTIVITIES = [
-  {
-    id: 1,
-    title: 'تلوين الفخار',
-    description: 'اختر قطعة فخارية وزيّنها بلمستك الخاصة بألوان الأكريليك.',
-    price: '١٥,٠٠٠ د.ع',
-    image: '/images/activity-pottery.png',
-  },
-  {
-    id: 2,
-    title: 'الرسم على الحقائب',
-    description: 'حقيبة قماشية جاهزة تحوّلها إلى لوحة فنية تعبّر عنك.',
-    price: '١٢,٠٠٠ د.ع',
-    image: '/images/activity-totebag.png',
-  },
-  {
-    id: 3,
-    title: 'تلوين اللوحات',
-    description: 'كانفاس بأحجام مختلفة مع ألوان أكريليك لتفريغ طاقتك الإبداعية.',
-    price: '١٠,٠٠٠ د.ع',
-    image: '/images/activity-canvas.png',
-  },
-  {
-    id: 4,
-    title: 'صناعة الأساور',
-    description: 'تشكيلة واسعة من الخرز والأحجار لصنع أساور ومقتنيات مميزة.',
-    price: '٨,٠٠٠ د.ع',
-    image: '/images/activity-bracelet.png',
-  },
+  { title: 'الرسم على الأكواب الفخارية', price: '10,000', image: '/images/figma/pottery.png' },
+  { title: 'الرسم على الحقائب القماشية', price: '15,000', image: '/images/figma/tote-bag.png' },
+  { title: 'الرسم على المرايا',         price: '15,000', image: '/images/figma/mirror.png' },
+  { title: 'صناعة الاكسسوارات',         price: '15,000', image: '/images/figma/pottery.png' },
+  { title: 'الرسم على القطع الخشبية',   price: '10,000', image: '/images/figma/tote-bag.png' },
+  { title: 'الرسم على اللوحات',         price: '15,000', image: '/images/figma/mirror.png' },
+  { title: 'الرسم على الزجاج',          price: '20,000', image: '/images/figma/pottery.png' },
+  { title: 'الرسم و الزراعة',           price: '15,000', image: '/images/figma/tote-bag.png' },
 ];
-
-const inView = {
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-};
 
 export default function RecreationalSection() {
   return (
-    <section id="activities" className={styles.section} aria-label="النشاطات الترفيهية">
+    <section id="entertainment" className={styles.section} aria-label="النشاطات الترفيهية">
       <div className={styles.inner}>
+        {/* Section header */}
+        <div className={styles.sectionHeader}>
+          <div className={styles.headingWrap}>
+            <h2 className={styles.heading}>النشاطات الترفيهية المفتوحة</h2>
+            <div className={styles.headingLine} aria-hidden="true" />
+          </div>
+          <a href="#" className={styles.viewAll}>View All</a>
+        </div>
 
-        {/* ── Header ── */}
-        <motion.div
-          {...inView}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className={styles.header}
-        >
-          <p className={styles.eyebrow}>بدون حجز مسبق</p>
-          <h2 className={styles.title}>النشاطات الترفيهية</h2>
-          <p className={styles.subtitle}>
-            نشاطات فنية حرة يومياً — تعال بوقتك وصمم قطعتك الفنية بلمستك الخاصة.
-          </p>
-        </motion.div>
-
-        {/* ── Cards Grid ── */}
+        {/* Activities grid */}
         <div className={styles.grid}>
           {ACTIVITIES.map((act, i) => (
-            <motion.article
-              key={act.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={styles.card}
-            >
-              <div className={styles.imageWrap}>
+            <div key={i} className={styles.card}>
+              <div className={styles.cardImageWrap}>
                 <Image
                   src={act.image}
                   alt={act.title}
                   fill
-                  className={styles.image}
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  loading="lazy"
+                  className={styles.cardImage}
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
-              <div className={styles.cardBody}>
+              <div className={styles.cardContent}>
                 <h3 className={styles.cardTitle}>{act.title}</h3>
-                <p className={styles.cardDesc}>{act.description}</p>
-                <div className={styles.cardFooter}>
-                  <span className={styles.price}>{act.price}</span>
-                  <span className={styles.tag}>متاح الآن</span>
-                </div>
+                <span className={styles.cardPrice}>{act.price}</span>
               </div>
-            </motion.article>
+            </div>
           ))}
         </div>
-
-        {/* ── CTA ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className={styles.cta}
-        >
-          <a href="#trainings" className="btn btn-ghost">
-            تصفّح الورش التدريبية
-          </a>
-        </motion.div>
-
       </div>
     </section>
   );
