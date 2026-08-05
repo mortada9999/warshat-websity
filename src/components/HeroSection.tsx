@@ -139,16 +139,16 @@ export default function HeroSection() {
           <a href="#about" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-2 hover:rotate-2 duration-300">
             {/* Realistic Scotch Tape */}
             <div 
-              className="hero-btn-tape absolute -top-4 left-1/2 -translate-x-1/2 w-[70px] h-[24px] rotate-[10deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
+              className="hero-btn-tape absolute -top-5 left-1/2 -translate-x-1/2 w-[90px] h-[30px] rotate-[10deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
               style={{
                 backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
               }}
             />
             
             {/* The paper card */}
-            <div className="hero-btn-paper flex flex-col items-center justify-center px-8 md:px-12 py-5 -rotate-3 bg-[#F8F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <span className="font-amiri text-[#374A00] text-2xl md:text-3xl leading-[130%]">من نحن</span>
-              <span className="font-ibm-plex text-[#45483A] text-[10px] md:text-xs leading-[150%] mt-1 tracking-wider uppercase">About Us</span>
+            <div className="hero-btn-paper flex flex-col items-center justify-center px-12 md:px-16 py-6 md:py-8 -rotate-3 bg-[#F8F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
+              <span className="font-amiri text-[#374A00] text-3xl md:text-5xl leading-[130%]">من نحن</span>
+              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-2 tracking-widest uppercase">About Us</span>
             </div>
           </a>
 
@@ -156,16 +156,16 @@ export default function HeroSection() {
           <a href="#cafe" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-2 hover:-rotate-2 duration-300">
             {/* Realistic Scotch Tape */}
             <div 
-              className="hero-btn-tape absolute -top-4 left-1/2 -translate-x-1/2 w-[65px] h-[24px] -rotate-[8deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
+              className="hero-btn-tape absolute -top-5 left-1/2 -translate-x-1/2 w-[85px] h-[30px] -rotate-[8deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
               style={{
                 backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
               }}
             />
             
             {/* The paper card */}
-            <div className="hero-btn-paper flex flex-col items-center justify-center px-8 md:px-12 py-5 rotate-2 bg-[#F4F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <span className="font-amiri text-[#374A00] text-2xl md:text-3xl leading-[130%]">قهوة فن</span>
-              <span className="font-ibm-plex text-[#45483A] text-[10px] md:text-xs leading-[150%] mt-1 tracking-wider uppercase">Art Caffe</span>
+            <div className="hero-btn-paper flex flex-col items-center justify-center px-12 md:px-16 py-6 md:py-8 rotate-2 bg-[#F4F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
+              <span className="font-amiri text-[#374A00] text-3xl md:text-5xl leading-[130%]">قهوة فن</span>
+              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-2 tracking-widest uppercase">Art Caffe</span>
             </div>
           </a>
 
