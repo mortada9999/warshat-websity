@@ -51,6 +51,42 @@ export default function HeroSection() {
         scrub: 1,
       },
     });
+
+    // 3. Buttons Peeling Animation (like TapedWorkshopCard)
+    const btns = gsap.utils.toArray('.hero-btn-container') as HTMLElement[];
+    btns.forEach((btn, index) => {
+      const tape = btn.querySelector('.hero-btn-tape');
+      const paper = btn.querySelector('.hero-btn-paper');
+      
+      if (!tape || !paper) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: btn,
+          start: 'top 50%', // Start peeling when they reach middle of screen
+          end: 'top 10%',
+          scrub: 1,
+        }
+      });
+
+      // Paper falls DOWN
+      tl.to(paper, {
+        y: 250,
+        rotate: index % 2 === 0 ? 15 : -15,
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.in'
+      }, 0);
+
+      // Tape flies UP
+      tl.to(tape, {
+        y: -150,
+        rotate: index % 2 === 0 ? -45 : 45,
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.in'
+      }, 0);
+    });
   }, { scope: sectionRef });
 
   return (
@@ -97,27 +133,27 @@ export default function HeroSection() {
         </div>
 
         {/* Navigation Options */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12 mt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-12 mt-4 z-30">
           
           {/* About Us Button */}
-          <a href="#about" className="group relative flex flex-col items-center transition-transform hover:-translate-y-1 hover:rotate-1 duration-300">
+          <a href="#about" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-1 hover:rotate-1 duration-300">
             {/* The tape */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-[48px] h-[16px] rotate-[12deg] bg-[#FFDF9D]/60 mix-blend-multiply z-20 backdrop-blur-sm" />
+            <div className="hero-btn-tape absolute -top-3 left-1/2 -translate-x-1/2 w-[48px] h-[16px] rotate-[12deg] bg-[#FFDF9D]/60 mix-blend-multiply z-20 backdrop-blur-sm" />
             
             {/* The paper card */}
-            <div className="flex flex-col items-center justify-center px-8 md:px-10 py-4 -rotate-3 bg-white border border-[#C5C8B6]/20 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] group-hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-shadow duration-300">
+            <div className="hero-btn-paper flex flex-col items-center justify-center px-8 md:px-10 py-4 -rotate-3 bg-white border border-[#C5C8B6]/20 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] group-hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-shadow duration-300">
               <span className="font-amiri text-[#374A00] text-2xl md:text-3xl leading-[130%]">من نحن</span>
               <span className="font-ibm-plex text-[#45483A] text-[10px] md:text-xs leading-[150%] mt-1">About Us</span>
             </div>
           </a>
 
           {/* Art Caffe Button */}
-          <a href="#cafe" className="group relative flex flex-col items-center transition-transform hover:-translate-y-1 hover:-rotate-1 duration-300">
+          <a href="#cafe" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-1 hover:-rotate-1 duration-300">
             {/* The tape */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-[48px] h-[16px] -rotate-[8deg] bg-[#C5D475]/60 mix-blend-multiply z-20 backdrop-blur-sm" />
+            <div className="hero-btn-tape absolute -top-3 left-1/2 -translate-x-1/2 w-[48px] h-[16px] -rotate-[8deg] bg-[#C5D475]/60 mix-blend-multiply z-20 backdrop-blur-sm" />
             
             {/* The paper card */}
-            <div className="flex flex-col items-center justify-center px-8 md:px-10 py-4 rotate-2 bg-white border border-[#C5C8B6]/20 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] group-hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-shadow duration-300">
+            <div className="hero-btn-paper flex flex-col items-center justify-center px-8 md:px-10 py-4 rotate-2 bg-white border border-[#C5C8B6]/20 shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1),0_2px_4px_-2px_rgba(0,0,0,0.1)] group-hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1)] transition-shadow duration-300">
               <span className="font-amiri text-[#374A00] text-2xl md:text-3xl leading-[130%]">قهوة فن</span>
               <span className="font-ibm-plex text-[#45483A] text-[10px] md:text-xs leading-[150%] mt-1">Art Caffe</span>
             </div>
