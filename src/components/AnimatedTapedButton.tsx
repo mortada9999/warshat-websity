@@ -23,11 +23,10 @@ export default function AnimatedTapedButton({
   ...props
 }: AnimatedTapedButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const tapeRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useGSAP(() => {
-    if (!containerRef.current || !tapeRef.current || !buttonRef.current) return;
+    if (!containerRef.current || !buttonRef.current) return;
 
     // Create a timeline mapped to the scroll progress (scrub: true)
     const tl = gsap.timeline({
@@ -39,19 +38,7 @@ export default function AnimatedTapedButton({
       }
     });
 
-    // 1. The Tape Peeling off Animation
-    tl.to(tapeRef.current, {
-      y: -50,          // Flies upwards
-      x: 30,           // Moves slightly right
-      rotate: 35,      // Peels off at an angle
-      skewX: 15,       // Distorts to simulate peeling
-      opacity: 0,      // Fades out
-      duration: 1,
-      ease: 'power1.inOut'
-    }, 0);
-
-    // 2. The Button Flying Up freely Animation
-    // Starts shortly after tape starts peeling (at 0.2s relative timeline time)
+    // The Button Flying Up freely Animation
     tl.to(buttonRef.current, {
       y: -15,          // Flies up slightly
       rotate: -1,      // Very slight tilt
@@ -63,13 +50,6 @@ export default function AnimatedTapedButton({
 
   return (
     <div ref={containerRef} className={`${styles.container} ${className}`}>
-      {/* Tape Element - absolute positioned */}
-      <div
-        ref={tapeRef}
-        className={`${styles.tape} ${styles[tapeStyle]}`}
-        aria-hidden="true"
-      />
-      
       {/* Actual Clickable Button */}
       <button
         ref={buttonRef}

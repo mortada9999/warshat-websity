@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import AnimatedTapedButton from './AnimatedTapedButton';
 
 const ACTIVITIES = [
   { title: 'الرسم على الأكواب الفخارية', price: '10,000', image: '/images/figma/pottery.png' },
@@ -65,11 +66,12 @@ export default function RecreationalSection() {
                 <div className="absolute inset-0 bg-[#A25F00]/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               </div>
               
-              {/* Clean Price Button (No Tape) */}
-              <div className="mt-[-20px] z-10">
-                <button className="px-6 py-2 md:px-8 md:py-3 bg-[#374A00] text-white rounded-md font-ibm-plex font-semibold text-sm md:text-base shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:bg-[#2a3800] hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] transition-all duration-300">
-                  {act.price} IQD
-                </button>
+              {/* The GSAP Animated Button (formerly with tape) */}
+              <div className="mt-[-40px] z-10 scale-[0.8] md:scale-100 origin-top">
+                <AnimatedTapedButton 
+                  text={`${act.price} IQD`} 
+                  tapeStyle={i % 3 === 0 ? 'tape1' : i % 2 === 0 ? 'tape2' : 'tape3'}
+                />
               </div>
 
             </div>
