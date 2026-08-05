@@ -68,24 +68,22 @@ export default function HeroSection() {
         }
       });
 
-      // Paper flies away (realistic 3D wind effect)
+      // Paper falls gracefully in place (not thrown away)
       tl.to(paper, {
-        y: 300 + (index * 100),
-        x: index === 0 ? -200 : 200, // Fly outwards
-        rotate: index === 0 ? -60 : 75,
-        rotateX: 65, // Flips in 3D
-        rotateY: index === 0 ? 45 : -45,
-        scale: 0.6,
+        y: 250 + (index * 50), // Falls straight down
+        x: 0, // Stays in place horizontally
+        rotate: index === 0 ? 10 : -10, // Very gentle tilt
+        scale: 0.9, // Slight push back
         opacity: 0,
         duration: 1,
         ease: 'power2.in'
       }, 0);
 
-      // Tape flies UP and away
+      // Tape flies UP elegantly
       tl.to(tape, {
-        y: -200 - (index * 50),
-        x: index === 0 ? -100 : 100,
-        rotate: index === 0 ? -80 : 80,
+        y: -150 - (index * 30),
+        x: 0,
+        rotate: index === 0 ? -25 : 25,
         opacity: 0,
         duration: 1,
         ease: 'power2.in'
