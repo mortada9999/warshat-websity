@@ -61,25 +61,31 @@ export default function HeroSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: btn,
-          start: 'top 50%', // Start peeling when they reach middle of screen
-          end: 'top 10%',
-          scrub: 1,
+          // Break synchronicity: second button triggers earlier/later
+          start: `top ${50 + index * 15}%`, 
+          end: `top ${10 - index * 10}%`,
+          scrub: 1.5,
         }
       });
 
-      // Paper falls DOWN
+      // Paper flies away (realistic 3D wind effect)
       tl.to(paper, {
-        y: 250,
-        rotate: index % 2 === 0 ? 15 : -15,
+        y: 300 + (index * 100),
+        x: index === 0 ? -200 : 200, // Fly outwards
+        rotate: index === 0 ? -60 : 75,
+        rotateX: 65, // Flips in 3D
+        rotateY: index === 0 ? 45 : -45,
+        scale: 0.6,
         opacity: 0,
         duration: 1,
         ease: 'power2.in'
       }, 0);
 
-      // Tape flies UP
+      // Tape flies UP and away
       tl.to(tape, {
-        y: -150,
-        rotate: index % 2 === 0 ? -45 : 45,
+        y: -200 - (index * 50),
+        x: index === 0 ? -100 : 100,
+        rotate: index === 0 ? -80 : 80,
         opacity: 0,
         duration: 1,
         ease: 'power2.in'
