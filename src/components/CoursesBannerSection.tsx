@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import styles from './CoursesBannerSection.module.css';
 
@@ -8,127 +8,142 @@ import styles from './CoursesBannerSection.module.css';
 const COURSES = [
   {
     id: 1,
-    titleAr: 'كورس تعليم الرسم',
+    index: '٠١',
+    titleAr: 'الرسم بالزيت',
+    titleEn: 'oil painting',
+    blurb: 'من أول طبقة لون حتى اللوحة المكتملة، على قماش حقيقي بأدوات احترافية.',
     sessions: '٨ جلسات',
-    image: '/images/activity-canvas.png',
-    rotate: '-3deg',
-    paletteColor: '#a25f00',
+    level: 'من الصفر',
+    price: '١٢٥٠٠٠',
+    image: '/images/workshop-oilpaint.png',
   },
   {
     id: 2,
-    titleAr: 'تقنيات الفخار المتقدمة',
+    index: '٠٢',
+    titleAr: 'الفخار على الدولاب',
+    titleEn: 'wheel throwing',
+    blurb: 'تعلّم مركزة الطين، سحب الجدران، والتشكيل النهائي والتزجيج.',
     sessions: '١٢ جلسة',
-    image: '/images/activity-pottery.png',
-    rotate: '2deg',
-    paletteColor: '#597257',
+    level: 'متوسط',
+    price: '١٨٠٠٠٠',
+    image: '/images/workshop-clay.png',
   },
   {
     id: 3,
-    titleAr: 'كورس الحياكة والخياطة',
+    index: '٠٣',
+    titleAr: 'التطريز اليدوي',
+    titleEn: 'hand embroidery',
+    blurb: 'قطبة بقطبة — نبني معك مفردات التطريز وننهي عملاً مؤطراً.',
     sessions: '٦ جلسات',
-    image: '/images/activity-totebag.png',
-    rotate: '-1.5deg',
-    paletteColor: '#374a00',
+    level: 'من الصفر',
+    price: '٩٠٠٠٠',
+    image: '/images/workshop-embroidery.png',
+  },
+  {
+    id: 4,
+    index: '٠٤',
+    titleAr: 'الأكريليك على كانفاس',
+    titleEn: 'acrylic on canvas',
+    blurb: 'ألوان سريعة الجفاف، طبقات جسورة، وأسلوب شخصي تبنيه بنفسك.',
+    sessions: '٦ جلسات',
+    level: 'من الصفر',
+    price: '٩٥٠٠٠',
+    image: '/images/activity-canvas.png',
   },
 ];
 
 /* ─── Component ─────────────────────────────────────────────────────────── */
 export default function CoursesBannerSection() {
+  const [active, setActive] = useState(0);
+  const current = COURSES[active];
+
   return (
     <section id="courses" aria-label="الكورسات" className={styles.section}>
-
-      {/* ── Canvas paper texture layer ── */}
-      <div className={styles.canvasTexture} aria-hidden="true" />
-
-      {/* ── Paint smear bg blobs ── */}
-      <div className={styles.blob1} aria-hidden="true" />
-      <div className={styles.blob2} aria-hidden="true" />
-      <div className={styles.blob3} aria-hidden="true" />
-
-      {/* ── Brush strokes decoration ── */}
-      <img
-        src="/textures/brush-strokes.png"
-        alt=""
-        aria-hidden="true"
-        className={styles.brushDeco}
-      />
-
-      {/* ── Content ── */}
       <div className={styles.inner} dir="rtl">
 
-        {/* ── Heading ── */}
-        <header className={styles.headingArea}>
-          {/* Handwritten-style title on torn paper label */}
-          <div className={styles.titleLabel}>
+        {/* ── Header ── */}
+        <header className={styles.header}>
+          <div className={styles.headText}>
+            <span className={styles.eyebrow}>برنامج مكثّف · دفعات محدودة</span>
             <h2 className={styles.heading}>الكورسات</h2>
-            {/* Hand-drawn underline */}
-            <svg viewBox="0 0 220 14" fill="none" aria-hidden="true" className={styles.underlineSvg}>
-              <path
-                d="M6 10 C50 2, 110 14, 160 7 S200 4, 215 9"
-                stroke="#a25f00"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-                fill="none"
-              />
-            </svg>
           </div>
-          <p className={styles.subHeading}>دورات متخصصة تغطي مختلف المهارات الفنية</p>
+          <p className={styles.lede}>
+            مسارات طويلة تبدأ من الأساسيات وتنتهي بعمل تحمله معك.
+            كل كورس بمجموعة صغيرة ومدرّب واحد يلازمك حتى النهاية.
+          </p>
         </header>
 
-        {/* ── Easel cards row ── */}
-        <div className={styles.easelRow}>
-          {COURSES.map((course) => (
-            <article
-              key={course.id}
-              className={styles.easel}
-              style={{ '--rotate': course.rotate, '--palette': course.paletteColor } as React.CSSProperties}
-            >
-              {/* ── Canvas frame ── */}
-              <div className={styles.canvasFrame}>
-                {/* Inner canvas — the painting surface */}
-                <div className={styles.canvas}>
+        {/* ── Gallery: index (right) + exhibit (left) ── */}
+        <div className={styles.gallery}>
+
+          {/* ── Course index ── */}
+          <ol className={styles.index}>
+            {COURSES.map((course, i) => {
+              const isActive = i === active;
+              return (
+                <li key={course.id} className={styles.indexItem}>
+                  <button
+                    type="button"
+                    className={`${styles.row} ${isActive ? styles.rowActive : ''}`}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    onClick={() => setActive(i)}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
+                    <span className={styles.rowNum}>{course.index}</span>
+
+                    <span className={styles.rowMain}>
+                      <span className={styles.rowTitle}>{course.titleAr}</span>
+                      <span className={styles.rowMeta}>
+                        {course.sessions}
+                        <span className={styles.dot} aria-hidden="true" />
+                        {course.level}
+                      </span>
+                    </span>
+
+                    <span className={styles.rowPrice}>
+                      {course.price}
+                      <span className={styles.currency}>د.ع</span>
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+
+          {/* ── Exhibit panel ── */}
+          <div className={styles.exhibit}>
+            <div className={styles.frame}>
+              {COURSES.map((course, i) => (
+                <div
+                  key={course.id}
+                  className={`${styles.plate} ${i === active ? styles.plateActive : ''}`}
+                  aria-hidden={i !== active}
+                >
                   <Image
                     src={course.image}
                     alt={course.titleAr}
                     fill
-                    className={styles.canvasImg}
-                    sizes="(max-width: 768px) 80vw, 30vw"
+                    className={styles.plateImg}
+                    sizes="(max-width: 1024px) 92vw, 42vw"
                   />
-                  {/* Color smear overlay at bottom */}
-                  <div className={styles.canvasOverlay} />
                 </div>
-                {/* Frame border — thick painted wood look */}
-                <div className={styles.frameBorder} />
-              </div>
+              ))}
+            </div>
 
-              {/* ── Easel legs ── */}
-              <div className={styles.easelLegs} aria-hidden="true">
-                <div className={styles.legLeft} />
-                <div className={styles.legRight} />
-                <div className={styles.legCross} />
-              </div>
-
-              {/* ── Info card below canvas ── */}
-              <div className={styles.infoCard}>
-                {/* Color palette dot */}
-                <span className={styles.paletteDot} style={{ background: course.paletteColor }} />
-                <h3 className={styles.cardTitle}>{course.titleAr}</h3>
-                <p className={styles.cardSessions}>{course.sessions}</p>
-                <a href="#book" className={styles.bookBtn}>احجز الآن</a>
-              </div>
-            </article>
-          ))}
+            {/* Caption + CTA for the active course */}
+            <div className={styles.caption} key={current.id}>
+              <span className={styles.captionEn}>{current.titleEn}</span>
+              <p className={styles.captionBlurb}>{current.blurb}</p>
+              <a href="#book" className={styles.bookBtn}>
+                احجز مقعدك
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                  <path d="M12 7H1M7 1L1 7l6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
-
-        {/* ── Footer CTA ── */}
-        <footer className={styles.footerCta}>
-          <a href="#" className={styles.allCoursesLink}>
-            عرض جميع الكورسات
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-              <path d="M7 1L13 7L7 13M12 7H1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </a>
-        </footer>
 
       </div>
     </section>

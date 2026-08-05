@@ -1,355 +1,319 @@
-/* ═══════════════════════════════════════════════════════════
-   CoursesBannerSection — Canvas Studio / Easel aesthetic
-   The entire section IS the canvas: raw linen texture, paint
-   blobs, brush smears, three easel-mounted paintings.
-   ═══════════════════════════════════════════════════════════ */
+/* ─── Courses — gallery index ──────────────────────────────────────────────
+   One large swapping exhibit image (the signature element) paired with a
+   quiet numbered course index. Warm canvas palette, no decorative filler.
+--------------------------------------------------------------------------- */
 
-/* ── Section shell ──────────────────────────────────────────── */
 .section {
-  position: relative;
   width: 100%;
-  min-height: 100vh;
-  background-color: #f5f0e4;   /* warm raw-linen base */
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 100%;
+  position: relative;
+  background: var(--fg-bg-main);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-/* ── Canvas paper texture (repeating linen weave) ───────────── */
-.canvasTexture {
-  position: absolute;
-  inset: 0;
-  background-image: url('/textures/canvas-paper.png');
-  background-repeat: repeat;
-  background-size: 340px 340px;
-  mix-blend-mode: multiply;
-  opacity: 0.22;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Background paint blobs ─────────────────────────────────── */
-.blob1, .blob2, .blob3 {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(90px);
-  pointer-events: none;
-  z-index: 0;
-}
-.blob1 {
-  width: 520px; height: 420px;
-  background: rgba(162, 95, 0, 0.13);   /* amber */
-  top: -80px; left: -100px;
-}
-.blob2 {
-  width: 440px; height: 440px;
-  background: rgba(89, 114, 87, 0.14);  /* sage green */
-  bottom: -60px; right: -80px;
-}
-.blob3 {
-  width: 360px; height: 280px;
-  background: rgba(55, 74, 0, 0.10);    /* olive */
-  top: 40%; left: 40%;
-  transform: translate(-50%, -50%);
-}
-
-/* ── Brush strokes decoration ───────────────────────────────── */
-.brushDeco {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  mix-blend-mode: multiply;
-  opacity: 0.06;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Inner content container ────────────────────────────────── */
 .inner {
-  position: relative;
-  z-index: 1;
-  width: 100%;
   max-width: 1280px;
-  padding: 80px 48px 100px;
+  margin: 0 auto;
+  padding: 96px 48px 88px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 64px;
 }
 
-/* ── Heading area ───────────────────────────────────────────── */
-.headingArea {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: end;
+  gap: 48px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--fg-border);
 }
 
-/* Torn-paper title label */
-.titleLabel {
-  position: relative;
-  background: #fffef8;
-  padding: 12px 40px 16px;
-  /* rough torn edges via clip-path */
-  clip-path: polygon(
-    0% 6%, 3% 0%, 7% 5%, 12% 1%, 17% 5%, 22% 0%, 28% 5%, 34% 0%, 40% 5%,
-    46% 0%, 52% 5%, 58% 0%, 64% 5%, 70% 0%, 76% 5%, 82% 0%, 87% 5%, 93% 0%, 97% 5%, 100% 2%,
-    100% 94%, 97% 100%, 91% 95%, 85% 100%, 79% 95%, 73% 100%, 67% 95%, 61% 100%,
-    55% 95%, 49% 100%, 43% 95%, 37% 100%, 31% 95%, 25% 100%, 19% 95%, 13% 100%, 7% 95%, 1% 100%, 0% 93%
-  );
-  box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
-  transform: rotate(-0.8deg);
+.headText {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--fg-orange);
 }
 
 .heading {
   font-family: var(--font-heading);
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
   font-weight: 700;
-  color: var(--fg-olive-dark);
-  text-align: center;
   line-height: 1;
-}
-
-.underlineSvg {
-  display: block;
-  width: 180px;
-  margin: 6px auto 0;
-}
-
-.subHeading {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--fg-text);
-  opacity: 0.7;
-  text-align: center;
-}
-
-/* ── Easel row ──────────────────────────────────────────────── */
-.easelRow {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: clamp(32px, 5vw, 80px);
-  width: 100%;
-  flex-wrap: wrap;
-}
-
-/* ── Single easel ───────────────────────────────────────────── */
-.easel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: clamp(200px, 24vw, 280px);
-  transform: rotate(var(--rotate, 0deg));
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
-              filter 0.3s ease;
-  cursor: pointer;
-  filter: drop-shadow(0 16px 32px rgba(0,0,0,0.22));
-}
-
-.easel:hover {
-  transform: rotate(0deg) translateY(-12px) scale(1.03);
-  filter: drop-shadow(0 28px 48px rgba(0,0,0,0.32));
-}
-
-/* ── Canvas frame (the painting) ────────────────────────────── */
-.canvasFrame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-}
-
-/* Thick wooden frame border */
-.frameBorder {
-  position: absolute;
-  inset: 0;
-  border: 14px solid #8B5E3C;
-  background: transparent;
-  z-index: 2;
-  pointer-events: none;
-  /* Inner shadow for depth */
-  box-shadow:
-    inset 0 0 0 3px rgba(255,255,255,0.15),
-    inset 0 0 0 5px rgba(0,0,0,0.25),
-    0 4px 12px rgba(0,0,0,0.3);
-}
-
-/* Wood grain texture on frame */
-.frameBorder::before {
-  content: '';
-  position: absolute;
-  inset: -14px;
-  background-image:
-    repeating-linear-gradient(
-      92deg,
-      rgba(255,255,255,0.04) 0px,
-      rgba(255,255,255,0.04) 1px,
-      transparent 1px,
-      transparent 4px
-    );
-  pointer-events: none;
-}
-
-/* The actual canvas painting area */
-.canvas {
-  position: absolute;
-  inset: 14px;  /* sits inside the frame border */
-  overflow: hidden;
-  background: #f0e8d8;  /* raw canvas fallback */
-}
-
-.canvasImg {
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.easel:hover .canvasImg {
-  transform: scale(1.06);
-}
-
-/* Bottom color smear overlay — paint drip aesthetic */
-.canvasOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 35%;
-  background: linear-gradient(
-    to top,
-    rgba(var(--palette-rgb, 55, 74, 0), 0.55),
-    transparent
-  );
-  /* Use CSS custom property for color */
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--palette, #374a00) 55%, transparent),
-    transparent
-  );
-}
-
-/* ── Easel wooden legs ──────────────────────────────────────── */
-.easelLegs {
-  position: relative;
-  width: 90%;
-  height: 56px;
-  margin-top: -2px;
-}
-
-.legLeft, .legRight {
-  position: absolute;
-  bottom: 0;
-  width: 10px;
-  background: linear-gradient(180deg, #8B5E3C 0%, #6B4427 100%);
-  border-radius: 0 0 4px 4px;
-  box-shadow: 1px 2px 6px rgba(0,0,0,0.25);
-}
-.legLeft  { left: 12%;  height: 54px; transform: rotate(-6deg); transform-origin: top center; }
-.legRight { right: 12%; height: 54px; transform: rotate(6deg);  transform-origin: top center; }
-
-/* Cross-bar connecting the legs */
-.legCross {
-  position: absolute;
-  left: 20%;
-  right: 20%;
-  top: 50%;
-  height: 8px;
-  background: linear-gradient(180deg, #8B5E3C 0%, #5a3a1e 100%);
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* ── Info card below easel ──────────────────────────────────── */
-.infoCard {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 16px 20px;
-  background: #fffef8;
-  width: 90%;
-  /* rough bottom edge */
-  clip-path: polygon(
-    0% 0%, 100% 0%,
-    100% 90%, 97% 100%, 92% 93%, 87% 100%, 82% 93%, 77% 100%, 72% 93%,
-    67% 100%, 62% 93%, 57% 100%, 52% 93%, 47% 100%, 42% 93%, 37% 100%,
-    32% 93%, 27% 100%, 22% 93%, 17% 100%, 12% 93%, 7% 100%, 2% 93%, 0% 100%
-  );
-  padding-bottom: 28px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-}
-
-.paletteDot {
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  display: block;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-}
-
-.cardTitle {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
   color: var(--fg-olive-dark);
-  text-align: center;
-  line-height: 1.3;
 }
 
-.cardSessions {
+.lede {
+  font-size: 16px;
+  line-height: 1.85;
+  color: var(--fg-text);
+  max-width: 46ch;
+  justify-self: end;
+  text-align: start;
+  text-wrap: pretty;
+}
+
+/* ─── Gallery grid ───────────────────────────────────────────────────────── */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  gap: 72px;
+  align-items: start;
+}
+
+/* ─── Index list (right in RTL) ──────────────────────────────────────────── */
+.index {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--fg-border);
+}
+
+.indexItem {
+  border-bottom: 1px solid var(--fg-border);
+}
+
+.row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3.25rem 1fr auto;
+  align-items: center;
+  gap: 24px;
+  padding: 26px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: start;
+  transition: padding 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 0.35s ease;
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--fg-orange);
+  outline-offset: 3px;
+}
+
+.rowActive {
+  padding-inline-start: 22px;
+  background: linear-gradient(
+    to left,
+    rgba(162, 95, 0, 0.06),
+    rgba(162, 95, 0, 0)
+  );
+}
+
+.rowNum {
   font-family: var(--font-body);
-  font-size: 0.8rem;
-  color: var(--fg-orange);
+  font-size: 13px;
   font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--fg-border);
+  transition: color 0.3s ease;
+}
+
+.rowActive .rowNum { color: var(--fg-orange); }
+
+.rowMain {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.rowTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--fg-olive-mid);
+  transition: color 0.3s ease;
+}
+
+.rowActive .rowTitle { color: var(--fg-olive-dark); }
+
+.rowMeta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--fg-text);
+  opacity: 0.75;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+.rowPrice {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg-olive-dark);
+  white-space: nowrap;
+}
+
+.currency {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.6;
+}
+
+/* ─── Exhibit panel (left in RTL) ────────────────────────────────────────── */
+.exhibit {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--fg-white);
+  padding: 14px;
+  border: 1px solid var(--fg-border);
+  box-shadow: 0 24px 60px -24px rgba(55, 74, 0, 0.28);
+  overflow: hidden;
+}
+
+.plate {
+  position: absolute;
+  inset: 14px;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.7s ease, transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.plateActive {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.plateImg { object-fit: cover; }
+
+/* ─── Caption ────────────────────────────────────────────────────────────── */
+.caption {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding-inline-start: 16px;
+  border-inline-start: 2px solid var(--fg-orange);
+  animation: captionIn 0.5s ease both;
+}
+
+@keyframes captionIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.captionEn {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--fg-orange);
+}
+
+.captionBlurb {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--fg-text);
+  text-wrap: pretty;
 }
 
 .bookBtn {
-  display: inline-block;
-  margin-top: 4px;
-  padding: 7px 24px;
-  background: var(--fg-olive-dark);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 4px;
-  transition: background 0.2s, transform 0.2s;
-}
-.bookBtn:hover {
-  background: #2a3800;
-  transform: translateY(-1px);
-}
-
-/* ── Footer CTA ─────────────────────────────────────────────── */
-.footerCta {
-  display: flex;
-  justify-content: center;
-}
-
-.allCoursesLink {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  margin-top: 4px;
+  padding: 11px 26px;
+  background: var(--fg-olive-dark);
+  color: var(--fg-white);
+  border-radius: 9999px;
   font-family: var(--font-body);
-  font-size: 0.9rem;
+  font-size: 13px;
   font-weight: 600;
-  color: var(--fg-orange);
-  border-bottom: 1px dashed var(--fg-orange);
-  padding-bottom: 2px;
-  transition: opacity 0.2s;
+  transition: background 0.25s ease, transform 0.25s ease;
 }
-.allCoursesLink:hover { opacity: 0.75; }
 
-/* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 900px) {
-  .inner { padding: 60px 24px 80px; gap: 48px; }
-  .easelRow { gap: 24px; }
+.bookBtn:hover {
+  background: #2a3800;
+  transform: translateY(-2px);
+}
+
+.bookBtn svg { transition: transform 0.25s ease; }
+.bookBtn:hover svg { transform: translateX(-3px); }
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .inner { padding: 72px 32px 64px; gap: 48px; }
+
+  .header {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 20px;
+  }
+
+  .lede { justify-self: start; max-width: none; }
+
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  /* Exhibit first on narrow screens */
+  .exhibit {
+    position: static;
+    order: -1;
+  }
+
+  .frame { aspect-ratio: 4 / 3; }
 }
 
 @media (max-width: 640px) {
-  .inner { padding: 48px 16px 72px; }
-  .easelRow { flex-direction: column; align-items: center; }
-  .easel { width: min(260px, 80vw); transform: none !important; }
-  .easel:hover { transform: translateY(-8px) scale(1.02) !important; }
+  .inner { padding: 56px 20px 48px; }
+
+  .row {
+    grid-template-columns: 2.5rem 1fr;
+    gap: 16px;
+    padding: 20px 6px;
+    row-gap: 10px;
+  }
+
+  .rowPrice {
+    grid-column: 2;
+    font-size: 14px;
+  }
+
+  .rowActive { padding-inline-start: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plate,
+  .row,
+  .bookBtn,
+  .bookBtn svg { transition: none; }
+  .caption { animation: none; }
 }
