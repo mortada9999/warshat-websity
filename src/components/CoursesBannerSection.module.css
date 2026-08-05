@@ -1,205 +1,355 @@
-/* Courses Section — fills 100vh sticky panel, scrolls internally */
+/* ═══════════════════════════════════════════════════════════
+   CoursesBannerSection — Canvas Studio / Easel aesthetic
+   The entire section IS the canvas: raw linen texture, paint
+   blobs, brush smears, three easel-mounted paintings.
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Section shell ──────────────────────────────────────────── */
 .section {
-  width: 100%;
-  height: 100%;
-  background: var(--fg-bg-main);
   position: relative;
-  overflow-y: auto;
-  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f0e4;   /* warm raw-linen base */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Background image layer */
-.bgImage {
+/* ── Canvas paper texture (repeating linen weave) ───────────── */
+.canvasTexture {
   position: absolute;
   inset: 0;
-  background: var(--fg-bg-main);
+  background-image: url('/textures/canvas-paper.png');
+  background-repeat: repeat;
+  background-size: 340px 340px;
+  mix-blend-mode: multiply;
+  opacity: 0.22;
+  pointer-events: none;
   z-index: 0;
 }
 
-/* Glassmorphism overlay (Figma: #ffffff 80%, blur, border #c5c8b6, r:12) */
-.overlay {
+/* ── Background paint blobs ─────────────────────────────────── */
+.blob1, .blob2, .blob3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+.blob1 {
+  width: 520px; height: 420px;
+  background: rgba(162, 95, 0, 0.13);   /* amber */
+  top: -80px; left: -100px;
+}
+.blob2 {
+  width: 440px; height: 440px;
+  background: rgba(89, 114, 87, 0.14);  /* sage green */
+  bottom: -60px; right: -80px;
+}
+.blob3 {
+  width: 360px; height: 280px;
+  background: rgba(55, 74, 0, 0.10);    /* olive */
+  top: 40%; left: 40%;
+  transform: translate(-50%, -50%);
+}
+
+/* ── Brush strokes decoration ───────────────────────────────── */
+.brushDeco {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Inner content container ────────────────────────────────── */
+.inner {
   position: relative;
   z-index: 1;
-  max-width: 1184px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.80);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--fg-border);
-  border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
-}
-
-.inner {
-  padding: 80px 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 56px;
-}
-
-/* Heading (Figma: Amiri/64px w:700 #374a00) */
-.headingWrap {
+  width: 100%;
+  max-width: 1280px;
+  padding: 80px 48px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 64px;
+}
+
+/* ── Heading area ───────────────────────────────────────────── */
+.headingArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Torn-paper title label */
+.titleLabel {
+  position: relative;
+  background: #fffef8;
+  padding: 12px 40px 16px;
+  /* rough torn edges via clip-path */
+  clip-path: polygon(
+    0% 6%, 3% 0%, 7% 5%, 12% 1%, 17% 5%, 22% 0%, 28% 5%, 34% 0%, 40% 5%,
+    46% 0%, 52% 5%, 58% 0%, 64% 5%, 70% 0%, 76% 5%, 82% 0%, 87% 5%, 93% 0%, 97% 5%, 100% 2%,
+    100% 94%, 97% 100%, 91% 95%, 85% 100%, 79% 95%, 73% 100%, 67% 95%, 61% 100%,
+    55% 95%, 49% 100%, 43% 95%, 37% 100%, 31% 95%, 25% 100%, 19% 95%, 13% 100%, 7% 95%, 1% 100%, 0% 93%
+  );
+  box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 2px 6px rgba(0,0,0,0.12);
+  transform: rotate(-0.8deg);
 }
 
 .heading {
   font-family: var(--font-heading);
-  font-size: 64px;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
   font-weight: 700;
   color: var(--fg-olive-dark);
   text-align: center;
+  line-height: 1;
 }
 
-.headingLine {
-  height: 2px;
-  width: 233px;
-  max-width: 100%;
-  background: linear-gradient(90deg, transparent, var(--fg-olive-dark), transparent);
+.underlineSvg {
+  display: block;
+  width: 180px;
+  margin: 6px auto 0;
 }
 
-/* Courses list */
-.coursesList {
+.subHeading {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--fg-text);
+  opacity: 0.7;
+  text-align: center;
+}
+
+/* ── Easel row ──────────────────────────────────────────────── */
+.easelRow {
   display: flex;
-  flex-direction: column;
-  gap: 48px;
-}
-
-/* Course card (Figma: ~903x434, bg #ffffff, border #c5c8b6) */
-.courseCard {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: var(--fg-white);
-  border: 1px solid var(--fg-border);
-  overflow: hidden;
-  min-height: 400px;
-}
-
-.courseCard:nth-child(even) {
-  direction: ltr;
-}
-
-.courseCard:nth-child(even) .courseContent {
-  direction: rtl;
-}
-
-/* Course image */
-.courseImageWrap {
-  position: relative;
-  overflow: hidden;
-}
-
-.courseImagePlaceholder {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  background: linear-gradient(135deg, #f0f0e8, #e8e8d8);
-}
-
-/* Course content */
-.courseContent {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  gap: 16px;
-  padding: 48px;
+  align-items: flex-end;
+  gap: clamp(32px, 5vw, 80px);
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-.courseTitleAr {
+/* ── Single easel ───────────────────────────────────────────── */
+.easel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(200px, 24vw, 280px);
+  transform: rotate(var(--rotate, 0deg));
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              filter 0.3s ease;
+  cursor: pointer;
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,0.22));
+}
+
+.easel:hover {
+  transform: rotate(0deg) translateY(-12px) scale(1.03);
+  filter: drop-shadow(0 28px 48px rgba(0,0,0,0.32));
+}
+
+/* ── Canvas frame (the painting) ────────────────────────────── */
+.canvasFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+}
+
+/* Thick wooden frame border */
+.frameBorder {
+  position: absolute;
+  inset: 0;
+  border: 14px solid #8B5E3C;
+  background: transparent;
+  z-index: 2;
+  pointer-events: none;
+  /* Inner shadow for depth */
+  box-shadow:
+    inset 0 0 0 3px rgba(255,255,255,0.15),
+    inset 0 0 0 5px rgba(0,0,0,0.25),
+    0 4px 12px rgba(0,0,0,0.3);
+}
+
+/* Wood grain texture on frame */
+.frameBorder::before {
+  content: '';
+  position: absolute;
+  inset: -14px;
+  background-image:
+    repeating-linear-gradient(
+      92deg,
+      rgba(255,255,255,0.04) 0px,
+      rgba(255,255,255,0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  pointer-events: none;
+}
+
+/* The actual canvas painting area */
+.canvas {
+  position: absolute;
+  inset: 14px;  /* sits inside the frame border */
+  overflow: hidden;
+  background: #f0e8d8;  /* raw canvas fallback */
+}
+
+.canvasImg {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.easel:hover .canvasImg {
+  transform: scale(1.06);
+}
+
+/* Bottom color smear overlay — paint drip aesthetic */
+.canvasOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  background: linear-gradient(
+    to top,
+    rgba(var(--palette-rgb, 55, 74, 0), 0.55),
+    transparent
+  );
+  /* Use CSS custom property for color */
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--palette, #374a00) 55%, transparent),
+    transparent
+  );
+}
+
+/* ── Easel wooden legs ──────────────────────────────────────── */
+.easelLegs {
+  position: relative;
+  width: 90%;
+  height: 56px;
+  margin-top: -2px;
+}
+
+.legLeft, .legRight {
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  background: linear-gradient(180deg, #8B5E3C 0%, #6B4427 100%);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 1px 2px 6px rgba(0,0,0,0.25);
+}
+.legLeft  { left: 12%;  height: 54px; transform: rotate(-6deg); transform-origin: top center; }
+.legRight { right: 12%; height: 54px; transform: rotate(6deg);  transform-origin: top center; }
+
+/* Cross-bar connecting the legs */
+.legCross {
+  position: absolute;
+  left: 20%;
+  right: 20%;
+  top: 50%;
+  height: 8px;
+  background: linear-gradient(180deg, #8B5E3C 0%, #5a3a1e 100%);
+  border-radius: 2px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ── Info card below easel ──────────────────────────────────── */
+.infoCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 20px;
+  background: #fffef8;
+  width: 90%;
+  /* rough bottom edge */
+  clip-path: polygon(
+    0% 0%, 100% 0%,
+    100% 90%, 97% 100%, 92% 93%, 87% 100%, 82% 93%, 77% 100%, 72% 93%,
+    67% 100%, 62% 93%, 57% 100%, 52% 93%, 47% 100%, 42% 93%, 37% 100%,
+    32% 93%, 27% 100%, 22% 93%, 17% 100%, 12% 93%, 7% 100%, 2% 93%, 0% 100%
+  );
+  padding-bottom: 28px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.paletteDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.cardTitle {
   font-family: var(--font-heading);
-  font-size: 44px;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--fg-olive-mid);
+  color: var(--fg-olive-dark);
+  text-align: center;
   line-height: 1.3;
 }
 
-.courseTitleEn {
+.cardSessions {
   font-family: var(--font-body);
-  font-size: 18px;
-  font-weight: 400;
-  color: var(--fg-text);
-}
-
-.courseSessions {
-  font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 0.8rem;
   color: var(--fg-orange);
+  font-weight: 600;
 }
 
 .bookBtn {
-  align-self: flex-start;
-  padding: 10px 28px;
+  display: inline-block;
+  margin-top: 4px;
+  padding: 7px 24px;
   background: var(--fg-olive-dark);
   color: #fff;
-  border: none;
-  border-radius: 6px;
   font-family: var(--font-body);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 8px;
+  border-radius: 4px;
+  transition: background 0.2s, transform 0.2s;
 }
-
 .bookBtn:hover {
   background: #2a3800;
   transform: translateY(-1px);
 }
 
-/* ─── Mobile ──────────────────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .overlay {
-    margin: 0 24px;
-  }
-
-  .courseCard {
-    grid-template-columns: 1fr;
-  }
-
-  .courseCard:nth-child(even) {
-    direction: rtl;
-  }
-
-  .heading {
-    font-size: 48px;
-  }
-
-  .courseTitleAr {
-    font-size: 32px;
-  }
+/* ── Footer CTA ─────────────────────────────────────────────── */
+.footerCta {
+  display: flex;
+  justify-content: center;
 }
 
-@media (max-width: 768px) {
-  .section {
-    min-height: auto;
-  }
+.allCoursesLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--fg-orange);
+  border-bottom: 1px dashed var(--fg-orange);
+  padding-bottom: 2px;
+  transition: opacity 0.2s;
+}
+.allCoursesLink:hover { opacity: 0.75; }
 
-  .overlay {
-    margin: 0 16px;
-    border-radius: 8px;
-  }
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .inner { padding: 60px 24px 80px; gap: 48px; }
+  .easelRow { gap: 24px; }
+}
 
-  .inner {
-    padding: 40px 20px;
-    gap: 32px;
-  }
-
-  .heading {
-    font-size: 36px;
-  }
-
-  .courseContent {
-    padding: 24px;
-  }
-
-  .courseTitleAr {
-    font-size: 28px;
-  }
-
-  .courseImagePlaceholder {
-    min-height: 200px;
-  }
+@media (max-width: 640px) {
+  .inner { padding: 48px 16px 72px; }
+  .easelRow { flex-direction: column; align-items: center; }
+  .easel { width: min(260px, 80vw); transform: none !important; }
+  .easel:hover { transform: translateY(-8px) scale(1.02) !important; }
 }
