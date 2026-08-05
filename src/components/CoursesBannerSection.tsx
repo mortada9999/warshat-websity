@@ -51,9 +51,8 @@ export default function CoursesBannerSection() {
         {/* Courses List - Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16 w-full z-10 place-items-center">
           {COURSES.map((course, index) => (
-            
-            {/* The Parent Container (Static for the Pin) */}
             <div key={course.id} className={`relative flex flex-col items-center w-full max-w-[320px] ${index === 0 ? '-rotate-2' : index === 1 ? 'rotate-1' : '-rotate-1'}`}>
+              {/* The Parent Container (Static for the Pin) */}
               
               {/* The Static Pin */}
               <img src="/images/pin.png" alt="pin" className="absolute -top-4 left-1/2 -translate-x-1/2 w-10 h-10 z-30 drop-shadow-md pointer-events-none" />
