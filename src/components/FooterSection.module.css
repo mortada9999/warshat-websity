@@ -1,9 +1,13 @@
-/* Footer (Figma: 1280x324, bg #e9e9de, border #c5c8b6) */
+/* Footer — fills 100vh sticky panel */
 .footer {
   width: 100%;
+  height: 100%;
   background: var(--fg-bg-footer);
   border-top: 1px solid var(--fg-border);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .topWave {

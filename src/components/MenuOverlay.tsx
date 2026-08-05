@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import type { Lang } from '@/lib/types';
 import styles from './MenuOverlay.module.css';
 
@@ -28,7 +28,7 @@ const SOCIALS = [
   { name: 'Be', icon: '🎨', href: '#' },
 ];
 
-const panelVariants = {
+const panelVariants: Variants = {
   hidden: { x: '100%' },
   visible: {
     x: 0,
@@ -40,14 +40,14 @@ const panelVariants = {
   },
 };
 
-const listVariants = {
+const listVariants: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.08, delayChildren: 0.2 },
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, x: 50 },
   visible: {
     opacity: 1,

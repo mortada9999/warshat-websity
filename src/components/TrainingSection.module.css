@@ -1,9 +1,11 @@
-/* Training Workshops Section (Figma: 1280x2073, bg #f0ebd8, drop-shadow) */
+/* Training Workshops Section — fills 100vh sticky panel, scrolls internally */
 .section {
   width: 100%;
+  height: 100%;
   background: var(--fg-bg-training);
   position: relative;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .topWave {
@@ -66,7 +68,6 @@
   min-height: 500px;
   border: 1px solid var(--fg-border);
   position: relative;
-  overflow: hidden;
 }
 
 .cardAlt {
@@ -112,15 +113,11 @@
 /* Decorative tape (Figma: 97x27, bg #e3e3d8@0.80, blur) */
 .tape {
   position: absolute;
-  top: 28px;
+  top: -14px;
   left: 50%;
-  transform: translateX(-50%) rotate(-3deg);
+  margin-left: -48.5px;
   width: 97px;
   height: 27px;
-  background: rgba(227, 227, 216, 0.80);
-  backdrop-filter: blur(4px);
-  border: 1px solid var(--fg-border);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* Content side */

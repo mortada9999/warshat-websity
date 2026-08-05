@@ -56,7 +56,7 @@ export default function WorkshopEditorModal({ workshop, defaultCategory, onClose
       });
 
       if (!res.ok) {
-        const data = await res.json();
+        const data: any = await res.json();
         throw new Error(data.error || 'Failed to save');
       }
 

@@ -1,14 +1,13 @@
-/* Hero Section (Figma: 1280x887, bg matches main) */
+/* Hero Section — fills 100vh sticky panel */
 .section {
   width: 100%;
-  min-height: 887px;
+  height: 100%;
   background: var(--fg-bg-main);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding-top: 80px; /* account for fixed header */
 }
 
 .inner {
@@ -21,7 +20,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 48px;
-  min-height: calc(887px - 80px);
+  height: 100%;
 }
 
 /* Decorative shapes (Figma: Abstract Collage 256x256, Background+Blur 288x288) */
@@ -110,13 +109,7 @@
 
 /* ─── Mobile ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
-  .section {
-    min-height: auto;
-    padding-top: 80px;
-  }
-
   .inner {
-    min-height: auto;
     padding: 2rem 16px;
   }
 

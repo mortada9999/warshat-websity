@@ -1,24 +1,70 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
 import HeroSection from '@/components/HeroSection';
 import RecreationalSection from '@/components/RecreationalSection';
 import TrainingSection from '@/components/TrainingSection';
 import CoursesBannerSection from '@/components/CoursesBannerSection';
 import KidsBannerSection from '@/components/KidsBannerSection';
 import FooterSection from '@/components/FooterSection';
+import TornEdge from '@/components/TornEdge';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
+const SECTIONS = [
+  { Component: HeroSection,         bg: '#F6F0E2', torn: false },
+  { Component: RecreationalSection, bg: '#E8F3E8', torn: true  },
+  { Component: TrainingSection,     bg: '#F6F0E2', torn: true  },
+  { Component: CoursesBannerSection,bg: '#FBFAEF', torn: true  },
+  { Component: KidsBannerSection,   bg: '#F6F0E2', torn: true  },
+];
 
 export default function HomePage() {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useGSAP(() => {
+    // Select all sections that should stack
+    const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
+    
+    sections.forEach((section, index) => {
+      // We don't pin the last section because there's nothing to slide over it (except the fixed footer, which works differently)
+      if (index === sections.length - 1) return;
+
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'bottom bottom', // Changed from 'top top' to ensure tall sections can be fully read before pinning
+        pin: true,
+        pinSpacing: false, // The magic property that makes the next section slide over!
+      });
+    });
+  }, { scope: containerRef });
+
   return (
-    <main>
-      {/* Figma order (top to bottom by Y coordinates): */}
-      {/* Hero → Entertainment → Training → Courses → Kids → Footer */}
-      <HeroSection />
-      <RecreationalSection />
-      <TrainingSection />
-      <CoursesBannerSection />
-      <KidsBannerSection />
+    <>
+      <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        {SECTIONS.map(({ Component, bg, torn }, i) => (
+          <div
+            key={i}
+            className="stackable-section relative w-full min-h-screen pb-[20vh]"
+            style={{ 
+              backgroundColor: bg,
+              zIndex: (i + 1) * 10,
+              // Add a subtle shadow to the top of sticky layers (except the first one) to emphasize the stacking depth
+              boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none'
+            }}
+          >
+            {torn && <TornEdge color={bg} seed={i} />}
+            <Component />
+          </div>
+        ))}
+      </main>
       <FooterSection />
-    </main>
+    </>
   );
 }

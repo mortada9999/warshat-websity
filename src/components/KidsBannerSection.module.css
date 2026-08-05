@@ -1,11 +1,10 @@
-/* Kids Section (Figma: 1280x1049, bg #fce4ec pink, drop-shadow) */
+/* Kids Section — fills 100vh sticky panel */
 .section {
   width: 100%;
-  min-height: 1049px;
+  height: 100%;
   background: var(--fg-bg-kids);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
 }
 
 .inner {

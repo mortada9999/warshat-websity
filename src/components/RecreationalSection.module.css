@@ -1,19 +1,20 @@
-/* Entertainment Section (Figma: 1280x1050) */
+/* Entertainment Section — fills 100vh sticky panel, scrolls internally */
 .section {
   width: 100%;
-  min-height: 1050px;
+  height: 100%;
   background: var(--fg-bg-main);
   position: relative;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .inner {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 80px 48px;
+  padding: 48px 48px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 32px;
 }
 
 /* Section header */
@@ -31,7 +32,7 @@
 
 .heading {
   font-family: var(--font-heading);
-  font-size: 64px;
+  font-size: 48px;
   font-weight: 700;
   color: #4d6314;
   line-height: 1.2;
@@ -61,7 +62,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 16px;
 }
 
 /* Activity card */
@@ -97,15 +98,15 @@
 }
 
 .cardContent {
-  padding: 16px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .cardTitle {
   font-family: var(--font-heading);
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 400;
   color: var(--fg-olive-dark);
   line-height: 1.3;

@@ -30,8 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head />
       <body>
         <LanguageProvider>
+          <Header />
           <SmoothScroll>
-            <Header />
             {children}
           </SmoothScroll>
         </LanguageProvider>
