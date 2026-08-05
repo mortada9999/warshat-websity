@@ -3,34 +3,60 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(useGSAP);
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
 }
 
 export default function HeroSection() {
-  const containerRef = useRef<HTMLElement>(null);
-  const handRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
+  const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
 
   useGSAP(() => {
-    if (!handRef.current) return;
+    if (!handRef.current || !handInnerRef.current || !sectionRef.current) return;
 
-    // Animate the hand sliding in from the right side
-    gsap.from(handRef.current, {
-      x: 400,
+    // 1. On-Load Presentation: "Handing a business card"
+    // Starts small, low, faded, and tilted back. Animates to full size, straight, and visible.
+    gsap.fromTo(handInnerRef.current,
+      {
+        scale: 0.7,
+        y: 150,
+        opacity: 0,
+        rotateX: 15, // 3D tilt back
+      },
+      {
+        scale: 1,
+        y: 0,
+        opacity: 1,
+        rotateX: 0,
+        duration: 1.5,
+        ease: 'power2.out',
+        delay: 0.3,
+      }
+    );
+
+    // 2. Scroll Scrub: Hand retreats on scroll down
+    // Retreats down (y: 200), shrinks, and fades out.
+    gsap.to(handRef.current, {
+      y: 200,
+      scale: 0.8,
       opacity: 0,
-      rotation: 25,
-      duration: 1.5,
-      ease: 'power3.out',
-      delay: 0.2 // slight delay after page load
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
     });
-  }, { scope: containerRef });
+  }, { scope: sectionRef });
 
   return (
     <section 
-      ref={containerRef}
-      className="relative flex flex-col items-center justify-center min-h-screen w-full bg-[#F6F0E2] overflow-hidden pt-24 pb-48 md:pb-64 px-6 md:px-12"
+      ref={sectionRef}
+      className="relative flex flex-col items-center justify-center min-h-screen w-full bg-[#F6F0E2] overflow-x-hidden pt-24 pb-48 md:pb-64 px-6 md:px-12"
       aria-label="القسم الرئيسي للورش"
     >
       {/* Background decorative shapes */}
@@ -45,23 +71,28 @@ export default function HeroSection() {
         aria-hidden="true" 
       />
 
-      {/* Main Content Container */}
-      <div className="relative z-10 flex flex-col items-center gap-12 w-full max-w-[896px]">
+      {/* Main Content Container — perspective enables 3D rotateX on child */}
+      <div className="relative z-10 flex flex-col items-center gap-12 w-full max-w-[896px]" style={{ perspective: '1200px' }}>
         
         {/* Central Image (The Hand) */}
-        <div ref={handRef} className="relative flex flex-col items-center justify-center w-full max-w-[512px] -rotate-1">
-          <Image
-            src="/images/figma/hero-hand.png"
-            alt="يد تمسك ورقة فنية — ورشة فن"
-            width={512}
-            height={684}
-            className="w-full h-auto object-contain drop-shadow-xl"
-            style={{ width: '100%', height: 'auto' }}
-            priority
-          />
-          {/* مساحة مخصصة للنصوص المستقبلية داخل اليد */}
-          <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pointer-events-none z-20">
-            {/* ضع النص المستقبلي هنا */}
+        <div 
+          ref={handRef} 
+          className="relative flex flex-col items-center justify-center w-full max-w-[512px]"
+        >
+          <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
+            <Image
+              src="/images/figma/hero-hand.png"
+              alt="يد تمسك ورقة فنية — ورشة فن"
+              width={512}
+              height={684}
+              className="w-full h-auto object-contain"
+              style={{ width: '100%', height: 'auto' }}
+              priority
+            />
+            {/* مساحة مخصصة للنصوص المستقبلية داخل اليد */}
+            <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pointer-events-none z-20">
+              {/* ضع النص المستقبلي هنا */}
+            </div>
           </div>
         </div>
 
@@ -92,6 +123,17 @@ export default function HeroSection() {
             </div>
           </a>
 
+        </div>
+
+        {/* Scroll Down Indicator */}
+        <div className="flex flex-col items-center gap-3 mt-8 animate-bounce">
+          <span className="font-ibm-plex text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#A25F00]/50">
+            Scroll
+          </span>
+          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="12" height="20" rx="6" stroke="#A25F00" strokeOpacity="0.4" strokeWidth="1.5"/>
+            <rect x="5.5" y="4.5" width="3" height="5" rx="1.5" fill="#A25F00" fillOpacity="0.5"/>
+          </svg>
         </div>
       </div>
     </section>
