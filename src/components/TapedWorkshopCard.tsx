@@ -7,7 +7,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import styles from './TrainingSection.module.css';
 
-const TAPE_CONFIGS = [
+type TapeConfig = {
+  top: string;
+  left?: string;
+  right?: string;
+  width: string;
+  height: string;
+  rotate: string;
+};
+
+const TAPE_CONFIGS: TapeConfig[][] = [
   // Card 1: Pottery (Image left. Tape on top edge, left of center)
   [
     { top: '-14px', left: '25%', width: '90px', height: '28px', rotate: '-2deg' }
