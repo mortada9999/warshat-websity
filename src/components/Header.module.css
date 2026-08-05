@@ -1,0 +1,195 @@
+/* Header - TopAppBar */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 80px;
+  background: rgba(251, 250, 239, 0.80);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+  box-shadow: 0 1px 0 var(--fg-border);
+}
+
+.scrolled {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.logoImg {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  border-radius: 50%;
+  /* Convert white logo to #374a00 */
+  filter: brightness(0) saturate(100%) invert(24%) sepia(10%) saturate(3023%) hue-rotate(36deg) brightness(96%) contrast(92%);
+}
+
+/* Desktop Nav */
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.navLink {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-text);
+  text-decoration: none;
+  transition: color 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.navLink:hover {
+  color: var(--fg-olive-dark);
+}
+
+.loyaltyLink {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--fg-orange);
+  text-decoration: none;
+  border: 1px solid var(--fg-orange);
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.loyaltyLink:hover {
+  background: var(--fg-orange);
+  color: #fff;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Language Toggle (Figma: pill shape, bg #e3e3d8@0.30, r:9999) */
+.langSwitch {
+  display: flex;
+  align-items: center;
+  background: rgba(227, 227, 216, 0.50);
+  border-radius: 9999px;
+  padding: 4px;
+  gap: 0;
+}
+
+.langBtn {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 16px;
+  border: none;
+  border-radius: 9999px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--fg-text);
+  transition: all 0.2s;
+}
+
+.activeLang {
+  background: var(--fg-olive-dark);
+  color: #f6f6f4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Floating Hamburger Button (shanesayers.com style) */
+.floatingHamburger {
+  position: fixed;
+  top: 48px;
+  right: 48px;
+  z-index: 101;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #1a1a1a; /* Dark almost black */
+  color: #fff;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.floatingHamburger.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.floatingHamburger:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
+
+.hamburgerLine {
+  width: 20px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* Mobile Hamburger for the top nav (when not scrolled) */
+.mobileHamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--fg-olive-dark);
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .inner {
+    padding: 0 24px;
+  }
+
+  .desktopNav {
+    display: none;
+  }
+
+  .floatingHamburger {
+    right: 24px;
+  }
+
+  .mobileHamburger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

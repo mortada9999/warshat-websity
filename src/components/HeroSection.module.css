@@ -1,0 +1,137 @@
+/* Hero Section — fills 100vh sticky panel */
+.section {
+  width: 100%;
+  height: 100%;
+  background: var(--fg-bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.inner {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 48px;
+  height: 100%;
+}
+
+/* Decorative shapes (Figma: Abstract Collage 256x256, Background+Blur 288x288) */
+.abstractShape {
+  position: absolute;
+  top: 10%;
+  right: 15%;
+  width: 256px;
+  height: 256px;
+  background: rgba(197, 200, 182, 0.15);
+  border-radius: 30% 70% 53% 47% / 26% 46% 54% 74%;
+  z-index: 0;
+}
+
+.blurShape {
+  position: absolute;
+  top: 5%;
+  right: 10%;
+  width: 288px;
+  height: 288px;
+  background: rgba(251, 250, 239, 0.6);
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: 0;
+}
+
+/* Hand image */
+.heroImageWrap {
+  position: relative;
+  z-index: 1;
+  width: 512px;
+  max-width: 80vw;
+}
+
+.heroImage {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Bottom card buttons (Figma: two card-like buttons) */
+.buttonsRow {
+  display: flex;
+  gap: 24px;
+  margin-top: -40px;
+  position: relative;
+  z-index: 2;
+}
+
+.cardBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 20px 40px;
+  background: #ffffff;
+  border: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  transform: rotate(-2deg);
+}
+
+.cardBtn:last-child {
+  transform: rotate(1deg);
+}
+
+.cardBtn:hover {
+  transform: translateY(-4px) rotate(0deg);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.cardBtnAr {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--fg-olive-dark);
+}
+
+.cardBtnEn {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--fg-text);
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .inner {
+    padding: 2rem 16px;
+  }
+
+  .heroImageWrap {
+    width: 80vw;
+  }
+
+  .buttonsRow {
+    gap: 12px;
+    margin-top: -20px;
+  }
+
+  .cardBtn {
+    padding: 14px 24px;
+  }
+
+  .cardBtnAr {
+    font-size: 22px;
+  }
+
+  .abstractShape,
+  .blurShape {
+    display: none;
+  }
+}
