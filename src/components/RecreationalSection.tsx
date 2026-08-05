@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Image from 'next/image';
-import AnimatedTapedButton from './AnimatedTapedButton';
 
 const ACTIVITIES = [
   { title: 'الرسم على الأكواب الفخارية', price: '10,000', image: '/images/figma/pottery.png' },
@@ -19,7 +18,7 @@ export default function RecreationalSection() {
   return (
     <section 
       id="entertainment" 
-      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 pb-48 md:pb-[20vh] z-20"
+      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 z-20"
       aria-label="النشاطات الترفيهية"
     >
       <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-12">
@@ -66,16 +65,31 @@ export default function RecreationalSection() {
                 <div className="absolute inset-0 bg-[#A25F00]/10 mix-blend-multiply opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               </div>
               
-              {/* The GSAP Animated Tape Button showing the Price */}
-              <div className="mt-[-40px] z-10 scale-[0.8] md:scale-100 origin-top">
-                <AnimatedTapedButton 
-                  text={`${act.price} IQD`} 
-                  tapeStyle={i % 3 === 0 ? 'tape1' : i % 2 === 0 ? 'tape2' : 'tape3'}
-                />
+              {/* Clean Price Button (No Tape) */}
+              <div className="mt-[-20px] z-10">
+                <button className="px-6 py-2 md:px-8 md:py-3 bg-[#374A00] text-white rounded-md font-ibm-plex font-semibold text-sm md:text-base shadow-[0_4px_12px_rgba(0,0,0,0.1)] hover:bg-[#2a3800] hover:shadow-[0_6px_16px_rgba(0,0,0,0.15)] transition-all duration-300">
+                  {act.price} IQD
+                </button>
               </div>
 
             </div>
           ))}
+        </div>
+
+        {/* Section Footer - View All CTA */}
+        <div className="flex flex-col items-center gap-4 mt-8 pt-8 border-t border-[#C5C8B6]/20 w-full">
+          <p className="font-amiri text-lg md:text-xl text-[#597257] text-center">
+            المزيد من النشاطات الإبداعية بانتظارك
+          </p>
+          <a
+            href="#"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-[#4D6314] text-white font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm shadow-md hover:bg-[#374A00] transition-colors"
+          >
+            عرض الكل
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 1L11 6L6 11M10 6H1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
