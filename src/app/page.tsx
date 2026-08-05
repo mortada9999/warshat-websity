@@ -50,11 +50,11 @@ export default function HomePage() {
 
   return (
     <>
-      <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)] tex-canvas">
         {SECTIONS.map(({ Component, bg, torn }, i) => (
           <div
             key={i}
-            className="stackable-section relative w-full"
+            className="stackable-section relative w-full tex-canvas"
             style={{ 
               backgroundColor: bg,
               zIndex: (i + 1) * 10,
