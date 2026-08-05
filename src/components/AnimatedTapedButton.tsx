@@ -11,7 +11,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
 }
 
-interface AnimatedTapedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface AnimatedTapedButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   text: string;
   tapeStyle?: 'tape1' | 'tape2' | 'tape3'; // variations for tape positioning
 }
@@ -23,7 +23,7 @@ export default function AnimatedTapedButton({
   ...props
 }: AnimatedTapedButtonProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     if (!containerRef.current || !buttonRef.current) return;
@@ -50,14 +50,14 @@ export default function AnimatedTapedButton({
 
   return (
     <div ref={containerRef} className={`${styles.container} ${className}`}>
-      {/* Actual Clickable Button */}
-      <button
+      {/* Actual Price Label */}
+      <div
         ref={buttonRef}
         className={styles.button}
         {...props}
       >
         {text}
-      </button>
+      </div>
     </div>
   );
 }

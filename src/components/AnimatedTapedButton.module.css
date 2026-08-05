@@ -54,18 +54,8 @@
   font-family: var(--font-body), sans-serif;
   font-size: 16px;
   font-weight: 600;
-  cursor: pointer;
-  
-  /* Keep it interactive! */
-  pointer-events: auto; 
   
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.button:hover {
-  background: #2a3800; /* slightly darker olive on hover */
-  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
 /* Mobile adjustments */
