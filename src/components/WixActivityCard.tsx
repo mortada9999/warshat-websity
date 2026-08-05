@@ -1,42 +1,23 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import type { Workshop } from '@/lib/types';
 import styles from './WixActivityCard.module.css';
 import { useLanguage } from './LanguageProvider';
-import { useAdmin } from './AdminProvider';
-import WorkshopEditorModal from './WorkshopEditorModal';
 
 interface WixActivityCardProps {
   workshop: Workshop;
-  onRefresh?: () => void;
 }
 
-export default function WixActivityCard({ workshop, onRefresh }: WixActivityCardProps) {
+export default function WixActivityCard({ workshop }: WixActivityCardProps) {
   const { lang } = useLanguage();
-  const { isAdmin } = useAdmin();
-  const [isEditing, setIsEditing] = useState(false);
 
   const title = lang === 'ar' ? workshop.title_ar : workshop.title_en;
-
-  const handleDelete = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (confirm('هل أنت متأكد من حذف هذا النشاط؟')) {
-      await fetch(`/api/workshops/${workshop.id}`, { method: 'DELETE' });
-      if (onRefresh) onRefresh();
-    }
-  };
 
   return (
     <>
       <div style={{ position: 'relative' }}>
-        {isAdmin && (
-          <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 10, display: 'flex', gap: 8 }}>
-            <button onClick={(e) => { e.preventDefault(); setIsEditing(true); }} style={adminBtnStyle}>✏️</button>
-            <button onClick={handleDelete} style={{ ...adminBtnStyle, background: '#fee' }}>🗑️</button>
-          </div>
-        )}
         <Link href={`/workshops/${workshop.id}`} className={styles.card}>
           <div className={styles.circleWrap}>
             {workshop.image_url ? (
@@ -59,13 +40,7 @@ export default function WixActivityCard({ workshop, onRefresh }: WixActivityCard
         </Link>
       </div>
 
-      {isEditing && (
-        <WorkshopEditorModal 
-          workshop={workshop} 
-          onClose={() => setIsEditing(false)} 
-          onSave={() => { setIsEditing(false); if (onRefresh) onRefresh(); }} 
-        />
-      )}
+
     </>
   );
 }

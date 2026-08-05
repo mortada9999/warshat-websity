@@ -1,0 +1,63 @@
+'use client';
+
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import styles from './AnimatedTapedButton.module.css';
+
+// Ensure plugins are registered only on the client side
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
+interface AnimatedTapedButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+  text: string;
+  tapeStyle?: 'tape1' | 'tape2' | 'tape3'; // variations for tape positioning
+}
+
+export default function AnimatedTapedButton({
+  text,
+  tapeStyle = 'tape1',
+  className = '',
+  ...props
+}: AnimatedTapedButtonProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    if (!containerRef.current || !buttonRef.current) return;
+
+    // Create a timeline mapped to the scroll progress (scrub: true)
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 80%', // Starts animation when button enters the bottom 20% of the screen
+        end: 'top 40%',   // Ends when button reaches 40% from the top
+        scrub: 1,      // Smooth scrubbing with 1 second lag
+      }
+    });
+
+    // The Button Flying Up freely Animation
+    tl.to(buttonRef.current, {
+      y: -15,          // Flies up slightly
+      rotate: -1,      // Very slight tilt
+      duration: 1,
+      ease: 'power2.out'
+    }, 0.2);
+
+  }, { scope: containerRef });
+
+  return (
+    <div ref={containerRef} className={`${styles.container} ${className}`}>
+      {/* Actual Price Label */}
+      <div
+        ref={buttonRef}
+        className={styles.button}
+        {...props}
+      >
+        {text}
+      </div>
+    </div>
+  );
+}

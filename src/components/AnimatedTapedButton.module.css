@@ -1,0 +1,71 @@
+.container {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  /* Add padding top to give room for the tape before it peels off */
+  padding-top: 15px; 
+}
+
+/* Tape styling */
+.tape {
+  position: absolute;
+  top: 0;
+  width: 90px;
+  height: 25px;
+  /* Simulating the frosted semi-transparent paper tape look */
+  background: rgba(230, 230, 220, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  
+  /* Very Important: Ensure the tape doesn't block interactions on the button */
+  pointer-events: none; 
+  
+  /* Make sure tape is above the button */
+  z-index: 10; 
+  /* Allows smooth peeling effect origin */
+  transform-origin: center right; 
+}
+
+/* Variations of tape positioning (to make multiple buttons look natural) */
+.tape1 { 
+  left: 50%; 
+  transform: translateX(-50%) rotate(-3deg); 
+}
+.tape2 { 
+  left: 40%; 
+  transform: translateX(-50%) rotate(4deg); 
+}
+.tape3 { 
+  right: 40%; 
+  transform: translateX(50%) rotate(-2deg); 
+}
+
+/* The actual button */
+.button {
+  position: relative;
+  z-index: 5;
+  padding: 12px 32px;
+  background: var(--fg-olive-dark, #374a00);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .button {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+  .tape {
+    width: 75px;
+    height: 20px;
+  }
+}

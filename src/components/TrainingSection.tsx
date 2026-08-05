@@ -2,100 +2,77 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import AnimatedTapedButton from './AnimatedTapedButton';
+import TapedWorkshopCard from './TapedWorkshopCard';
 import styles from './TrainingSection.module.css';
 
-const TRAININGS = [
+const WORKSHOPS = [
   {
     id: 1,
-    title: 'أساسيات فن التطريز',
-    instructor: 'مريم أحمد',
-    duration: '٣ أيام — ساعتان يومياً',
-    price: '٣٥,٠٠٠ د.ع',
-    image: '/images/workshop-embroidery.png',
-    seats: '٦ أماكن متبقية',
+    titleAr: 'ورشة الفخار',
+    titleEn: '',
+    subtitle: 'استكشف مهارات تشكيل الطين وتحويله إلى قطع فنية تنبض بالحياة',
+    desc: 'سواء كنتم مبتدئين أو تمتلكون خبرة سابقة، ستجدون في قسم الخزف فرصة للتعبير عن أنفسكم وابتكار أعمال فنية فريدة تحمل لمستكم الخاصة.',
+    image: '/images/figma/pottery.png',
   },
   {
     id: 2,
-    title: 'نحت الطين الاحترافي',
-    instructor: 'علي باسم',
-    duration: 'يومان — ٣ ساعات يومياً',
-    price: '٤٠,٠٠٠ د.ع',
-    image: '/images/workshop-clay.png',
-    seats: '٤ أماكن متبقية',
+    titleAr: '',
+    titleEn: 'Lino Cut Printing',
+    subtitle: 'تعلم فن الطباعة البارزة واستخراج التصاميم المعقدة',
+    desc: 'مساحة إبداعية للتعرف على أدوات الحفر وإنشاء طبعات فنية بلمساتك الخاصة، لا تتطلب خبرة مسبقة.',
+    image: '/images/figma/mirror.png',
   },
   {
     id: 3,
-    title: 'الرسم الزيتي للمبتدئين',
-    instructor: 'سارة محمد',
-    duration: '٤ أيام — ساعتان يومياً',
-    price: '٤٥,٠٠٠ د.ع',
-    image: '/images/workshop-oilpaint.png',
-    seats: '٨ أماكن متبقية',
+    titleAr: '',
+    titleEn: 'Needle Felting',
+    subtitle: 'شكل الصوف واصنع مجسمات ناعمة ودقيقة',
+    desc: 'اكتشف متعة التلبيد بالإبرة، مهارة يدوية مريحة للأعصاب تتيح لك تشكيل الصوف الحر إلى شخصيات وأشكال لطيفة.',
+    image: '/images/figma/tote-bag.png',
   },
 ];
 
 export default function TrainingSection() {
   return (
-    <section id="trainings" className={styles.section} aria-label="الورش التدريبية">
-      <div className={styles.inner}>
+    <section 
+      id="training" 
+      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#F6F0E2] z-20"
+      aria-label="الورش التدريبية"
+    >
+      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-12 h-full">
+        
+        {/* Section Heading */}
+        <div className="relative flex flex-col items-center justify-center w-full pb-4 z-40">
+          <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#4D6314] text-center leading-[120%] mb-2">
+            الورش التدريبية
+          </h2>
+          {/* Curved Line under heading */}
+          <svg width="234" height="16" viewBox="0 0 234 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#4D6314" strokeWidth="3.9245" strokeLinecap="round" />
+          </svg>
+        </div>
 
-        {/* ── Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className={styles.header}
-        >
-          <p className={styles.eyebrow}>أماكن محدودة</p>
-          <h2 className={styles.title}>الورش التدريبية</h2>
-          <p className={styles.subtitle}>
-            تعلّم فنوناً جديدة بخطوات عملية مع مدربين متخصصين. احجز مكانك الآن.
-          </p>
-        </motion.div>
-
-        {/* ── Cards ── */}
-        <div className={styles.grid}>
-          {TRAININGS.map((w, i) => (
-            <motion.article
-              key={w.id}
-              initial={{ opacity: 0, y: 28 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className={styles.card}
-            >
-              <div className={styles.imageWrap}>
-                <Image
-                  src={w.image}
-                  alt={w.title}
-                  fill
-                  className={styles.image}
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  loading="lazy"
-                />
-                <div className={styles.seatsTag}>{w.seats}</div>
-              </div>
-
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitle}>{w.title}</h3>
-                <div className={styles.meta}>
-                  <span className={styles.instructor}>{w.instructor}</span>
-                  <span className={styles.separator} aria-hidden="true" />
-                  <span className={styles.duration}>{w.duration}</span>
-                </div>
-                <div className={styles.cardFooter}>
-                  <span className={styles.price}>{w.price}</span>
-                  <button className="btn btn-accent btn-sm" type="button">
-                    احجز الآن
-                  </button>
-                </div>
-              </div>
-            </motion.article>
+        {/* Workshop Cards List */}
+        <div className={styles.workshopList}>
+          {WORKSHOPS.map((w, index) => (
+            <TapedWorkshopCard key={w.id} workshop={w} index={index} />
           ))}
         </div>
 
+        {/* Section Footer - Booking CTA */}
+        <div className="flex flex-col items-center gap-4 mt-12 pt-8 w-full">
+          <div className="w-16 h-[2px] bg-[#A25F00]/30" />
+          <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
+            احجز مكانك في الورشة القادمة
+          </p>
+          <a
+            href="#book"
+            className="inline-flex items-center gap-2 px-10 py-3 bg-[#A25F00] text-white font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm shadow-md hover:bg-[#7D4A00] transition-colors"
+          >
+            Book Now
+          </a>
+        </div>
       </div>
     </section>
   );

@@ -1,0 +1,80 @@
+.scrollContainer {
+  overflow: hidden; /* لمنع ظهور شريط التمرير الأفقي الأساسي للصفحة */
+}
+
+.section {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.normalSection {
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.pinnedSection {
+  background-color: #2c3e50;
+  color: white;
+}
+
+/* -------------------------
+   Horizontal Scroll Styles 
+   ------------------------- */
+.horizontalSection {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* ضروري جداً لإخفاء البطاقات الجانبية */
+  background-color: #ecf0f1;
+}
+
+.cardsWrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100%;
+  padding: 0 5vw;
+  align-items: center;
+  gap: 2rem;
+}
+
+.card {
+  flex-shrink: 0;
+  width: 60vw; /* حجم البطاقة بالنسبة للشاشة */
+  height: 60vh;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* -------------------------
+   Mobile-First Fallback
+   ------------------------- */
+/* في الهواتف، يتم إيقاف التمرير الأفقي بواسطة matchMedia في الـ JS، وهنا نعدل الـ CSS ليصبح ترتيبها عمودياً وطبيعياً */
+@media (max-width: 767px) {
+  .horizontalSection {
+    height: auto;
+    padding: 3rem 0;
+  }
+  
+  .cardsWrapper {
+    flex-direction: column; /* تحويل العرض إلى عمودي */
+    padding: 0 1.5rem;
+    height: auto;
+  }
+  
+  .card {
+    width: 100%;
+    height: 300px;
+  }
+}

@@ -1,204 +1,214 @@
+/* MenuOverlay - Sidebar (shanesayers.com style) */
 .overlay {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 200;
   display: flex;
-  /* RTL: panel comes from right */
-  flex-direction: row;
+  justify-content: flex-end; /* Sidebar on the right (LTR) */
 }
 
+/* Force sidebar to remain on the right in RTL */
 [dir="rtl"] .overlay {
-  flex-direction: row;
+  justify-content: flex-start;
 }
 
-[dir="ltr"] .overlay {
-  flex-direction: row-reverse;
-}
-
+/* Dark backdrop */
 .backdrop {
-  flex: 1;
-  background: rgba(18, 18, 18, 0.45);
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 0;
 }
 
+/* Slide-in panel */
 .panel {
-  width: min(440px, 88vw);
-  background: #121212;
-  color: #F6F6F4;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 480px;
+  height: 100%;
+  background-color: var(--fg-bg-main);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  padding: 2rem 2.75rem 2.5rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: relative;
-  border-inline-start: 1px solid rgba(246, 246, 244, 0.07);
 }
 
-.topRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 3rem;
-}
-
-.brandLink {
-  display: flex;
-  align-items: center;
-  gap: 0.625rem;
-  text-decoration: none;
-  color: #F6F6F4;
-}
-
-.brandLogo {
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-}
-
-.brandName {
-  font-family: var(--font-heading);
-  font-weight: 400;
-  font-size: 1.125rem;
-  color: #F6F6F4;
-  letter-spacing: 0.02em;
-}
-
+/* Close button - Floating red circle */
 .closeBtn {
-  background: none;
+  position: absolute;
+  top: 100px;
+  left: -100px; /* Floating completely outside the sidebar */
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #c95c55; /* Red color similar to shanesayers */
+  color: #fff;
   border: none;
-  color: rgba(246, 246, 244, 0.5);
-  cursor: pointer;
-  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color var(--transition);
-  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .closeBtn:hover {
-  color: #F6F6F4;
+  transform: scale(1.1) rotate(90deg);
+  background-color: #b04943;
 }
 
+.panelContent {
+  padding: 80px 64px 64px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+}
+
+/* Navigation Links */
 .nav {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 }
 
 .navList {
   list-style: none;
+  padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 32px;
 }
 
+.navItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+/* Numbers (01, 02) */
+.navNum {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  color: #c95c55; /* Red */
+  margin-top: 24px;
+  width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* Large Links */
 .navLink {
-  display: block;
-  font-family: var(--font-heading);
-  font-weight: 400;
-  font-size: clamp(2rem, 6vw, 2.75rem);
-  color: rgba(246, 246, 244, 0.75);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 56px;
+  font-weight: 900;
+  color: var(--fg-text);
   text-decoration: none;
-  padding: 0.3rem 0;
-  line-height: 1.3;
-  position: relative;
-  overflow: hidden;
-  transition: color var(--transition);
-}
-
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  right: 0;
-  width: 0;
-  height: 1px;
-  background: var(--accent);
-  transition: width 0.35s ease;
-}
-
-[dir="ltr"] .navLink::after {
-  right: auto;
-  left: 0;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .navLink:hover {
-  color: #F6F6F4;
+  color: var(--fg-olive-dark);
+  transform: translateX(8px);
 }
 
-.navLink:hover::after {
-  width: 100%;
+/* RTL Support for hover and alignment */
+[dir="rtl"] .navLink:hover {
+  transform: translateX(-8px);
+}
+[dir="rtl"] .navNum {
+  text-align: left;
 }
 
-.bottomRow {
+/* Bottom Section */
+.bottomSection {
+  margin-top: 64px;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 2rem;
-  margin-top: 2.5rem;
-  border-top: 1px solid rgba(246, 246, 244, 0.08);
+  flex-direction: column;
+  gap: 32px;
 }
 
-.langToggle {
-  background: none;
-  border: 1px solid rgba(246, 246, 244, 0.15);
-  color: rgba(246, 246, 244, 0.6);
-  cursor: pointer;
-  padding: 0.35rem 0.875rem;
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  display: flex;
-  align-items: center;
-  gap: 0.2rem;
-  border-radius: 9999px;
-  transition: border-color var(--transition), color var(--transition);
-  letter-spacing: 0.03em;
-}
-
-.langToggle:hover {
-  border-color: rgba(246, 246, 244, 0.4);
-  color: #F6F6F4;
-}
-
-.activeLang {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-.inactiveLang {
-  opacity: 0.5;
-}
-
-.langSlash {
-  opacity: 0.25;
-  margin: 0 0.1rem;
-}
-
+/* Social Buttons */
 .socials {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 16px;
 }
 
-.socialLink {
-  font-family: var(--font-body);
-  font-size: 0.7rem;
-  color: rgba(246, 246, 244, 0.35);
+.socialIconBtn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #c95c55;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
   text-decoration: none;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  transition: color var(--transition);
+  transition: transform 0.2s, background-color 0.2s;
 }
 
-.socialLink:hover {
-  color: rgba(246, 246, 244, 0.85);
+.socialIconBtn:hover {
+  transform: translateY(-4px);
+  background-color: #b04943;
 }
 
-@media (max-width: 480px) {
+/* Language Toggle */
+.langToggle {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fg-text);
+  cursor: pointer;
+  padding: 8px 0;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s;
+}
+
+.langToggle:hover {
+  color: var(--fg-olive-dark);
+}
+
+/* Mobile overrides */
+@media (max-width: 768px) {
   .panel {
-    width: 100vw;
-    padding: 1.5rem 1.5rem 2rem;
+    max-width: 100%;
   }
+
+  .closeBtn {
+    left: 24px;
+    top: 24px;
+  }
+  
+  [dir="rtl"] .closeBtn {
+    right: 24px;
+    left: auto;
+  }
+
+  .panelContent {
+    padding: 100px 32px 48px;
+  }
+
   .navLink {
-    font-size: 2rem;
+    font-size: 36px;
+  }
+
+  .navNum {
+    font-size: 12px;
+    margin-top: 8px;
   }
 }

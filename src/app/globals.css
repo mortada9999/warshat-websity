@@ -1,18 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Arabic:wght@300;400;500;600&family=Aref+Ruqaa:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap');
 
-/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+/* ─── Design Tokens (from Figma) ─────────────────────────────────────────── */
 :root {
-  /* Core 5-color palette */
-  --bg:           #F6F6F4;  /* archive paper */
-  --surface:      #F9F8F2;  /* section alternate */
-  --text:         #121212;  /* deep charcoal */
-  --muted:        #6B6B6B;  /* secondary text */
-  --border:       #DEDEDE;  /* subtle lines */
-  --accent:       #C4622D;  /* burnt orange — use sparingly */
-  --olive:        #4A5240;  /* buttons, nav */
-  --dark:         #121212;  /* footer / dark sections */
+  /* Figma palette */
+  --fg-olive-dark:   #374a00;  /* headings, primary text */
+  --fg-olive-mid:    #597257;  /* subheadings */
+  --fg-olive-ent:    #4d6314;  /* entertainment heading */
+  --fg-orange:       #a25f00;  /* accent, prices, CTA */
+  --fg-text:         #45483a;  /* body text, nav links */
+  --fg-border:       #c5c8b6;  /* borders */
+  --fg-bg-main:      #fbfaef;  /* main background */
+  --fg-bg-training:  #f0ebd8;  /* training section bg */
+  --fg-bg-kids:      #fce4ec;  /* kids section bg (pink) */
+  --fg-bg-footer:    #e9e9de;  /* footer bg */
+  --fg-tape:         #e3e3d8;  /* decorative tape */
+  --fg-card-alt:     #f7f8f0;  /* card alt bg */
+  --fg-card-warm:    #fdfaf5;  /* card warm bg */
+  --fg-white:        #ffffff;
 
   /* Legacy aliases — keep existing components working */
+  --bg:           var(--fg-bg-main);
+  --surface:      #F9F8F2;
+  --text:         var(--fg-olive-dark);
+  --text-light:   var(--fg-text);
+  --muted:        #6B6B6B;
+  --border:       var(--fg-border);
+  --accent:       var(--fg-orange);
+  --olive:        #4A5240;
+  --dark:         #121212;
+
   --clr-bg:          var(--bg);
   --clr-surface:     var(--surface);
   --clr-surface-2:   #E9E4D8;
@@ -36,17 +52,17 @@
   --clr-pistachio:   var(--olive);
   --clr-peach:       #F1E7D3;
 
-  --font-heading: 'Aref Ruqaa', Georgia, serif;
-  --font-body:    'IBM Plex Arabic', 'Segoe UI', sans-serif;
+  /* Figma Fonts */
+  --font-heading: 'Amiri', Georgia, serif;
+  --font-body:    'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-display: 'Epilogue', 'IBM Plex Sans', sans-serif;
 
-  --nav-h:     64px;
+  --nav-h:     80px;
   --radius-sm: 0px;
-  --radius-md: 9999px;  /* pill — for CTAs only */
+  --radius-md: 9999px;
   --radius-lg: 0px;
   --radius-xl: 0px;
   --transition: 0.25s ease;
-
-  /* Canvas texture — kept for backwards compat, set to none */
   --tex-canvas: none;
 }
 
@@ -62,7 +78,7 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--bg);
-  color: var(--text);
+  color: var(--fg-text);
   line-height: 1.7;
   min-height: 100vh;
   direction: rtl;
@@ -73,12 +89,12 @@ body.ltr { direction: ltr; }
 /* ─── Typography ─────────────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
-  font-weight: 400; /* intentionally restrained — gallery aesthetic */
+  font-weight: 700;
   line-height: 1.25;
-  color: var(--text);
+  /* color removed — let component-level Tailwind classes control heading colors */
 }
 
-p { color: var(--muted); }
+p { /* color inherited — component-level classes control */  }
 
 a {
   color: inherit;
@@ -94,7 +110,7 @@ button { font-family: var(--font-body); }
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 3rem;
+  padding: 0 48px;
 }
 
 @media (max-width: 768px) {
@@ -108,10 +124,10 @@ button { font-family: var(--font-body); }
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 2rem;
-  border-radius: 9999px;
+  border-radius: 6px;
   font-family: var(--font-body);
-  font-size: 0.9375rem;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
   border: none;
   transition: all var(--transition);
@@ -120,31 +136,30 @@ button { font-family: var(--font-body); }
 }
 
 .btn-primary {
-  background: var(--olive);
+  background: var(--fg-olive-dark);
   color: #fff;
 }
 .btn-primary:hover {
-  background: #5C6650;
+  background: #2a3800;
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background: var(--fg-orange);
+  color: #fff;
+}
+.btn-accent:hover {
+  background: #8a5000;
   transform: translateY(-1px);
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
+  color: var(--fg-text);
+  border: 1px solid var(--fg-border);
 }
 .btn-ghost:hover {
-  border-color: var(--text);
-  background: transparent;
-}
-
-.btn-accent {
-  background: var(--accent);
-  color: #fff;
-}
-.btn-accent:hover {
-  background: #B05525;
-  transform: translateY(-1px);
+  border-color: var(--fg-text);
 }
 
 .btn-sm { padding: 0.4rem 1rem; font-size: 0.85rem; }
@@ -237,8 +252,8 @@ button { font-family: var(--font-body); }
 .section-title {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-family: var(--font-heading);
-  font-weight: 400;
-  color: var(--text);
+  font-weight: 700;
+  color: var(--fg-olive-dark);
 }
 
 /* ─── Divider ────────────────────────────────────────────────────────────── */

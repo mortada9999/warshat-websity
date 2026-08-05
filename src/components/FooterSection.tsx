@@ -3,123 +3,79 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import styles from './FooterSection.module.css';
-
-const SOCIAL_LINKS = [
-  { name: 'Instagram', href: 'https://www.instagram.com/warshatfan/', label: 'إنستغرام' },
-  { name: 'TikTok',    href: '#',                                       label: 'تيك توك' },
-  { name: 'Pinterest', href: '#',                                       label: 'بينتريست' },
-];
-
-const NAV_QUICK = [
-  { href: '/#activities', label: 'النشاطات الترفيهية' },
-  { href: '/#trainings',  label: 'الورش التدريبية' },
-  { href: '/#courses',    label: 'الكورسات' },
-  { href: '/#kids',       label: 'الأطفال' },
-  { href: '/loyalty',     label: 'بطاقة الولاء' },
-  { href: '/location',    label: 'المواقع' },
-];
-
-const inView = (delay = 0) => ({
-  initial: { opacity: 0, y: 18 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] },
-});
 
 export default function FooterSection() {
   return (
-    <footer className={styles.footer} aria-label="قسم الختام">
+    <footer 
+      className="relative w-full h-[60vh] md:h-[80vh]"
+      aria-label="تذييل الصفحة"
+    >
+      {/* 
+        Fixed container stays at the bottom of the viewport behind main.
+        Dark slate/warm dark background.
+      */}
+      <div className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0 overflow-hidden">
+        
+        {/* Main Content (Center) with massive negative space */}
+        <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-20 md:py-32">
+          
+          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-6xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] leading-none uppercase tracking-tighter mb-4 text-center">
+            LET'S MAKE ART
+          </h1>
+          
+          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-5xl md:text-7xl text-[#E8F3E8] leading-none text-center mb-16">
+            لنصنع فن
+          </h2>
 
-      {/* ── Big tagline ── */}
-      <motion.div {...inView(0)} className={styles.taglineWrap}>
-        <h2 className={styles.tagline}>
-          خلّينا نصنع فن
-        </h2>
-        <div className={styles.taglineLine} aria-hidden="true" />
-      </motion.div>
-
-      {/* ── Middle grid: logo+desc | nav links | socials ── */}
-      <motion.div {...inView(0.1)} className={styles.midGrid}>
-
-        {/* Brand column */}
-        <div className={styles.brandCol}>
-          <Link href="/" className={styles.brandLogo} aria-label="ورشة فن">
-            <Image
-              src="/logo.png"
-              alt="شعار ورشة فن"
-              width={48}
-              height={48}
-              className={styles.logoImg}
-            />
-          </Link>
-          <p className={styles.brandDesc}>
-            مساحة إبداعية في بغداد تجمع بين الفن اليدوي والتعلم والمتعة — فرعا اليرموك والزيونة.
+          <p style={{ fontFamily: "'Inter', sans-serif" }} className="text-xs md:text-sm uppercase tracking-widest text-gray-400 mb-8">
+            Visit Our Branches
           </p>
-        </div>
 
-        {/* Quick nav */}
-        <nav aria-label="روابط سريعة" className={styles.navCol}>
-          <p className={styles.colLabel}>استعرض</p>
-          <ul className={styles.navList}>
-            {NAV_QUICK.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className={styles.navLink}>
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        {/* Contact + socials */}
-        <div className={styles.contactCol}>
-          <p className={styles.colLabel}>تواصل معنا</p>
-          <div className={styles.socialRow}>
-            {SOCIAL_LINKS.map((s) => (
-              <a
-                key={s.name}
-                href={s.href}
-                className={styles.socialChip}
-                aria-label={s.label}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {s.name}
-              </a>
-            ))}
+          {/* Location Buttons - Small, elegant circles (w-14 h-14) */}
+          <div className="flex gap-4">
+            {/* Zayouna Branch */}
+            <a 
+              href="https://maps.google.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="فرع الزيونة"
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#e8f3e8] hover:text-stone-900 text-white transition-colors shadow-lg"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </a>
+            
+            {/* Yarmouk Branch */}
+            <a 
+              href="https://maps.google.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              title="فرع اليرموك"
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#e8f3e8] hover:text-stone-900 text-white transition-colors shadow-lg"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+            </a>
           </div>
-
-          {/* Google Sign-in placeholder */}
-          <button className={styles.googleBtn} type="button" aria-label="تسجيل الدخول بحساب Google">
-            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            <span>تسجيل الدخول</span>
-          </button>
         </div>
 
-      </motion.div>
-
-      {/* ── Divider ── */}
-      <div className={styles.footerDivider} aria-hidden="true" />
-
-      {/* ── Bottom bar ── */}
-      <motion.div {...inView(0.2)} className={styles.bottomBar}>
-        <span className={styles.copyright}>
-          &copy; ورشة فن ٢٠٢٥ — جميع الحقوق محفوظة
-        </span>
-        <div className={styles.locations}>
-          <span>بغداد — اليرموك</span>
-          <span className={styles.dot} aria-hidden="true" />
-          <span>بغداد — الزيونة</span>
+        {/* Bottom Footer */}
+        <div className="w-full flex flex-col md:flex-row justify-between items-center px-8 py-6 border-t border-stone-800 gap-4 md:gap-0 bg-stone-900">
+          
+          <div className="text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+            © 2024 Warshat Fan Studio
+          </div>
+          
+          <div className="text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+            صُنع بحب وشغف فني
+          </div>
+          
+          <div className="flex items-center gap-4 text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <Link href="/" className="hover:text-white transition-colors">Home</Link>
+            <Link href="/about" className="hover:text-white transition-colors">About</Link>
+            <Link href="/courses" className="hover:text-white transition-colors">Work</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+          </div>
         </div>
-      </motion.div>
-
+      </div>
     </footer>
   );
 }
