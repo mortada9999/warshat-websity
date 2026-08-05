@@ -29,20 +29,23 @@ export default function HomePage() {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
-    // Select all sections that should stack
     const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
     
     sections.forEach((section, index) => {
-      // We don't pin the last section because there's nothing to slide over it (except the fixed footer, which works differently)
+      // Skip last section - footer handles it
       if (index === sections.length - 1) return;
 
       ScrollTrigger.create({
         trigger: section,
-        start: 'bottom bottom', // Changed from 'top top' to ensure tall sections can be fully read before pinning
+        start: 'bottom bottom',
+        end: 'bottom top',
         pin: true,
-        pinSpacing: false, // The magic property that makes the next section slide over!
+        pinSpacing: false,
       });
     });
+
+    // Force ScrollTrigger refresh after Lenis initializes
+    ScrollTrigger.refresh();
   }, { scope: containerRef });
 
   return (
@@ -51,12 +54,13 @@ export default function HomePage() {
         {SECTIONS.map(({ Component, bg, torn }, i) => (
           <div
             key={i}
-            className="stackable-section relative w-full min-h-screen pb-[20vh]"
+            className="stackable-section relative w-full"
             style={{ 
               backgroundColor: bg,
               zIndex: (i + 1) * 10,
-              // Add a subtle shadow to the top of sticky layers (except the first one) to emphasize the stacking depth
-              boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none'
+              boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
+              minHeight: '100vh',
+              paddingBottom: '60vh',
             }}
           >
             {torn && <TornEdge color={bg} seed={i} />}

@@ -37,7 +37,7 @@ export default function TrainingSection() {
   return (
     <section 
       id="training" 
-      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#F6F0E2] pb-48 md:pb-[20vh] z-20"
+      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#F6F0E2] z-20"
       aria-label="الورش التدريبية"
     >
       <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-12 h-full">
@@ -58,6 +58,20 @@ export default function TrainingSection() {
           {WORKSHOPS.map((w, index) => (
             <TapedWorkshopCard key={w.id} workshop={w} index={index} />
           ))}
+        </div>
+
+        {/* Section Footer - Booking CTA */}
+        <div className="flex flex-col items-center gap-4 mt-12 pt-8 w-full">
+          <div className="w-16 h-[2px] bg-[#A25F00]/30" />
+          <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
+            احجز مكانك في الورشة القادمة
+          </p>
+          <a
+            href="#book"
+            className="inline-flex items-center gap-2 px-10 py-3 bg-[#A25F00] text-white font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm shadow-md hover:bg-[#7D4A00] transition-colors"
+          >
+            Book Now
+          </a>
         </div>
       </div>
     </section>

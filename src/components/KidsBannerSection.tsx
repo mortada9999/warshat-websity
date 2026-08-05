@@ -73,6 +73,24 @@ export default function KidsBannerSection() {
           </motion.div>
           
         </div>
+
+        {/* Section Footer */}
+        <div className="flex flex-col items-center gap-4 mt-12 pb-4">
+          <div className="flex items-center gap-4">
+            <span className="text-2xl">🎨</span>
+            <span className="text-2xl">🖌️</span>
+            <span className="text-2xl">🌈</span>
+          </div>
+          <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
+            اشتراكات شهرية وفصلية للأطفال
+          </p>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-3 border-2 border-[#A25F00] text-[#A25F00] font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm hover:bg-[#A25F00] hover:text-white transition-colors"
+          >
+            تواصل معنا
+          </a>
+        </div>
       </div>
     </section>
   );
