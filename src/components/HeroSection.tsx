@@ -18,31 +18,29 @@ export default function HeroSection() {
   useGSAP(() => {
     if (!handRef.current || !handInnerRef.current || !sectionRef.current) return;
 
-    // 1. On-Load Presentation: "Handing a business card"
-    // Starts small, low, faded, and tilted back. Animates to full size, straight, and visible.
+    // 1. On-Load Presentation: 3D Hand-out reveal
     gsap.fromTo(handInnerRef.current,
       {
-        scale: 0.7,
-        y: 150,
+        scale: 0.5,
+        y: 80,
+        rotateX: 45,
         opacity: 0,
-        rotateX: 15, // 3D tilt back
+        transformPerspective: 1000
       },
       {
         scale: 1,
         y: 0,
-        opacity: 1,
         rotateX: 0,
+        opacity: 1,
         duration: 1.5,
-        ease: 'power2.out',
-        delay: 0.3,
+        ease: 'back.out(1.5)'
       }
     );
 
     // 2. Scroll Scrub: Hand retreats on scroll down
-    // Retreats down (y: 200), shrinks, and fades out.
     gsap.to(handRef.current, {
-      y: 200,
-      scale: 0.8,
+      scale: 0.7,
+      y: 150,
       opacity: 0,
       scrollTrigger: {
         trigger: sectionRef.current,
