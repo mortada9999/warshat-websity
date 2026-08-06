@@ -7,7 +7,8 @@
   width: 100%;
   height: 100%;
   position: relative;
-  background: var(--fg-bg-main);
+  /* transparent — lets the parent stackable-section bg (notebook lines) show through */
+  background: transparent;
   overflow-y: auto;
   overflow-x: hidden;
 }
