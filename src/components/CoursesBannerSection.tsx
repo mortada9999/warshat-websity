@@ -52,9 +52,8 @@ export default function CoursesBannerSection() {
       id="courses" 
       className="relative flex flex-col items-center justify-center w-full min-h-screen py-16 px-4 md:px-8 z-20 bg-[#FDFBF7]"
       style={{
-        backgroundImage: 'repeating-linear-gradient(transparent, transparent calc(2.5rem - 1px), #A8BCD4 calc(2.5rem - 1px), #A8BCD4 2.5rem), repeating-linear-gradient(90deg, transparent, transparent 2.5rem, #F2B6B6 2.5rem, #F2B6B6 calc(2.5rem + 2px), transparent calc(2.5rem + 2px), transparent 100%)',
-        backgroundSize: '100% 2.5rem, 100% 100%',
-        backgroundPosition: '0 0'
+        backgroundColor: '#FDFBF7',
+        backgroundImage: 'linear-gradient(90deg, transparent 48px, rgba(210, 90, 90, 0.4) 48px, rgba(210, 90, 90, 0.4) 49px, transparent 49px), repeating-linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)'
       }}
       aria-label="الكورسات"
     >
