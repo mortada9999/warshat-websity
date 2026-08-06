@@ -14,20 +14,20 @@ export default function FooterSection() {
         Fixed container stays at the bottom of the viewport behind main.
         Dark slate/warm dark background.
       */}
-      <div className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0 overflow-hidden">
+      <div className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-[#E8F3E8] flex flex-col justify-between z-0 overflow-hidden">
         
         {/* Main Content (Center) with massive negative space */}
         <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-20 md:py-32">
           
-          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-6xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] leading-none uppercase tracking-tighter mb-4 text-center">
+          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-6xl md:text-8xl lg:text-[10rem] text-[#374A00] leading-none uppercase tracking-tighter mb-4 text-center">
             LET'S MAKE ART
           </h1>
           
-          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-5xl md:text-7xl text-[#E8F3E8] leading-none text-center mb-16">
+          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-5xl md:text-7xl text-[#374A00] leading-none text-center mb-16">
             لنصنع فن
           </h2>
 
-          <p style={{ fontFamily: "'Inter', sans-serif" }} className="text-xs md:text-sm uppercase tracking-widest text-gray-400 mb-8">
+          <p style={{ fontFamily: "'Inter', sans-serif" }} className="text-xs md:text-sm uppercase tracking-widest text-[#597257] mb-8 font-semibold">
             Visit Our Branches
           </p>
 
@@ -39,7 +39,7 @@ export default function FooterSection() {
               target="_blank" 
               rel="noopener noreferrer"
               title="فرع الزيونة"
-              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#e8f3e8] hover:text-stone-900 text-white transition-colors shadow-lg"
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#374A00] hover:text-white text-white transition-colors shadow-lg"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
             </a>
@@ -50,7 +50,7 @@ export default function FooterSection() {
               target="_blank" 
               rel="noopener noreferrer"
               title="فرع اليرموك"
-              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#e8f3e8] hover:text-stone-900 text-white transition-colors shadow-lg"
+              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#374A00] hover:text-white text-white transition-colors shadow-lg"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
             </a>
@@ -58,21 +58,21 @@ export default function FooterSection() {
         </div>
 
         {/* Bottom Footer */}
-        <div className="w-full flex flex-col md:flex-row justify-between items-center px-8 py-6 border-t border-stone-800 gap-4 md:gap-0 bg-stone-900">
+        <div className="w-full flex flex-col md:flex-row justify-between items-center px-8 py-6 border-t border-[#C5C8B6] gap-4 md:gap-0 bg-[#E8F3E8]">
           
-          <div className="text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <div className="text-xs text-[#45483A] font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
             © 2024 Warshat Fan Studio
           </div>
           
-          <div className="text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
+          <div className="text-xs text-[#45483A] font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
             صُنع بحب وشغف فني
           </div>
           
-          <div className="flex items-center gap-4 text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <Link href="/about" className="hover:text-white transition-colors">About</Link>
-            <Link href="/courses" className="hover:text-white transition-colors">Work</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+          <div className="flex items-center gap-4 text-xs text-[#45483A] font-semibold" style={{ fontFamily: "'Inter', sans-serif" }}>
+            <Link href="/" className="hover:text-[#A25F00] transition-colors">Home</Link>
+            <Link href="/about" className="hover:text-[#A25F00] transition-colors">About</Link>
+            <Link href="/courses" className="hover:text-[#A25F00] transition-colors">Work</Link>
+            <Link href="/contact" className="hover:text-[#A25F00] transition-colors">Contact</Link>
           </div>
         </div>
       </div>
