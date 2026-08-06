@@ -96,7 +96,7 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
             style={{ 
               top: tape.top,
               left: tape.left,
-              right: tape.right,
+              right: 'right' in tape ? (tape as any).right : undefined,
               width: tape.width,
               height: tape.height,
               transform: `rotate(${tape.rotate})`,
