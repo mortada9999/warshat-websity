@@ -50,7 +50,7 @@ export default function CoursesBannerSection() {
   return (
     <section 
       id="courses" 
-      className="relative flex flex-col items-center justify-center w-full min-h-screen py-16 px-4 md:px-8 z-20 bg-[#FDFBF7]"
+      className="relative flex flex-col items-center justify-center w-full min-h-screen pb-[60vh] py-16 px-4 md:px-8 z-20"
       style={{
         backgroundColor: '#FDFBF7',
         backgroundImage: 'linear-gradient(90deg, transparent 48px, rgba(210, 90, 90, 0.4) 48px, rgba(210, 90, 90, 0.4) 49px, transparent 49px), linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
