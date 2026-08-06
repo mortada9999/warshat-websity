@@ -26,6 +26,8 @@ const MOCK_WORKSHOPS: Workshop[] = [
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
+    sort_order: 1,
+    sort_order: 1,
   },
   {
     id: '2',
@@ -41,6 +43,7 @@ const MOCK_WORKSHOPS: Workshop[] = [
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
+    sort_order: 1,
   },
   {
     id: '3',
@@ -56,6 +59,7 @@ const MOCK_WORKSHOPS: Workshop[] = [
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
+    sort_order: 1,
   },
   {
     id: '4',
@@ -71,6 +75,7 @@ const MOCK_WORKSHOPS: Workshop[] = [
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
+    sort_order: 1,
   },
   {
     id: '5',
@@ -86,6 +91,7 @@ const MOCK_WORKSHOPS: Workshop[] = [
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
+    sort_order: 1,
   },
   {
     id: '6',
@@ -101,6 +107,7 @@ const MOCK_WORKSHOPS: Workshop[] = [
     is_active: 1,
     tags: null,
     created_at: new Date().toISOString(),
+    sort_order: 1,
   }
 ];
 
