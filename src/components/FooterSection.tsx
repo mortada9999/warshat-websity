@@ -19,11 +19,11 @@ export default function FooterSection() {
         {/* Main Content (Center) with massive negative space */}
         <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-20 md:py-32">
           
-          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-6xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] bg-[#E8F3E8]/10 px-8 py-4 rounded-3xl leading-none uppercase tracking-tighter mb-4 text-center backdrop-blur-sm">
+          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-6xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] leading-none uppercase tracking-tighter mb-4 text-center">
             LET'S MAKE ART
           </h1>
           
-          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-5xl md:text-7xl text-[#E8F3E8] bg-[#E8F3E8]/10 px-8 py-4 rounded-3xl leading-none text-center mb-16 backdrop-blur-sm">
+          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-5xl md:text-7xl text-[#E8F3E8] leading-none text-center mb-16">
             لنصنع فن
           </h2>
 
