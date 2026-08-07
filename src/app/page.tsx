@@ -29,6 +29,8 @@ export default function HomePage() {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
+    ScrollTrigger.config({ ignoreMobileResize: true });
+    
     const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
     
     sections.forEach((section, index) => {
