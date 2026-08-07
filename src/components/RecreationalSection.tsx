@@ -30,8 +30,8 @@ export default function RecreationalSection() {
           <div className="absolute left-[5%] md:left-[10%] top-0 w-[150px] md:w-[192px] h-[48px] rounded-full bg-[#4D6314]/20 mix-blend-multiply blur-[12px] -z-10" />
           <div className="absolute left-[15%] md:left-[20%] top-4 w-[100px] md:w-[128px] h-[40px] rounded-full bg-[#D9B053]/20 mix-blend-multiply blur-[12px] -z-10" />
           
-          <div className="flex w-full justify-between items-end">
-            <a href="#" className="font-ibm-plex font-semibold text-[#A25F00] text-xs uppercase tracking-widest hover:underline flex items-center gap-2 pb-2">
+          <div className="flex flex-col-reverse md:flex-row w-full justify-between items-end gap-2 md:gap-0">
+            <a href="#" className="font-ibm-plex font-semibold text-[#A25F00] text-xs md:text-sm uppercase tracking-widest hover:underline flex items-center gap-2 pb-0 md:pb-2">
               View All
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.10208 5.25H0V4.08333H7.10208L3.83542 0.816667L4.66667 0L9.33333 4.66667L4.66667 9.33333L3.83542 8.51667L7.10208 5.25Z" fill="#A25F00"/>

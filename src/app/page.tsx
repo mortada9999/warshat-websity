@@ -54,13 +54,11 @@ export default function HomePage() {
         {SECTIONS.map(({ Component, bg, torn }, i) => (
           <div
             key={i}
-            className="stackable-section relative w-full"
+            className="stackable-section relative w-full min-h-[100svh] pb-[15vh] md:pb-[60vh]"
             style={{ 
               backgroundColor: bg,
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              minHeight: '100vh',
-              paddingBottom: '60vh',
             }}
           >
             {torn && <TornEdge color={bg} seed={i} />}

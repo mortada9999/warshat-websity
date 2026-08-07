@@ -19,7 +19,7 @@ export default function KidsBannerSection() {
         
         {/* Section Heading */}
         <div className="relative flex flex-col items-center justify-center w-full pb-8 md:pb-12 z-40">
-          <h2 className="font-amiri font-bold text-4xl md:text-6xl text-[#374A00] text-center leading-[120%] mb-2">
+          <h2 className="font-amiri font-bold text-3xl md:text-6xl text-[#374A00] text-center leading-[120%] mb-2">
             ورش و اشتراكات الأطفال
           </h2>
           <svg width="234" height="16" viewBox="0 0 234 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,7 +48,7 @@ export default function KidsBannerSection() {
 
             {/* Text Overlay on Cloud */}
             <div className="absolute flex flex-col items-center justify-center text-center p-6 md:p-12 w-[80%] md:w-[60%] max-w-[500px]">
-              <h3 className="font-amiri text-2xl md:text-4xl text-[#374A00] font-bold mb-4">
+              <h3 className="font-amiri text-xl md:text-4xl text-[#374A00] font-bold mb-4">
                 عالم من الإبداع للصغار
               </h3>
               <p className="font-ibm-plex text-sm md:text-lg text-[#45483A] mb-6 leading-relaxed">

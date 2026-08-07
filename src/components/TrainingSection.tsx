@@ -40,11 +40,11 @@ export default function TrainingSection() {
       className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#F6F0E2] z-20"
       aria-label="الورش التدريبية"
     >
-      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-12 h-full">
+      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-8 md:mt-12 h-full">
         
         {/* Section Heading */}
         <div className="relative flex flex-col items-center justify-center w-full pb-4 z-40">
-          <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#4D6314] text-center leading-[120%] mb-2">
+          <h2 className="font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-center leading-[120%] mb-2">
             الورش التدريبية
           </h2>
           {/* Curved Line under heading */}
@@ -61,7 +61,7 @@ export default function TrainingSection() {
         </div>
 
         {/* Section Footer - Booking CTA */}
-        <div className="flex flex-col items-center gap-4 mt-12 pt-8 w-full">
+        <div className="flex flex-col items-center gap-4 mt-8 md:mt-12 pt-6 md:pt-8 w-full">
           <div className="w-16 h-[2px] bg-[#A25F00]/30" />
           <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
             احجز مكانك في الورشة القادمة

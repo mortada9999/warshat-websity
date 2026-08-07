@@ -62,7 +62,7 @@ export default function CoursesBannerSection() {
       <div className="relative flex flex-col items-center w-full max-w-6xl z-10 bg-transparent">
         
         {/* Section Header */}
-        <div className="relative flex flex-col items-center justify-center w-full mb-16 md:mb-24 gsap-header bg-transparent">
+        <div className="relative flex flex-col items-center justify-center w-full mb-12 md:mb-24 gsap-header bg-transparent">
           <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%] mb-3">
             الكورسات
           </h2>
