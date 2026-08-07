@@ -53,6 +53,7 @@ export default function HomePage() {
   return (
     <>
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="fixed top-0 left-0 z-[9999] bg-red-500 text-white text-xs px-2 py-1 pointer-events-none">V2.1</div>
         {SECTIONS.map(({ Component, bg, torn }, i) => (
           <div
             key={i}
