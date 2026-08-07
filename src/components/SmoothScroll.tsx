@@ -9,10 +9,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Enabled Lenis on mobile to ensure GSAP ScrollTrigger transitions (pinning, scrub) work correctly.
+    // if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+
     // إعداد Lenis ومزامنته مع GSAP Ticker
     const lenis = new Lenis({
       autoRaf: false,
-      lerp: 0.1, // درجة نعومة التمرير
+      lerp: 0.1,
     });
 
     lenis.on('scroll', ScrollTrigger.update);
