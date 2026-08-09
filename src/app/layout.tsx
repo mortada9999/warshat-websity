@@ -29,6 +29,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl" className="bg-[#F6F6F4]">
       <head />
       <body>
+        <script dangerouslySetInnerHTML={{ __html: `
+          // RAW JS TEST - runs before React hydration
+          window.__rawJsWorks = true;
+          window.__jsErrors = [];
+          window.addEventListener('error', function(e) {
+            window.__jsErrors.push(e.message);
+            var d = document.getElementById('raw-js-debug');
+            if (d) d.textContent = 'ERR: ' + e.message;
+          });
+          window.addEventListener('load', function() {
+            var d = document.getElementById('raw-js-debug');
+            if (d) d.textContent = 'JS:OK | Errors:' + window.__jsErrors.length + (window.__jsErrors.length ? ' | ' + window.__jsErrors[0] : '');
+          });
+          setTimeout(function() {
+            var d = document.getElementById('raw-js-debug');
+            if (d && d.textContent === 'loading...') {
+              d.textContent = 'JS:OK but load event not fired after 5s | Errors:' + window.__jsErrors.length + (window.__jsErrors.length ? ' | ' + window.__jsErrors[0] : '');
+            }
+          }, 5000);
+        `}} />
+        <div id="raw-js-debug" style={{ position: 'fixed', top: 24, left: 0, right: 0, zIndex: 99999, backgroundColor: '#1e40af', color: '#fff', fontSize: 11, padding: '4px 8px', fontFamily: 'monospace', direction: 'ltr', textAlign: 'left', pointerEvents: 'none' }}>loading...</div>
         <LanguageProvider>
           <Header />
           <SmoothScroll>
