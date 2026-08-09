@@ -13,9 +13,12 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const lenis = new Lenis({
       autoRaf: false,
       lerp: 0.1,
-      syncTouch: true,       // ← THE FIX: Makes Lenis intercept touch events on mobile
-      touchMultiplier: 2,    // Responsive touch scrolling speed
+      syncTouch: true,
+      touchMultiplier: 2,
     });
+
+    // Expose for debug overlay
+    (window as any).__lenis = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 

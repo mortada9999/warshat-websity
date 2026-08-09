@@ -41,8 +41,14 @@
   height: 48px;
   object-fit: contain;
   border-radius: 50%;
-  /* Convert white logo to #374a00 */
   filter: brightness(0) saturate(100%) invert(24%) sepia(10%) saturate(3023%) hue-rotate(36deg) brightness(96%) contrast(92%);
+}
+
+@media (max-width: 768px) {
+  .logoImg {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 /* Desktop Nav */
@@ -176,11 +182,38 @@
 /* ─── Mobile ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .inner {
-    padding: 0 24px;
+    padding: 0 16px;
+    gap: 8px;
   }
 
   .desktopNav {
+    display: flex;
+    gap: 10px;
+  }
+
+  .navLink {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .loyaltyLink {
     display: none;
+  }
+
+  .langBtn {
+    font-size: 10px;
+    padding: 4px 10px;
+  }
+
+  .controls {
+    gap: 6px;
+  }
+
+  .langSwitch {
+    padding: 2px;
+    gap: 0;
   }
 
   .floatingHamburger {

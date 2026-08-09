@@ -75,7 +75,7 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link href="#loyalty" className={styles.loyaltyLink}>
+            <Link href="#loyalty" className={`${styles.loyaltyLink} hidden md:inline-block`}>
               Loyalty Ticket
             </Link>
           </nav>
