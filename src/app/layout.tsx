@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             }
           }, 5000);
         `}} />
-        <div id="raw-js-debug" style={{ position: 'fixed', top: 24, left: 0, right: 0, zIndex: 99999, backgroundColor: '#1e40af', color: '#fff', fontSize: 11, padding: '4px 8px', fontFamily: 'monospace', direction: 'ltr', textAlign: 'left', pointerEvents: 'none' }}>loading...</div>
+        <div id="raw-js-debug" style={{ position: 'fixed', bottom: 50, left: 0, right: 0, zIndex: 99999, backgroundColor: '#1e40af', color: '#fff', fontSize: 13, padding: '8px', fontFamily: 'monospace', direction: 'ltr', textAlign: 'left', pointerEvents: 'none' }}>loading...</div>
         <LanguageProvider>
           <Header />
           <SmoothScroll>
