@@ -7,17 +7,18 @@ import Image from 'next/image';
 export default function FooterSection() {
   return (
     <footer 
-      className="relative w-full min-h-[60vh] md:min-h-[80vh] bg-stone-900 flex flex-col justify-between z-0"
+      className="sticky bottom-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0"
       aria-label="تذييل الصفحة"
+      suppressHydrationWarning
     >
       {/* Main Content (Center) with massive negative space */}
-      <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-12 md:py-32">
+      <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-20 md:py-32">
           
-          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-4xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] bg-[#E8F3E8]/10 px-4 md:px-8 py-2 md:py-4 rounded-2xl md:rounded-3xl leading-none uppercase tracking-tighter mb-4 text-center backdrop-blur-sm max-w-full overflow-hidden text-ellipsis">
+          <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-4xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] leading-none uppercase tracking-tighter mb-4 text-center max-w-full overflow-hidden text-ellipsis">
             LET'S MAKE ART
           </h1>
           
-          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-3xl md:text-7xl text-[#E8F3E8] bg-[#E8F3E8]/10 px-4 md:px-8 py-2 md:py-4 rounded-2xl md:rounded-3xl leading-none text-center mb-16 backdrop-blur-sm">
+          <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-3xl md:text-7xl text-[#E8F3E8] leading-none text-center mb-16">
             لنصنع فن
           </h2>
 
