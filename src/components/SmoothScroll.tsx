@@ -10,13 +10,11 @@ ScrollTrigger.config({ ignoreMobileResize: true });
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Enabled Lenis on mobile to ensure GSAP ScrollTrigger transitions (pinning, scrub) work correctly.
-    // if (typeof window !== 'undefined' && window.innerWidth < 768) return;
-
-    // إعداد Lenis ومزامنته مع GSAP Ticker
     const lenis = new Lenis({
       autoRaf: false,
       lerp: 0.1,
+      syncTouch: true,       // ← THE FIX: Makes Lenis intercept touch events on mobile
+      touchMultiplier: 2,    // Responsive touch scrolling speed
     });
 
     lenis.on('scroll', ScrollTrigger.update);
@@ -35,3 +33,4 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
   return <>{children}</>;
 }
+

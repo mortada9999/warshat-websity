@@ -20,7 +20,9 @@ export default function CreativeScrollLayout() {
     // نهج متقدم: إيقاف الحلقة التلقائية (autoRaf: false) والاعتماد الكامل على GSAP Ticker
     const lenis = new Lenis({
       autoRaf: false,
-      lerp: 0.1, // النعومة المطلوبة
+      lerp: 0.1,
+      syncTouch: true,
+      touchMultiplier: 2,
     });
 
     // تحديث ScrollTrigger عند كل تمرير لضمان مزامنة الأنيميشن
