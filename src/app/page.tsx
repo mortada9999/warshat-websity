@@ -12,7 +12,6 @@ import CoursesBannerSection from '@/components/CoursesBannerSection';
 import KidsBannerSection from '@/components/KidsBannerSection';
 import FooterSection from '@/components/FooterSection';
 import TornEdge from '@/components/TornEdge';
-import MobileDebugOverlay from '@/components/MobileDebugOverlay';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -31,11 +30,11 @@ export default function HomePage() {
 
   useGSAP(() => {
     ScrollTrigger.config({ ignoreMobileResize: true });
+    ScrollTrigger.normalizeScroll(true);
     
     const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
     
     sections.forEach((section, index) => {
-      // Skip last section - footer handles it
       if (index === sections.length - 1) return;
 
       ScrollTrigger.create({
@@ -47,14 +46,12 @@ export default function HomePage() {
       });
     });
 
-    // Force ScrollTrigger refresh after Lenis initializes
     ScrollTrigger.refresh();
   }, { scope: containerRef });
 
   return (
     <>
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-        <div className="fixed top-0 left-0 z-[9999] bg-red-500 text-white text-xs px-2 py-1 pointer-events-none">V3.0</div>
         {SECTIONS.map(({ Component, bg, torn }, i) => (
           <div
             key={i}
@@ -73,7 +70,6 @@ export default function HomePage() {
         ))}
       </main>
       <FooterSection />
-      <MobileDebugOverlay />
     </>
   );
 }

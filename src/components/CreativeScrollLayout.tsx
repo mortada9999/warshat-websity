@@ -8,7 +8,9 @@ import Lenis from 'lenis';
 import styles from './CreativeScrollLayout.module.css';
 
 // تأكد من تسجيل إضافة ScrollTrigger
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export default function CreativeScrollLayout() {
   const containerRef = useRef<HTMLDivElement>(null);

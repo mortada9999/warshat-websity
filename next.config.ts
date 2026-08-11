@@ -9,7 +9,7 @@ const securityHeaders = [
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ['192.168.10.88'],
+  allowedDevOrigins: ['192.168.10.88', '192.168.68.109', '192.168.68.115', '192.168.6.1', 'localhost:3000'],
   headers: async () => [
     {
       source: '/(.*)',

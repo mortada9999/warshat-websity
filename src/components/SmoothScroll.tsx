@@ -5,20 +5,21 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 
-gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ ignoreMobileResize: true });
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+}
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
   useEffect(() => {
+    // Skip Lenis entirely on mobile — native scroll is better for touch
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+
     const lenis = new Lenis({
       autoRaf: false,
       lerp: 0.1,
-      syncTouch: true,
-      touchMultiplier: 2,
+      syncTouch: false,
     });
-
-    // Expose for debug overlay
-    (window as any).__lenis = lenis;
 
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -27,6 +28,8 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     });
 
     gsap.ticker.lagSmoothing(0);
+
+    setTimeout(() => ScrollTrigger.refresh(), 200);
 
     return () => {
       lenis.destroy();
