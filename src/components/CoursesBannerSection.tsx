@@ -51,9 +51,6 @@ export default function CoursesBannerSection() {
     <section 
       id="courses" 
       className="relative flex flex-col items-center justify-center w-full min-h-screen pb-[60vh] py-16 px-4 md:px-8 z-20"
-      style={{
-        backgroundColor: '#FDFBF7'
-      }}
       aria-label="الكورسات"
     >
       <div className="relative flex flex-col items-center w-full max-w-6xl z-10 bg-transparent">
