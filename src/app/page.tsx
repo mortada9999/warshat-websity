@@ -18,11 +18,11 @@ if (typeof window !== 'undefined') {
 }
 
 const SECTIONS = [
-  { Component: HeroSection,         bg: '#F6F0E2', torn: false },
-  { Component: RecreationalSection, bg: '#E8F3E8', torn: true  },
-  { Component: TrainingSection,     bg: '#F6F0E2', torn: true  },
-  { Component: CoursesBannerSection,bg: '#FBFAEF', torn: true  },
-  { Component: KidsBannerSection,   bg: '#F6F0E2', torn: true  },
+  { Component: HeroSection,         bg: '#F6F0E2', torn: false, isNotebook: false },
+  { Component: RecreationalSection, bg: '#E8F3E8', torn: true,  isNotebook: false },
+  { Component: TrainingSection,     bg: '#F6F0E2', torn: true,  isNotebook: false },
+  { Component: CoursesBannerSection,bg: '#FDFBF7', torn: true,  isNotebook: true  },
+  { Component: KidsBannerSection,   bg: '#F6F0E2', torn: true,  isNotebook: false },
 ];
 
 export default function HomePage() {
@@ -50,7 +50,7 @@ export default function HomePage() {
   return (
     <>
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-        {SECTIONS.map(({ Component, bg, torn }, i) => (
+        {SECTIONS.map(({ Component, bg, torn, isNotebook }, i) => (
           <div
             key={i}
             className="stackable-section relative w-full"
@@ -65,7 +65,7 @@ export default function HomePage() {
               paddingBottom: '60vh',
             }}
           >
-            {torn && <TornEdge color={bg} seed={i} />}
+            {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} />}
             <Component />
           </div>
         ))}
