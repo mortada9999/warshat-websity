@@ -50,12 +50,12 @@ export default function RecreationalSection() {
             <div key={i} className="flex flex-col items-center justify-start text-center relative pt-4 group">
               
               {/* Title positioned at top of card */}
-              <h3 className="font-amiri text-lg md:text-2xl text-[#374A00] mb-4 h-12 flex items-center justify-center leading-[120%]">
+              <h3 className="font-amiri text-base md:text-2xl text-[#374A00] mb-3 h-10 flex items-center justify-center leading-[120%]">
                 {act.title}
               </h3>
               
               {/* Circular Image with Overlay */}
-              <div className="relative w-[120px] h-[120px] md:w-[160px] md:h-[160px] rounded-full border-4 border-[#F6F6F4] shadow-md overflow-hidden mb-6 transition-transform duration-300 group-hover:scale-105">
+              <div className="relative w-[100px] h-[100px] md:w-[160px] md:h-[160px] rounded-full border-4 border-[#F6F6F4] shadow-md overflow-hidden mb-4 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src={act.image}
                   alt={act.title}
