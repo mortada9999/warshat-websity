@@ -56,6 +56,11 @@ export default function HomePage() {
             className="stackable-section relative w-full"
             style={{ 
               backgroundColor: bg,
+              ...(isNotebook ? {
+                backgroundImage: 'linear-gradient(90deg, transparent 48px, rgba(210, 90, 90, 0.4) 48px, rgba(210, 90, 90, 0.4) 49px, transparent 49px), linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
+                backgroundSize: '100% 40px',
+                backgroundRepeat: 'repeat'
+              } : {}),
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
               // min(100dvh, 100vh): dvh = actual visible viewport excluding
