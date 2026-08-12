@@ -183,13 +183,12 @@
 /* ─── Mobile ──────────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .workshopCard {
-    grid-template-columns: 1fr;
-    min-height: auto;
+    /* Keep side-by-side on tablet but let it flex more naturally */
+    grid-template-columns: 1fr 1fr;
+    min-height: 350px;
   }
 
-  .workshopCard:nth-child(even) {
-    direction: rtl;
-  }
+  /* Don't reset direction, let it alternate like desktop */
 
   .workshopImageWrap {
     padding: 24px;
@@ -219,12 +218,62 @@
     font-size: 36px;
   }
 
+  .workshopCard {
+    /* Keep side-by-side on mobile, just scale down instead of stacking */
+    grid-template-columns: 45% 55%;
+    min-height: 180px;
+  }
+
+  /* Ensure alternating layout stays active on mobile */
+  .workshopCard:nth-child(even) {
+    direction: ltr;
+  }
+
+  .workshopCard:nth-child(even) .workshopContent {
+    direction: rtl;
+  }
+
+  .workshopImageWrap {
+    padding: 12px;
+  }
+
+  .workshopImageFrame {
+    min-height: 140px;
+    height: 100%;
+  }
+
+  /* Scale down the tape slightly for mobile */
+  .tape {
+    width: 60px;
+    height: 18px;
+    top: -8px;
+    margin-left: -30px;
+  }
+
   .workshopContent {
-    padding: 24px;
+    padding: 16px 12px;
+    gap: 8px;
   }
 
   .workshopTitleAr,
   .workshopTitleEn {
-    font-size: 28px;
+    font-size: 20px;
+    line-height: 1.1;
+  }
+
+  .workshopSubtitle {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .workshopDesc {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .bookBtn {
+    padding: 6px 16px;
+    font-size: 11px;
+    margin-top: 4px;
   }
 }

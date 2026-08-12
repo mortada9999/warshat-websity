@@ -5,12 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function FooterSection() {
-  return (
-    <footer 
-      className="sticky bottom-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0"
-      aria-label="تذييل الصفحة"
-      suppressHydrationWarning
-    >
+    <>
+      {/* Spacer div to push document length and allow scrolling past main content */}
+      <div className="w-full h-[70vh] md:h-[80vh] pointer-events-none" aria-hidden="true" />
+      
+      {/* Fixed footer that sits behind main content (-z-10) and is revealed as we scroll into the spacer */}
+      <footer 
+        className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between -z-10"
+        aria-label="تذييل الصفحة"
+        suppressHydrationWarning
+      >
       {/* Main Content (Center) with massive negative space */}
       <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-20 md:py-32">
           
@@ -70,6 +74,6 @@ export default function FooterSection() {
             <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
           </div>
         </div>
-    </footer>
+    </>
   );
 }
