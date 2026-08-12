@@ -29,9 +29,6 @@ export default function HomePage() {
   const containerRef = useRef<HTMLElement>(null);
 
   useGSAP(() => {
-    ScrollTrigger.config({ ignoreMobileResize: true });
-    ScrollTrigger.normalizeScroll(true);
-    
     const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
     
     sections.forEach((section, index) => {
@@ -43,6 +40,7 @@ export default function HomePage() {
         end: 'bottom top',
         pin: true,
         pinSpacing: false,
+        invalidateOnRefresh: true,
       });
     });
 
@@ -60,7 +58,10 @@ export default function HomePage() {
               backgroundColor: bg,
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              minHeight: '100vh',
+              // min(100dvh, 100vh): dvh = actual visible viewport excluding
+              // Android address bar. Critical for correct GSAP pin calculations.
+              // Falls back to 100vh on Android < Chrome 108.
+              minHeight: 'min(100dvh, 100vh)',
               paddingBottom: '60vh',
             }}
           >
