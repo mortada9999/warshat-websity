@@ -74,6 +74,7 @@ export default function FooterSection() {
             <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
           </div>
         </div>
+      </footer>
     </>
   );
 }
