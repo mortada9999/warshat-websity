@@ -45,12 +45,9 @@ export default function TornEdge({ color, seed, isNotebook = false }: TornEdgePr
           {/* Base solid color */}
           <rect x="-12" y="-12" width="2450" height="160" fill={color} />
           
-          {/* Notebook Lines mapped to SVG coordinates (scaled approximately for 100px height) */}
+          {/* Notebook Lines mapped to SVG coordinates */}
           {isNotebook && (
             <>
-              {/* Blue horizontal lines */}
-              <line x1="0" y1="40" x2="2500" y2="40" stroke="#C5D0E8" strokeWidth="1.5" />
-              <line x1="0" y1="98" x2="2500" y2="98" stroke="#C5D0E8" strokeWidth="1.5" />
               {/* Red vertical line (Responsive 5% from the right, to match CSS background RTL margin) */}
               <line x1="95%" y1="0" x2="95%" y2="150" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" />
             </>
