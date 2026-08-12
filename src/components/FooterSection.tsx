@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function FooterSection() {
+  return (
     <>
       {/* Spacer div to push document length and allow scrolling past main content */}
       <div className="w-full h-[70vh] md:h-[80vh] pointer-events-none" aria-hidden="true" />
