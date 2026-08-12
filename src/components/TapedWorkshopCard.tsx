@@ -92,14 +92,14 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
         {cardTapes.map((tape, i) => (
           <div 
             key={i}
-            className="collage-tape absolute z-20 bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm"
+            className={`collage-tape absolute z-20 bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm ${styles.collageTape}`}
             style={{ 
               top: tape.top,
               left: tape.left,
               right: 'right' in tape ? (tape as any).right : undefined,
               width: tape.width,
               height: tape.height,
-              transform: `rotate(${tape.rotate})`,
+              transform: `scale(var(--tape-scale, 1)) rotate(${tape.rotate})`,
               backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
             }}
           />

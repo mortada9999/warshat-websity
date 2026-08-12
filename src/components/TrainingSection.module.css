@@ -243,11 +243,8 @@
   }
 
   /* Scale down the tape slightly for mobile */
-  .tape {
-    width: 60px;
-    height: 18px;
-    top: -8px;
-    margin-left: -30px;
+  .collageTape {
+    --tape-scale: 0.55;
   }
 
   .workshopContent {
