@@ -17,12 +17,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     // Detection covers Xiaomi, Realme, and all Android devices.
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouch) {
-      // normalizeScroll is REQUIRED on real Android Chrome for GSAP pins to work.
-      // Without it, the address bar show/hide changes viewport height mid-scroll,
-      // breaking all pin position calculations. This call is safe WITHOUT Lenis.
-      // GSAP docs: "Do not use normalizeScroll with Lenis" — we only call it here
-      // on the touch branch where Lenis is NOT active.
-      ScrollTrigger.normalizeScroll(true);
+      // We removed normalizeScroll(true) because it hijacks touch events 
+      // and completely breaks native pull-to-refresh on mobile devices.
+      // Instead, we rely on minHeight: '100dvh' in our sections.
 
       // Use window.load instead of setTimeout: ensures all images are loaded
       // before ScrollTrigger measures element positions (critical for hero-hand.png)
