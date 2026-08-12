@@ -12,7 +12,7 @@ export default function FooterSection() {
       
       {/* Fixed footer that sits behind main content (-z-10) and is revealed as we scroll into the spacer */}
       <footer 
-        className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between -z-10"
+        className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0"
         aria-label="تذييل الصفحة"
         suppressHydrationWarning
       >

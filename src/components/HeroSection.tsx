@@ -173,16 +173,6 @@ export default function HeroSection() {
 
         </div>
 
-        {/* Scroll Down Indicator */}
-        <div className="flex flex-col items-center gap-3 mt-8 animate-bounce">
-          <span className="font-ibm-plex text-[10px] md:text-xs uppercase tracking-[0.3em] text-[#A25F00]/50">
-            Scroll
-          </span>
-          <svg width="14" height="22" viewBox="0 0 14 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="12" height="20" rx="6" stroke="#A25F00" strokeOpacity="0.4" strokeWidth="1.5"/>
-            <rect x="5.5" y="4.5" width="3" height="5" rx="1.5" fill="#A25F00" fillOpacity="0.5"/>
-          </svg>
-        </div>
       </div>
     </section>
   );
