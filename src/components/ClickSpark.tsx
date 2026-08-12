@@ -126,8 +126,11 @@ const ClickSpark: React.FC<ClickSparkProps> = ({
           position: 'fixed',
           top: 0,
           left: 0,
-          width: '100vw',
-          height: '100vh',
+          // 100% instead of 100vw: on mobile, 100vw includes scrollbar/overflow
+          // and causes the white horizontal gap during scroll.
+          width: '100%',
+          // 100dvh instead of 100vh: accounts for Android address bar show/hide
+          height: '100dvh',
           pointerEvents: 'none',
           zIndex: 99999,
         }}

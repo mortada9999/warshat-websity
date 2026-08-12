@@ -73,6 +73,11 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   background-color: var(--bg);
+  /* CRITICAL: prevents horizontal white gap on mobile scroll.
+     Must be on html (not just body) to work on all Android/iOS browsers. */
+  overflow-x: hidden;
+  /* Prevent width from exceeding viewport on mobile */
+  max-width: 100%;
 }
 
 body {
@@ -82,6 +87,10 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   direction: rtl;
+  /* Prevent horizontal overflow / white gap on mobile scroll */
+  overflow-x: hidden;
+  /* max-width: 100% prevents any child from causing horizontal overflow */
+  max-width: 100%;
 }
 
 body.ltr { direction: ltr; }
