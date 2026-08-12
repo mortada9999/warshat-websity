@@ -57,7 +57,7 @@ export default function HomePage() {
             style={{ 
               backgroundColor: bg,
               ...(isNotebook ? {
-                backgroundImage: 'linear-gradient(to left, transparent 48px, rgba(210, 90, 90, 0.4) 48px, rgba(210, 90, 90, 0.4) 49px, transparent 49px), linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
+                backgroundImage: 'linear-gradient(to left, transparent 5%, rgba(210, 90, 90, 0.4) 5%, rgba(210, 90, 90, 0.4) calc(5% + 1.5px), transparent calc(5% + 1.5px)), linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
                 backgroundSize: '100% 40px',
                 backgroundRepeat: 'repeat'
               } : {}),
