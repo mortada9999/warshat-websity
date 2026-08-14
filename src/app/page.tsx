@@ -79,12 +79,9 @@ export default function HomePage() {
             {/* Horizontal blue lines starting below the header margin */}
             {isNotebook && (
               <div 
-                className="absolute left-0 right-0 bottom-0 pointer-events-none z-0"
+                className="absolute left-0 right-0 bottom-0 pointer-events-none z-0 notebook-lines"
                 style={{ 
                   top: '55px',
-                  backgroundImage: 'linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
-                  backgroundSize: '100% 40px',
-                  backgroundRepeat: 'repeat'
                 }}
                 aria-hidden="true"
               />
