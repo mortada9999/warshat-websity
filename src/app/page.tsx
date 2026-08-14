@@ -67,7 +67,7 @@ export default function HomePage() {
             {/* Single continuous red margin line for notebook sections */}
             {isNotebook && (
               <div 
-                className="absolute z-30 pointer-events-none top-[-53px] sm:top-[-90px] bottom-0"
+                className="absolute z-30 pointer-events-none top-[-49px] sm:top-[-84px] bottom-0"
                 style={{ 
                   right: '5%',
                   width: '1.5px',

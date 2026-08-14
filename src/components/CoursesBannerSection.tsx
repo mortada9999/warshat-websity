@@ -56,7 +56,7 @@ export default function CoursesBannerSection() {
       <div className="relative flex flex-col items-center w-full max-w-6xl z-10 bg-transparent">
         
         {/* Section Header */}
-        <div className="relative flex flex-col items-center justify-center w-full -mt-12 md:-mt-16 mb-20 md:mb-32 gsap-header bg-transparent z-30">
+        <div className="relative flex flex-col items-center justify-center w-full -mt-12 md:-mt-16 mb-8 md:mb-12 gsap-header bg-transparent z-30">
           <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%] mb-3">
             الكورسات
           </h2>
@@ -66,7 +66,7 @@ export default function CoursesBannerSection() {
         </div>
 
         {/* ── Vertical Card Stack ── */}
-        <div className={styles.cardStack} style={{ marginTop: '60px' }}>
+        <div className={styles.cardStack}>
           {COURSES.map((course) => (
             <article key={course.id} className={styles.card}>
               
