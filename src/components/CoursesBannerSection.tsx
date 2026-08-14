@@ -63,9 +63,6 @@ export default function CoursesBannerSection() {
           <svg width="160" height="10" viewBox="0 0 234 16" fill="none" className={styles.headingLine}>
             <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#C5C8B6" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <p className="font-ibm-plex text-[#597257] mt-5 text-center max-w-md px-4 text-sm md:text-base leading-relaxed">
-            انغمس في عالم الفن والإبداع من خلال دوراتنا المتخصصة والمصممة لتطوير مهاراتك الفنية بأسلوب أكاديمي وعملي.
-          </p>
         </div>
 
         {/* ── Vertical Card Stack ── */}

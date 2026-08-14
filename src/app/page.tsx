@@ -81,7 +81,7 @@ export default function HomePage() {
               <div 
                 className="absolute left-0 right-0 bottom-0 pointer-events-none z-0"
                 style={{ 
-                  top: '160px',
+                  top: '80px',
                   backgroundImage: 'linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
                   backgroundSize: '100% 40px',
                   backgroundRepeat: 'repeat'
