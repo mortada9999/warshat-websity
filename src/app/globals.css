@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap');
 
-/* ─── Design Tokens (from Figma) ─────────────────────────────────────────── */
+/* â”€â”€â”€ Design Tokens (from Figma) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
   /* Figma palette */
   --fg-olive-dark:   #374a00;  /* headings, primary text */
@@ -18,7 +18,7 @@
   --fg-card-warm:    #fdfaf5;  /* card warm bg */
   --fg-white:        #ffffff;
 
-  /* Legacy aliases — keep existing components working */
+  /* Legacy aliases â€” keep existing components working */
   --bg:           var(--fg-bg-main);
   --surface:      #F9F8F2;
   --text:         var(--fg-olive-dark);
@@ -66,7 +66,7 @@
   --tex-canvas: none;
 }
 
-/* ─── Reset ──────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
@@ -95,15 +95,15 @@ body {
 
 body.ltr { direction: ltr; }
 
-/* ─── Typography ─────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Typography â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.25;
-  /* color removed — let component-level Tailwind classes control heading colors */
+  /* color removed â€” let component-level Tailwind classes control heading colors */
 }
 
-p { /* color inherited — component-level classes control */  }
+p { /* color inherited â€” component-level classes control */  }
 
 a {
   color: inherit;
@@ -115,7 +115,7 @@ img { max-width: 100%; display: block; }
 
 button { font-family: var(--font-body); }
 
-/* ─── Layout ─────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Layout â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -126,7 +126,7 @@ button { font-family: var(--font-body); }
   .container { padding: 0 1.25rem; }
 }
 
-/* ─── Buttons ────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -180,7 +180,7 @@ button { font-family: var(--font-body); }
 }
 .btn-danger:hover { background: rgba(200, 50, 30, 0.1); }
 
-/* ─── Form Controls ──────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Form Controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
 .form-label {
@@ -215,7 +215,7 @@ button { font-family: var(--font-body); }
 .form-select option { background: var(--surface); }
 .form-error { font-size: 0.8rem; color: #d94040; margin-top: 0.2rem; }
 
-/* ─── Cards ──────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Cards â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -225,7 +225,7 @@ button { font-family: var(--font-body); }
 }
 .card:hover { transform: translateY(-4px); }
 
-/* ─── Badge ──────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Badge â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -257,7 +257,7 @@ button { font-family: var(--font-body); }
   border: 1px solid rgba(200,50,30,0.2);
 }
 
-/* ─── Section headings ───────────────────────────────────────────────────── */
+/* â”€â”€â”€ Section headings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .section-title {
   font-size: clamp(1.6rem, 3vw, 2.4rem);
   font-family: var(--font-heading);
@@ -265,20 +265,20 @@ button { font-family: var(--font-body); }
   color: var(--fg-olive-dark);
 }
 
-/* ─── Divider ────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Divider â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .divider {
   height: 1px;
   background: var(--border);
   margin: 2rem 0;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Scrollbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 ::-webkit-scrollbar       { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--surface); }
 ::-webkit-scrollbar-thumb { background: var(--border); }
 ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
-/* ─── Utility ────────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Utility â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .sr-only {
   position: absolute; width: 1px; height: 1px;
   padding: 0; margin: -1px; overflow: hidden;
@@ -288,7 +288,7 @@ button { font-family: var(--font-body); }
 .text-center { text-align: center; }
 .flex-center  { display: flex; align-items: center; justify-content: center; }
 
-/* ─── Animations ─────────────────────────────────────────────────────────── */
+/* â”€â”€â”€ Animations â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -296,16 +296,15 @@ button { font-family: var(--font-body); }
 
 .animate-fade-up { animation: fadeUp 0.55s ease both; }
 
- / *   N o t e b o o k   l i n e s   r e s p o n s i v e   s c a l i n g   * / 
- . n o t e b o o k - l i n e s   { 
-     b a c k g r o u n d - i m a g e :   l i n e a r - g r a d i e n t ( 0 d e g ,   t r a n s p a r e n t ,   t r a n s p a r e n t   2 3 p x ,   # C 5 D 0 E 8   2 3 p x ,   # C 5 D 0 E 8   2 4 p x ) ; 
-     b a c k g r o u n d - s i z e :   1 0 0 %   2 4 p x ; 
-     b a c k g r o u n d - r e p e a t :   r e p e a t ; 
- } 
- @ m e d i a   ( m i n - w i d t h :   7 6 8 p x )   { 
-     . n o t e b o o k - l i n e s   { 
-         b a c k g r o u n d - i m a g e :   l i n e a r - g r a d i e n t ( 0 d e g ,   t r a n s p a r e n t ,   t r a n s p a r e n t   3 9 p x ,   # C 5 D 0 E 8   3 9 p x ,   # C 5 D 0 E 8   4 0 p x ) ; 
-         b a c k g r o u n d - s i z e :   1 0 0 %   4 0 p x ; 
-     } 
- }  
- 
+/* Notebook lines responsive scaling */
+.notebook-lines {
+  background-image: linear-gradient(0deg, transparent, transparent 23px, #C5D0E8 23px, #C5D0E8 24px);
+  background-size: 100% 24px;
+  background-repeat: repeat;
+}
+@media (min-width: 768px) {
+  .notebook-lines {
+    background-image: linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px);
+    background-size: 100% 40px;
+  }
+}
