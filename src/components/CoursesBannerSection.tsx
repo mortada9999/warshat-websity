@@ -66,7 +66,7 @@ export default function CoursesBannerSection() {
         </div>
 
         {/* ── Vertical Card Stack ── */}
-        <div className={styles.cardStack}>
+        <div className={styles.cardStack} style={{ marginTop: '60px' }}>
           {COURSES.map((course) => (
             <article key={course.id} className={styles.card}>
               
