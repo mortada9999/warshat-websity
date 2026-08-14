@@ -6,31 +6,6 @@
 /* ── Notebook Page Background ── */
 .notebookPage {
   background-color: #FDFBF7;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 31px,
-      #C5D0E8 31px,
-      #C5D0E8 32px
-    );
-}
-
-/* Red margin line */
-.notebookPage::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 48px;
-  bottom: 0;
-  width: 1px;
-  background: rgba(210, 90, 90, 0.35);
-  z-index: 0;
-  pointer-events: none;
-}
-
-@media (max-width: 768px) {
-  .notebookPage::before { right: 24px; }
 }
 
 /* ── Vertical Card Stack ── */
