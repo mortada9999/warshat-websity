@@ -56,11 +56,8 @@ export default function HomePage() {
             className="stackable-section relative w-full"
             style={{ 
               backgroundColor: bg,
-              ...(isNotebook ? {
-                backgroundImage: 'linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
-                backgroundSize: '100% 40px',
-                backgroundRepeat: 'repeat'
-              } : {}),
+              // Background image is now handled by a separate absolute div to create a header margin
+
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
               minHeight: 'min(100dvh, 100vh)',
@@ -75,6 +72,19 @@ export default function HomePage() {
                   right: '5%',
                   width: '1.5px',
                   backgroundColor: 'rgba(210, 90, 90, 0.5)',
+                }}
+                aria-hidden="true"
+              />
+            )}
+            {/* Horizontal blue lines starting below the header margin */}
+            {isNotebook && (
+              <div 
+                className="absolute left-0 right-0 bottom-0 pointer-events-none z-0"
+                style={{ 
+                  top: '160px',
+                  backgroundImage: 'linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
+                  backgroundSize: '100% 40px',
+                  backgroundRepeat: 'repeat'
                 }}
                 aria-hidden="true"
               />
