@@ -57,19 +57,28 @@ export default function HomePage() {
             style={{ 
               backgroundColor: bg,
               ...(isNotebook ? {
-                backgroundImage: 'linear-gradient(to left, transparent 5%, rgba(210, 90, 90, 0.4) 5%, rgba(210, 90, 90, 0.4) calc(5% + 1.5px), transparent calc(5% + 1.5px)), linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
+                backgroundImage: 'linear-gradient(0deg, transparent, transparent 39px, #C5D0E8 39px, #C5D0E8 40px)',
                 backgroundSize: '100% 40px',
                 backgroundRepeat: 'repeat'
               } : {}),
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              // min(100dvh, 100vh): dvh = actual visible viewport excluding
-              // Android address bar. Critical for correct GSAP pin calculations.
-              // Falls back to 100vh on Android < Chrome 108.
               minHeight: 'min(100dvh, 100vh)',
               paddingBottom: '60vh',
             }}
           >
+            {/* Single continuous red margin line for notebook sections */}
+            {isNotebook && (
+              <div 
+                className="absolute z-30 pointer-events-none top-[-53px] sm:top-[-90px] bottom-0"
+                style={{ 
+                  right: '5%',
+                  width: '1.5px',
+                  backgroundColor: 'rgba(210, 90, 90, 0.5)',
+                }}
+                aria-hidden="true"
+              />
+            )}
             {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} />}
             <Component />
           </div>

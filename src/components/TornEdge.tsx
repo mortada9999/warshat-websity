@@ -20,7 +20,7 @@ export default function TornEdge({ color, seed, isNotebook = false }: TornEdgePr
       aria-hidden="true"
     >
       <svg
-        className="absolute top-0 left-0 w-full h-full block"
+        className="absolute bottom-0 right-0 w-[200%] sm:w-full h-auto min-h-[50px] object-cover"
         viewBox="0 0 2429 144"
         preserveAspectRatio="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -44,14 +44,6 @@ export default function TornEdge({ color, seed, isNotebook = false }: TornEdgePr
         <g mask={`url(#${clipId})`}>
           {/* Base solid color */}
           <rect x="-12" y="-12" width="2450" height="160" fill={color} />
-          
-          {/* Notebook Lines mapped to SVG coordinates */}
-          {isNotebook && (
-            <>
-              {/* Red vertical line (Responsive 5% from the right, to match CSS background RTL margin) */}
-              <line x1="95%" y1="0" x2="95%" y2="150" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" />
-            </>
-          )}
         </g>
       </svg>
     </div>

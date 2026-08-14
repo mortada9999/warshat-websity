@@ -50,22 +50,19 @@ export default function CoursesBannerSection() {
   return (
     <section 
       id="courses" 
-      className="relative flex flex-col items-center justify-center w-full min-h-screen pb-[60vh] py-16 px-4 md:px-8 z-20"
+      className="relative flex flex-col items-center justify-start w-full min-h-screen pt-2 pb-16 px-4 md:px-8 z-20"
       aria-label="الكورسات"
     >
       <div className="relative flex flex-col items-center w-full max-w-6xl z-10 bg-transparent">
         
         {/* Section Header */}
-        <div className="relative flex flex-col items-center justify-center w-full mb-12 md:mb-24 gsap-header bg-transparent">
-          <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%] mb-3">
+        <div className="relative flex flex-col items-center justify-center w-full -mt-16 md:-mt-24 mb-12 md:mb-24 gsap-header z-30">
+          <h2 className="font-amiri font-bold text-2xl md:text-3xl text-[#374A00] text-center leading-none mb-1">
             الكورسات
           </h2>
-          <svg width="160" height="10" viewBox="0 0 234 16" fill="none" className={styles.headingLine}>
+          <svg width="140" height="8" viewBox="0 0 234 16" fill="none" className={styles.headingLine}>
             <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#C5C8B6" strokeWidth="2" strokeLinecap="round" />
           </svg>
-          <p className="font-ibm-plex text-[#597257] mt-5 text-center max-w-md px-4 text-sm md:text-base leading-relaxed">
-            انغمس في عالم الفن والإبداع من خلال دوراتنا المتخصصة والمصممة لتطوير مهاراتك الفنية بأسلوب أكاديمي وعملي.
-          </p>
         </div>
 
         {/* ── Vertical Card Stack ── */}
