@@ -44,6 +44,16 @@ export default function TornEdge({ color, seed, isNotebook = false }: TornEdgePr
         <g mask={`url(#${clipId})`}>
           {/* Base solid color */}
           <rect x="-12" y="-12" width="2450" height="160" fill={color} />
+          
+          {/* Red notebook margin lines that perfectly match the CSS line below */}
+          {isNotebook && (
+            <>
+              {/* Desktop: 48px from right edge */}
+              <line className="hidden md:block" x1="calc(100% - 48px)" y1="0" x2="calc(100% - 48px)" y2="160" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+              {/* Mobile: 24px from right edge */}
+              <line className="md:hidden" x1="calc(100% - 24px)" y1="0" x2="calc(100% - 24px)" y2="160" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+            </>
+          )}
         </g>
       </svg>
     </div>
