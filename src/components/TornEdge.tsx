@@ -44,18 +44,18 @@ export default function TornEdge({ color, seed, isNotebook = false }: TornEdgePr
         <g mask={`url(#${clipId})`}>
           {/* Base solid color */}
           <rect x="-12" y="-12" width="2450" height="160" fill={color} />
+          
+          {/* Red notebook margin lines that perfectly match the CSS line below (5% right margin) */}
+          {isNotebook && (
+            <>
+              {/* Desktop (sm and up, SVG is w-full): 5% from right edge -> 95% */}
+              <line className="hidden sm:block" x1="95%" y1="0" x2="95%" y2="160" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+              {/* Mobile (under sm, SVG is w-[200%]): 5vw is 2.5% of SVG width -> 97.5% */}
+              <line className="sm:hidden" x1="97.5%" y1="0" x2="97.5%" y2="160" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+            </>
+          )}
         </g>
       </svg>
-
-      {/* HTML Red line that perfectly aligns with the main CSS red line below.
-          Starts at top: 25px to safely stay below the lowest point of the wavy cut. */}
-      {isNotebook && (
-        <div 
-          className="absolute bottom-0 right-[24px] md:right-[48px] w-[1.5px]"
-          style={{ top: '25px', backgroundColor: 'rgba(210, 90, 90, 0.4)' }}
-          aria-hidden="true"
-        />
-      )}
     </div>
   );
 }
