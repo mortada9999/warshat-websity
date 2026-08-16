@@ -5,12 +5,14 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { useLanguage } from './LanguageProvider';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(useGSAP, ScrollTrigger);
 }
 
 export default function HeroSection() {
+  const { t } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
@@ -95,7 +97,7 @@ export default function HeroSection() {
     <section 
       ref={sectionRef}
       className="relative flex flex-col items-center justify-center min-h-screen w-full bg-[#F6F0E2] overflow-x-hidden pt-24 pb-32 md:pb-64 px-6 md:px-12"
-      aria-label="القسم الرئيسي للورش"
+      aria-label={t('القسم الرئيسي للورش', 'Main workshops section')}
     >
       {/* Background decorative shapes */}
       {/* Yellow Blur */}
@@ -120,11 +122,16 @@ export default function HeroSection() {
           <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
             <Image
               src="/images/figma/hero-hand.png"
-              alt="يد تمسك ورقة فنية — ورشة فن"
+              alt={t('يد تمسك ورقة فنية — ورشة فن', 'A hand holding an art paper — Warshat Fan')}
               width={512}
               height={684}
               className="w-full h-auto object-contain"
-              style={{ width: '100%', height: 'auto' }}
+              style={{
+                width: '100%',
+                height: 'auto',
+                maskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
+              }}
               priority
             />
             {/* مساحة مخصصة للنصوص المستقبلية داخل اليد */}

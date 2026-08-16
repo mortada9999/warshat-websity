@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { useLanguage } from './LanguageProvider';
 import styles from './CoursesBannerSection.module.css';
 
 type CoursePattern = 'crochet' | 'music' | 'blueprint';
@@ -10,7 +11,8 @@ const COURSES: {
   id: number;
   titleAr: string;
   titleEn: string;
-  sessions: string;
+  sessionsAr: string;
+  sessionsEn: string;
   image: string;
   pattern: CoursePattern;
 }[] = [
@@ -18,7 +20,8 @@ const COURSES: {
     id: 1,
     titleAr: 'كورس تعليم الرسم',
     titleEn: 'Fine Art Fundamentals',
-    sessions: '8 جلسات',
+    sessionsAr: '8 جلسات',
+    sessionsEn: '8 Sessions',
     image: '/images/figma/pottery.png',
     pattern: 'blueprint',
   },
@@ -26,7 +29,8 @@ const COURSES: {
     id: 2,
     titleAr: 'تقنيات الفخار المتقدمة',
     titleEn: 'Advanced Pottery Techniques',
-    sessions: '12 جلسة',
+    sessionsAr: '12 جلسة',
+    sessionsEn: '12 Sessions',
     image: '/images/figma/mirror.png',
     pattern: 'music',
   },
@@ -34,7 +38,8 @@ const COURSES: {
     id: 3,
     titleAr: 'كورس الحياكة',
     titleEn: 'Textile Design',
-    sessions: '6 جلسات',
+    sessionsAr: '6 جلسات',
+    sessionsEn: '6 Sessions',
     image: '/images/figma/tote-bag.png',
     pattern: 'crochet',
   },
@@ -47,18 +52,19 @@ const PATTERN_CLASSES: Record<CoursePattern, string> = {
 };
 
 export default function CoursesBannerSection() {
+  const { t } = useLanguage();
   return (
     <section 
       id="courses" 
       className="relative flex flex-col items-center justify-start w-full min-h-screen pt-2 pb-16 px-4 md:px-8 z-20"
-      aria-label="الكورسات"
+      aria-label={t('الكورسات', 'Courses')}
     >
       <div className="relative flex flex-col items-center w-full max-w-6xl z-10 bg-transparent">
         
         {/* Section Header */}
         <div className="relative flex flex-col items-center justify-center w-full -mt-12 md:-mt-16 gsap-header bg-transparent z-30">
           <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%] mb-3">
-            الكورسات
+            {t('الكورسات', 'Courses')}
           </h2>
           <svg width="160" height="10" viewBox="0 0 234 16" fill="none" className={styles.headingLine}>
             <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#C5C8B6" strokeWidth="2" strokeLinecap="round" />
@@ -89,10 +95,10 @@ export default function CoursesBannerSection() {
 
                 {/* Text — solid bg for readability over pattern */}
                 <div className={styles.cardText}>
-                  <h3 className={styles.cardTitle}>{course.titleAr}</h3>
-                  <p className={styles.cardEn}>{course.titleEn}</p>
-                  <p className={styles.cardSessions}>{course.sessions}</p>
-                  <a href="#book" className={styles.bookBtn}>Book Now</a>
+                  <h3 className={styles.cardTitle}>{t(course.titleAr, course.titleEn)}</h3>
+                  <p className={styles.cardEn}>{t(course.titleEn, course.titleAr)}</p>
+                  <p className={styles.cardSessions}>{t(course.sessionsAr, course.sessionsEn)}</p>
+                  <a href="#book" className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</a>
                 </div>
 
               </div>
@@ -103,7 +109,7 @@ export default function CoursesBannerSection() {
         {/* ── View All CTA ── */}
         <div className="mt-12 md:mt-16">
           <a href="#" className={styles.viewAllLink}>
-            جميع الكورسات
+            {t('جميع الكورسات', 'View All Courses')}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M7 1L13 7L7 13M12 7H1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

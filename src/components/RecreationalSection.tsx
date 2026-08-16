@@ -3,24 +3,26 @@
 import React from 'react';
 import Image from 'next/image';
 import AnimatedTapedButton from './AnimatedTapedButton';
+import { useLanguage } from './LanguageProvider';
 
 const ACTIVITIES = [
-  { title: 'الرسم على الأكواب الفخارية', price: '10,000', image: '/images/figma/pottery.png' },
-  { title: 'الرسم على الحقائب القماشية', price: '15,000', image: '/images/figma/tote-bag.png' },
-  { title: 'الرسم على المرايا',         price: '15,000', image: '/images/figma/mirror.png' },
-  { title: 'صناعة الاكسسوارات',         price: '15,000', image: '/images/figma/pottery.png' },
-  { title: 'الرسم على القطع الخشبية',   price: '10,000', image: '/images/figma/tote-bag.png' },
-  { title: 'الرسم على اللوحات',         price: '15,000', image: '/images/figma/mirror.png' },
-  { title: 'الرسم على الزجاج',          price: '20,000', image: '/images/figma/pottery.png' },
-  { title: 'الرسم و الزراعة',           price: '15,000', image: '/images/figma/tote-bag.png' },
+  { titleAr: 'الرسم على الأكواب الفخارية', titleEn: 'Cup Painting', price: '10,000', image: '/images/figma/pottery.png' },
+  { titleAr: 'الرسم على الحقائب القماشية', titleEn: 'Tote Bag Painting', price: '15,000', image: '/images/figma/tote-bag.png' },
+  { titleAr: 'الرسم على المرايا', titleEn: 'Mirror Painting', price: '15,000', image: '/images/figma/mirror.png' },
+  { titleAr: 'صناعة الاكسسوارات', titleEn: 'Accessory Making', price: '15,000', image: '/images/figma/pottery.png' },
+  { titleAr: 'الرسم على القطع الخشبية', titleEn: 'Wood Painting', price: '10,000', image: '/images/figma/tote-bag.png' },
+  { titleAr: 'الرسم على اللوحات', titleEn: 'Canvas Painting', price: '15,000', image: '/images/figma/mirror.png' },
+  { titleAr: 'الرسم على الزجاج', titleEn: 'Glass Painting', price: '20,000', image: '/images/figma/pottery.png' },
+  { titleAr: 'الرسم و الزراعة', titleEn: 'Painting & Planting', price: '15,000', image: '/images/figma/tote-bag.png' },
 ];
 
 export default function RecreationalSection() {
+  const { t } = useLanguage();
   return (
     <section 
       id="entertainment" 
       className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 z-20"
-      aria-label="النشاطات الترفيهية"
+      aria-label={t('النشاطات الترفيهية', 'Recreational activities')}
     >
       <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-12">
         
@@ -32,14 +34,14 @@ export default function RecreationalSection() {
           
           <div className="flex flex-col-reverse md:flex-row w-full justify-between items-end gap-2 md:gap-0">
             <a href="#" className="font-ibm-plex font-semibold text-[#A25F00] text-xs md:text-sm uppercase tracking-widest hover:underline flex items-center gap-2 pb-0 md:pb-2">
-              View All
+              {t('عرض الكل', 'View All')}
               <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7.10208 5.25H0V4.08333H7.10208L3.83542 0.816667L4.66667 0L9.33333 4.66667L4.66667 9.33333L3.83542 8.51667L7.10208 5.25Z" fill="#A25F00"/>
               </svg>
             </a>
             
             <h2 className="font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-right leading-[120%]">
-              النشاطات الترفيهية المفتوحة
+              {t('النشاطات اليومية المفتوحة', 'Open Daily Activities')}
             </h2>
           </div>
         </div>
@@ -51,14 +53,14 @@ export default function RecreationalSection() {
               
               {/* Title positioned at top of card */}
               <h3 className="font-amiri text-base md:text-2xl text-[#374A00] mb-3 h-10 flex items-center justify-center leading-[120%]">
-                {act.title}
+                {t(act.titleAr, act.titleEn)}
               </h3>
               
               {/* Circular Image with Overlay */}
               <div className="relative w-[100px] h-[100px] md:w-[160px] md:h-[160px] rounded-full border-4 border-[#F6F6F4] shadow-md overflow-hidden mb-4 transition-transform duration-300 group-hover:scale-105">
                 <Image
                   src={act.image}
-                  alt={act.title}
+                  alt={t(act.titleAr, act.titleEn)}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 120px, 160px"
@@ -81,13 +83,13 @@ export default function RecreationalSection() {
         {/* Section Footer - View All CTA */}
         <div className="flex flex-col items-center gap-4 mt-8 pt-8 border-t border-[#C5C8B6]/20 w-full">
           <p className="font-amiri text-lg md:text-xl text-[#597257] text-center">
-            المزيد من النشاطات الإبداعية بانتظارك
+            {t('المزيد من النشاطات الإبداعية بانتظارك', 'More creative activities await you')}
           </p>
           <a
             href="#"
             className="inline-flex items-center gap-2 px-8 py-3 bg-[#4D6314] text-white font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm shadow-md hover:bg-[#374A00] transition-colors"
           >
-            عرض الكل
+            {t('عرض الكل', 'View All')}
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
               <path d="M6 1L11 6L6 11M10 6H1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

@@ -12,6 +12,7 @@ import CoursesBannerSection from '@/components/CoursesBannerSection';
 import KidsBannerSection from '@/components/KidsBannerSection';
 import FooterSection from '@/components/FooterSection';
 import TornEdge from '@/components/TornEdge';
+import HangingTags from '@/components/HangingTags';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -49,6 +50,7 @@ export default function HomePage() {
 
   return (
     <>
+      <HangingTags />
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         {SECTIONS.map(({ Component, bg, torn, isNotebook }, i) => (
           <div

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { useLanguage } from './LanguageProvider';
 import styles from './TrainingSection.module.css';
 
 const TAPE_CONFIGS = [
@@ -32,8 +33,10 @@ interface Workshop {
   id: number;
   titleAr: string;
   titleEn: string;
-  subtitle: string;
-  desc: string;
+  subtitleAr: string;
+  subtitleEn: string;
+  descAr: string;
+  descEn: string;
   image: string;
 }
 
@@ -43,6 +46,7 @@ interface Props {
 }
 
 export default function TapedWorkshopCard({ workshop: w, index }: Props) {
+  const { lang, t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLElement>(null);
 
@@ -110,7 +114,7 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
           <div className={styles.workshopImageFrame}>
             <Image
               src={w.image}
-              alt={w.titleAr || w.titleEn}
+              alt={lang === 'ar' ? w.titleAr : w.titleEn}
               fill
               className={styles.workshopImage}
               sizes="(max-width: 1024px) 100vw, 525px"
@@ -120,26 +124,24 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
 
         {/* Content */}
         <div className={styles.workshopContent}>
-          {w.titleAr ? (
-            <h3 className={styles.workshopTitleAr}>{w.titleAr}</h3>
-          ) : (
-            <h3 className={styles.workshopTitleEn}>{w.titleEn}</h3>
-          )}
+          <h3 className={lang === 'ar' ? styles.workshopTitleAr : styles.workshopTitleEn}>
+            {lang === 'ar' ? w.titleAr : w.titleEn}
+          </h3>
           
-          {w.subtitle && (
+          {w.subtitleAr && (
             <p className={styles.workshopSubtitle}>
-              {w.subtitle}
+              {t(w.subtitleAr, w.subtitleEn)}
             </p>
           )}
           
-          {w.desc && (
+          {w.descAr && (
             <p className={styles.workshopDesc}>
-              {w.desc}
+              {t(w.descAr, w.descEn)}
             </p>
           )}
           
           {/* Book Now Button */}
-          <a href="#book" className={styles.bookBtn}>Book Now</a>
+          <a href="#book" className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</a>
         </div>
       </article>
     </div>

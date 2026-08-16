@@ -3,13 +3,15 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useLanguage } from './LanguageProvider';
 
 export default function KidsBannerSection() {
+  const { t } = useLanguage();
   return (
     <section 
       id="kids" 
       className="relative flex flex-col items-center justify-center w-full h-full min-h-screen px-6 md:px-12 bg-[#F6F0E2] overflow-hidden z-20"
-      aria-label="ورش الأطفال"
+      aria-label={t('ورش الأطفال', 'Kids workshops')}
     >
       {/* Decorative Playful Elements */}
       <div className="absolute top-[10%] left-[5%] md:left-[15%] w-16 h-16 bg-[#FFDF9D] opacity-60 rounded-full blur-xl" aria-hidden="true" />
@@ -20,7 +22,7 @@ export default function KidsBannerSection() {
         {/* Section Heading */}
         <div className="relative flex flex-col items-center justify-center w-full pb-8 md:pb-12 z-40">
           <h2 className="font-amiri font-bold text-3xl md:text-6xl text-[#374A00] text-center leading-[120%] mb-2">
-            ورش و اشتراكات الأطفال
+            {t('ورش و اشتراكات الأطفال', 'Kids Workshops & Subscriptions')}
           </h2>
           <svg width="234" height="16" viewBox="0 0 234 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#C5D475" strokeWidth="3.9245" strokeLinecap="round" />
@@ -40,7 +42,7 @@ export default function KidsBannerSection() {
             {/* Cloud Image */}
             <Image
               src="/images/figma/kids-cloud.png"
-              alt="ورش فنية للأطفال"
+              alt={t('ورش فنية للأطفال', 'Art workshops for kids')}
               fill
               className="object-contain drop-shadow-2xl"
               sizes="(max-width: 1024px) 100vw, 908px"
@@ -49,14 +51,16 @@ export default function KidsBannerSection() {
             {/* Text Overlay on Cloud */}
             <div className="absolute flex flex-col items-center justify-center text-center p-6 md:p-12 w-[80%] md:w-[60%] max-w-[500px]">
               <h3 className="font-amiri text-xl md:text-4xl text-[#374A00] font-bold mb-4">
-                عالم من الإبداع للصغار
+                {t('عالم من الإبداع للصغار', 'A world of creativity for kids')}
               </h3>
               <p className="font-ibm-plex text-sm md:text-lg text-[#45483A] mb-6 leading-relaxed">
-                نقدم ورش عمل فنية ممتعة ومحفزة لخيال الأطفال، حيث يكتشفون مواهبهم
-                في بيئة مليئة بالألوان والمرح.
+                {t(
+                  'نقدم ورش عمل فنية ممتعة ومحفزة لخيال الأطفال، حيث يكتشفون مواهبهم في بيئة مليئة بالألوان والمرح.',
+                  "We offer fun, stimulating art workshops that spark children's imagination, helping them discover their talents in a colorful, playful environment.",
+                )}
               </p>
               <button className="px-8 py-3 bg-[#A25F00] text-white font-ibm-plex font-semibold text-sm md:text-base uppercase tracking-widest rounded-full shadow-lg transition-transform hover:scale-105 hover:bg-[#7D713C]">
-                Book Now
+                {t('احجز الآن', 'Book Now')}
               </button>
             </div>
 
@@ -64,7 +68,7 @@ export default function KidsBannerSection() {
             <div className="absolute -bottom-8 md:-bottom-16 -right-4 md:-right-12 w-[120px] h-[120px] md:w-[214px] md:h-[214px] rounded-full border-[6px] border-white shadow-xl overflow-hidden bg-white hover:rotate-3 transition-transform duration-300">
               <Image
                 src="/images/figma/image1.png"
-                alt="طفل يرسم"
+                alt={t('طفل يرسم', 'A child painting')}
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 120px, 214px"
@@ -82,13 +86,13 @@ export default function KidsBannerSection() {
             <span className="text-2xl">🌈</span>
           </div>
           <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
-            اشتراكات شهرية وفصلية للأطفال
+            {t('اشتراكات شهرية وفصلية للأطفال', 'Monthly & seasonal subscriptions for kids')}
           </p>
           <a
             href="#contact"
             className="inline-flex items-center gap-2 px-8 py-3 border-2 border-[#A25F00] text-[#A25F00] font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm hover:bg-[#A25F00] hover:text-white transition-colors"
           >
-            تواصل معنا
+            {t('تواصل معنا', 'Contact Us')}
           </a>
         </div>
       </div>

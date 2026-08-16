@@ -1,0 +1,150 @@
+/* ─────────────────────────────────────────────────────────────
+   Hanging Fabric Tags — creative section navigation
+   Clothing-tag aesthetic: raw canvas, stitched dashed border,
+   metal grommet + twine string. Mobile-first, RTL aware.
+   ───────────────────────────────────────────────────────────── */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+}
+
+.rootHidden .body {
+  pointer-events: none;
+}
+
+.anchor {
+  position: fixed;
+  top: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+/* Horizontal slots (mobile-first): a loose cluster on each edge */
+.anchor:nth-child(1) { left: 6px; }
+.anchor:nth-child(2) { left: 38px; }
+.anchor:nth-child(3) { right: 6px; }
+.anchor:nth-child(4) { right: 38px; }
+
+/* Rustic burlap twine string with visible fiber texture */
+.string {
+  display: block;
+  width: 4px;
+  height: 70px; /* fallback, replaced by GSAP with a random length */
+  flex-shrink: 0;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(255, 255, 255, 0.16) 0 1.5px,
+      rgba(0, 0, 0, 0) 1.5px 3px,
+      rgba(0, 0, 0, 0.22) 3px 4.5px,
+      rgba(0, 0, 0, 0) 4.5px 6px),
+    linear-gradient(180deg, #cba470 0%, #9d7547 45%, #765433 72%, #a17c4e 100%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.3),
+    inset 0 0 1.5px rgba(0, 0, 0, 0.4);
+}
+
+/* Aged fabric/paper tag body with grain, lighting and edge wear */
+.body {
+  position: relative;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 48px;
+  padding: 20px 6px 11px;
+  border: 1.5px dashed rgba(110, 88, 60, 0.6);
+  background-color: #f2e6cd;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% -20%, rgba(255, 252, 240, 0.65) 0%, rgba(255, 252, 240, 0) 58%),
+    radial-gradient(ellipse at 50% 120%, rgba(110, 84, 52, 0.16) 0%, rgba(110, 84, 52, 0) 58%),
+    repeating-linear-gradient(0deg, rgba(120, 100, 70, 0.04) 0 1px, rgba(120, 100, 70, 0) 1px 3px),
+    repeating-linear-gradient(90deg, rgba(120, 100, 70, 0.04) 0 1px, rgba(120, 100, 70, 0) 1px 3px);
+  box-shadow:
+    0 9px 20px rgba(18, 18, 18, 0.16),
+    0 2px 5px rgba(18, 18, 18, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -10px 16px rgba(110, 84, 52, 0.12);
+  cursor: grab;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  appearance: none;
+  font-family: inherit;
+  color: inherit;
+  outline-offset: 2px;
+}
+
+.body:active { cursor: grabbing; }
+
+.toneB { background-color: #e9dcc0; }
+
+/* Realistic copper grommet (annulus with punched hole + highlight) */
+.grommet {
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%,
+      transparent 0 5px,
+      #e29256 5px 6px,
+      #b06a33 6px 7.3px,
+      #77421f 7.3px 8px,
+      #512a12 8px 8.5px),
+    radial-gradient(circle at 34% 28%, rgba(255, 228, 194, 0.95) 0 1.6px, rgba(255, 228, 194, 0) 2.8px);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    inset 0 0 1px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.28);
+}
+
+/* Vertical English label */
+.text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-olive-dark);
+  line-height: 1;
+  text-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* ── Desktop: spread tags into the wider side gutters ── */
+@media (min-width: 768px) {
+  .anchor { top: 88px; }
+
+  .anchor:nth-child(1) { left: 32px; }
+  .anchor:nth-child(2) { left: 152px; }
+  .anchor:nth-child(3) { right: 32px; }
+  .anchor:nth-child(4) { right: 152px; }
+
+  .body {
+    width: 56px;
+    padding: 24px 8px 13px;
+    gap: 7px;
+  }
+
+  .text { font-size: 12px; letter-spacing: 0.16em; }
+  .grommet { width: 18px; height: 18px; top: -10px; }
+  .string { width: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .string { transition: none; }
+}

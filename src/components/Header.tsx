@@ -9,10 +9,10 @@ import MenuOverlay from './MenuOverlay';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
-  { href: '#entertainment', label: 'Entertainment' },
-  { href: '#training',      label: 'Training' },
-  { href: '#courses',       label: 'Courses' },
-  { href: '#kids',           label: 'Kids' },
+  { href: '#entertainment', ar: 'ترفيه', en: 'Entertainment' },
+  { href: '#training',      ar: 'ورش تدريبية', en: 'Training' },
+  { href: '#courses',       ar: 'كورسات', en: 'Courses' },
+  { href: '#kids',          ar: 'أطفال', en: 'Kids' },
 ];
 
 export default function Header() {
@@ -72,11 +72,11 @@ export default function Header() {
           <nav className={styles.desktopNav}>
             {NAV_LINKS.map((link) => (
               <Link key={link.href} href={link.href} className={styles.navLink}>
-                {link.label}
+                {t(link.ar, link.en)}
               </Link>
             ))}
             <Link href="#loyalty" className={`${styles.loyaltyLink} hidden md:inline-block`}>
-              Loyalty Ticket
+              {t('تذكرة الولاء', 'Loyalty Ticket')}
             </Link>
           </nav>
 

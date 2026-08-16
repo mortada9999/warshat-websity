@@ -3,8 +3,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from './LanguageProvider';
 
 export default function FooterSection() {
+  const { t } = useLanguage();
   return (
     <>
       {/* Spacer div to push document length and allow scrolling past main content */}
@@ -20,11 +22,11 @@ export default function FooterSection() {
       <div className="flex flex-col items-center justify-center w-full flex-1 px-4 py-20 md:py-32">
           
           <h1 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-4xl md:text-8xl lg:text-[10rem] text-[#E8F3E8] leading-none uppercase tracking-tighter mb-4 text-center max-w-full overflow-hidden text-ellipsis">
-            LET'S MAKE ART
+            {t('لنصنع فن', "LET'S MAKE ART")}
           </h1>
           
           <h2 style={{ fontFamily: "'Inter', sans-serif" }} className="font-black text-3xl md:text-7xl text-[#E8F3E8] leading-none text-center mb-16">
-            لنصنع فن
+            {t("LET'S MAKE ART", 'لنصنع فن')}
           </h2>
 
         </div>
@@ -33,11 +35,11 @@ export default function FooterSection() {
         <div className="w-full flex flex-col md:flex-row justify-between items-center px-8 py-6 border-t border-stone-800 gap-4 md:gap-0 bg-stone-900">
           
           <div className="text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
-            © 2024 Warshat Fan Studio
+            {t('© 2024 استوديو ورشة فن', '© 2024 Warshat Fan Studio')}
           </div>
           
           <div className="text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
-            صُنع بحب وشغف فني
+            {t('صُنع بحب وشغف فني', 'Made with love & artistic passion')}
           </div>
           
           <div className="flex items-center gap-4 text-xs text-gray-300" style={{ fontFamily: "'Inter', sans-serif" }}>
