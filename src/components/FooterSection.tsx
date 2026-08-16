@@ -27,34 +27,6 @@ export default function FooterSection() {
             لنصنع فن
           </h2>
 
-          <p style={{ fontFamily: "'Inter', sans-serif" }} className="text-xs md:text-sm uppercase tracking-widest text-gray-400 mb-8">
-            Visit Our Branches
-          </p>
-
-          {/* Location Buttons - Small, elegant circles (w-14 h-14) */}
-          <div className="flex gap-4">
-            {/* Zayouna Branch */}
-            <a 
-              href="https://maps.google.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              title="فرع الزيونة"
-              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#e8f3e8] hover:text-stone-900 text-white transition-colors shadow-lg"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            </a>
-            
-            {/* Yarmouk Branch */}
-            <a 
-              href="https://maps.google.com" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              title="فرع اليرموك"
-              className="flex items-center justify-center w-14 h-14 rounded-full bg-[#c95c55] hover:bg-[#e8f3e8] hover:text-stone-900 text-white transition-colors shadow-lg"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.243-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            </a>
-          </div>
         </div>
 
         {/* Bottom Footer */}

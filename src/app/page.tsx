@@ -64,12 +64,15 @@ export default function HomePage() {
               paddingBottom: '60vh',
             }}
           >
-            {/* Single continuous red margin line for notebook sections */}
+            {/* Single continuous red margin line for notebook sections.
+                `right: calc(5% - 0.75px)` centers this 1.5px line on the 5% mark
+                so it lines up exactly with the TornEdge SVG stroke (which is a
+                1.5px stroke centered on 5%) on every breakpoint. */}
             {isNotebook && (
               <div 
                 className="absolute z-0 pointer-events-none top-0 bottom-0"
                 style={{ 
-                  right: '5%',
+                  right: 'calc(5% - 0.75px)',
                   width: '1.5px',
                   backgroundColor: 'rgba(210, 90, 90, 0.4)',
                 }}
