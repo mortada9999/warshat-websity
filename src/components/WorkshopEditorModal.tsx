@@ -109,6 +109,18 @@ export default function WorkshopEditorModal() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    // Auto-format price with commas
+    if (name === 'price') {
+      const digits = value.replace(/\D/g, ''); // strip non-digits
+      if (digits) {
+        setForm(prev => ({ ...prev, price: Number(digits).toLocaleString('en-US') }));
+      } else {
+        setForm(prev => ({ ...prev, price: '' }));
+      }
+      return;
+    }
+
     setForm(prev => ({
       ...prev,
       [name]: name === 'sortOrder' ? Number(value) : value,

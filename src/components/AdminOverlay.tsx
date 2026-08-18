@@ -32,29 +32,32 @@ export function AdminCardOverlay({ workshop }: { workshop: WorkshopItem }) {
 
   return (
     <div ref={menuRef} style={{ position: 'absolute', top: '-8px', left: '-8px', zIndex: 50 }}>
-      {/* Trigger — small olive circle with a pencil icon */}
+      {/* Trigger — olive pill with order number and pencil icon */}
       <button
         onClick={(e) => { e.preventDefault(); e.stopPropagation(); setMenuOpen(v => !v); }}
         style={{
-          width: '28px',
           height: '28px',
-          borderRadius: '50%',
+          padding: '0 10px',
+          borderRadius: '14px',
           background: '#4D6314',
           border: '2px solid #F6F6F4',
           color: '#F6F6F4',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: '6px',
           cursor: 'pointer',
           fontSize: '13px',
           lineHeight: 1,
+          fontFamily: 'monospace',
           boxShadow: '0 1px 4px rgba(0,0,0,0.15)',
           transition: 'transform 0.15s ease',
-          transform: menuOpen ? 'scale(1.1)' : 'scale(1)',
+          transform: menuOpen ? 'scale(1.05)' : 'scale(1)',
         }}
         title="خيارات الإدارة"
       >
-        ✎
+        <span style={{ fontWeight: 600 }}>{workshop.sortOrder}</span>
+        <span>✎</span>
       </button>
 
       {/* Dropdown Menu */}
