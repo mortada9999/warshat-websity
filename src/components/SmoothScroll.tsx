@@ -47,6 +47,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       syncTouch: false,
     });
 
+    // Expose globally so modals can stop/start scroll
+    (window as unknown as Record<string, unknown>).__lenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
 
     gsap.ticker.add((time) => {

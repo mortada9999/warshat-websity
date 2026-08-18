@@ -75,13 +75,23 @@ export default function WorkshopEditorModal() {
     }
   }, [isOpen, workshop, defaultCategory]);
 
-  // Lock body scroll when modal is open
+  // Lock ALL scroll when modal is open (body + Lenis smooth scroll)
   useEffect(() => {
-    if (isOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
-    }
+    if (!isOpen) return;
+
+    // Lock native scroll
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    // Stop Lenis smooth scroll
+    const win = window as unknown as Record<string, unknown>;
+    const lenis = win.__lenis as { stop?: () => void; start?: () => void } | undefined;
+    lenis?.stop?.();
+
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      lenis?.start?.();
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
