@@ -7,6 +7,8 @@ import { useLanguage } from './LanguageProvider';
 import { useAdmin } from './AdminProvider';
 import { useWorkshopStore } from '@/lib/workshopStore';
 import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
+import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
+import styles from './RecreationalSection.module.css';
 
 export default function RecreationalSection() {
   const { t } = useLanguage();
@@ -17,11 +19,12 @@ export default function RecreationalSection() {
 
   return (
     <section 
-      id="entertainment" 
-      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 z-20"
+      id="recreational" 
+      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#E8F3E8] z-20"
       aria-label={t('النشاطات الترفيهية', 'Recreational activities')}
     >
-      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-12">
+      <HiddenWorkshopsMenu category="open_activity" />
+      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-8 md:mt-12 h-full">
         
         {/* Section Header */}
         <div className="relative flex flex-col items-end w-full pb-4 border-b border-[#C5C8B6]/50 z-40">

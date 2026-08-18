@@ -6,6 +6,7 @@ import { useLanguage } from './LanguageProvider';
 import { useAdmin } from './AdminProvider';
 import { useWorkshopStore } from '@/lib/workshopStore';
 import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
+import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
 import styles from './CoursesBannerSection.module.css';
 
 type CoursePattern = 'crochet' | 'music' | 'blueprint';
@@ -29,6 +30,7 @@ export default function CoursesBannerSection() {
       className="relative flex flex-col items-center justify-start w-full min-h-screen pt-2 pb-16 px-4 md:px-8 z-20"
       aria-label={t('الكورسات', 'Courses')}
     >
+      <HiddenWorkshopsMenu category="course" />
       <div className="relative flex flex-col items-center w-full max-w-6xl z-10 bg-transparent">
         
         {/* Section Header */}

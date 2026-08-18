@@ -8,6 +8,7 @@ import { useLanguage } from './LanguageProvider';
 import { useAdmin } from './AdminProvider';
 import { useWorkshopStore } from '@/lib/workshopStore';
 import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
+import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
 import styles from './TrainingSection.module.css';
 
 export default function TrainingSection() {
@@ -23,6 +24,7 @@ export default function TrainingSection() {
       className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#F6F0E2] z-20"
       aria-label={t('الورش التدريبية', 'Training workshops')}
     >
+      <HiddenWorkshopsMenu category="workshop" />
       <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-8 md:mt-12 h-full">
         
         {/* Section Heading */}

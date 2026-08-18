@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
 import KidsEntryButton from './kids/KidsEntryButton';
+import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
 
 export default function KidsBannerSection() {
   const { t } = useLanguage();
@@ -14,6 +15,7 @@ export default function KidsBannerSection() {
       className="relative flex flex-col items-center justify-center w-full h-full min-h-screen px-6 md:px-12 bg-[#F6F0E2] overflow-hidden z-20"
       aria-label={t('ورش الأطفال', 'Kids workshops')}
     >
+      <HiddenWorkshopsMenu category="kids" />
       {/* Decorative Playful Elements */}
       <div className="absolute top-[10%] left-[5%] md:left-[15%] w-16 h-16 bg-[#FFDF9D] opacity-60 rounded-full blur-xl" aria-hidden="true" />
       <div className="absolute bottom-[20%] right-[5%] md:right-[15%] w-24 h-24 bg-[#C5D475] opacity-60 rounded-full blur-2xl" aria-hidden="true" />
