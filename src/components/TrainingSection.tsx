@@ -58,7 +58,7 @@ export default function TrainingSection() {
 
         {/* Admin Add Button */}
         {isAdmin && (
-          <div className="w-full max-w-[800px]">
+          <div className="relative z-50 w-full max-w-[800px]">
             <AdminAddButton category="workshop" />
           </div>
         )}

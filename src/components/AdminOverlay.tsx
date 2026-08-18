@@ -139,6 +139,8 @@ export function AdminAddButton({ category }: { category: Category }) {
     <button
       onClick={() => openEditor(null, category)}
       style={{
+        position: 'relative',
+        zIndex: 50,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
