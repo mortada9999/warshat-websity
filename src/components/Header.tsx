@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { AnimatePresence } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
-import MenuOverlay from './MenuOverlay';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
@@ -17,7 +15,6 @@ const NAV_LINKS = [
 
 export default function Header() {
   const { lang, setLang, t } = useLanguage();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -31,24 +28,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [isMenuOpen]);
-
   return (
     <>
-      {/* Floating Hamburger Button (Appears when scrolled and menu is closed) */}
-      <button
-        className={`${styles.floatingHamburger} ${scrolled && !isMenuOpen ? styles.visible : ''}`}
-        onClick={() => setIsMenuOpen(true)}
-        aria-label={t('فتح القائمة', 'Open menu')}
-        aria-expanded={isMenuOpen}
-        aria-haspopup="dialog"
-      >
-        <span className={styles.hamburgerLine} />
-        <span className={styles.hamburgerLine} />
-      </button>
 
       {/* Main Top Header */}
       <header
@@ -97,32 +78,9 @@ export default function Header() {
                 EN
               </button>
             </div>
-
-            {/* Mobile Hamburger (Only visible on small screens when NOT scrolled) */}
-            <button
-              className={styles.mobileHamburger}
-              onClick={() => setIsMenuOpen(true)}
-              aria-label={t('فتح القائمة', 'Open menu')}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="3" y1="7" x2="21" y2="7" />
-                <line x1="3" y1="17" x2="21" y2="17" />
-              </svg>
-            </button>
           </div>
         </div>
       </header>
-
-      <AnimatePresence>
-        {isMenuOpen && (
-          <MenuOverlay
-            onClose={() => setIsMenuOpen(false)}
-            lang={lang}
-            setLang={setLang}
-            t={t}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 }
