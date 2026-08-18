@@ -209,10 +209,63 @@ export default function WorkshopEditorModal() {
             <input name="price" value={form.price} onChange={handleChange} style={inputStyle} placeholder="10,000" />
           </div>
 
-          {/* Image */}
+          {/* Image Upload */}
           <div>
-            <label style={labelStyle}>رابط الصورة</label>
-            <input name="image" value={form.image} onChange={handleChange} style={inputStyle} placeholder="/images/figma/pottery.png" />
+            <label style={labelStyle}>الصورة</label>
+            <div 
+              style={{
+                ...inputStyle,
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '24px',
+                border: '2px dashed #C5C8B6',
+                background: form.image ? 'transparent' : '#FDFBF7',
+                cursor: 'pointer',
+                textAlign: 'center',
+                gap: '8px',
+                overflow: 'hidden',
+              }}
+              onClick={() => document.getElementById('image-upload')?.click()}
+            >
+              {form.image ? (
+                <>
+                  <div style={{
+                    width: '100%', height: '120px', 
+                    backgroundImage: `url(${form.image})`, 
+                    backgroundSize: 'contain', 
+                    backgroundPosition: 'center', 
+                    backgroundRepeat: 'no-repeat',
+                    marginBottom: '8px'
+                  }} />
+                  <span style={{ fontSize: '12px', color: '#4D6314', fontWeight: 600 }}>تغيير الصورة</span>
+                </>
+              ) : (
+                <>
+                  <span style={{ fontSize: '24px' }}>🖼️</span>
+                  <span style={{ fontSize: '13px', color: '#6B6B6B' }}>اضغط هنا لاختيار صورة من جهازك</span>
+                </>
+              )}
+              <input 
+                id="image-upload"
+                type="file" 
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    if (event.target?.result) {
+                      setForm(prev => ({ ...prev, image: event.target!.result as string }));
+                    }
+                  };
+                  reader.readAsDataURL(file);
+                }}
+              />
+            </div>
           </div>
 
           {/* Sessions (courses only) */}
