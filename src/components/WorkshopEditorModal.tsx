@@ -75,12 +75,32 @@ export default function WorkshopEditorModal() {
     }
   }, [isOpen, workshop, defaultCategory]);
 
-  // Lock body scroll when modal is open
+  // Aggressive scroll lock (Native + Lenis)
   useEffect(() => {
     if (isOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
+      const html = document.documentElement;
+      const body = document.body;
+      
+      const prevHtmlOverflow = html.style.overflow;
+      const prevBodyOverflow = body.style.overflow;
+      
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+
+      // Stop Lenis smooth scroll if it exists
+      const win = window as unknown as Record<string, any>;
+      if (win.__lenis && typeof win.__lenis.stop === 'function') {
+        win.__lenis.stop();
+      }
+
+      return () => {
+        html.style.overflow = prevHtmlOverflow;
+        body.style.overflow = prevBodyOverflow;
+        
+        if (win.__lenis && typeof win.__lenis.start === 'function') {
+          win.__lenis.start();
+        }
+      };
     }
   }, [isOpen]);
 
@@ -130,6 +150,8 @@ export default function WorkshopEditorModal() {
   return (
     <div
       onClick={closeEditor}
+      onWheel={e => e.stopPropagation()}
+      onTouchMove={e => e.stopPropagation()}
       data-lenis-prevent="true"
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
