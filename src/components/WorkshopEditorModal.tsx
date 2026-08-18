@@ -34,7 +34,7 @@ export default function WorkshopEditorModal() {
     sessionsAr: '',
     sessionsEn: '',
     pattern: 'blueprint',
-    sortOrder: 0,
+    sortOrder: 0 as number | string,
   });
 
   // Reset form when opening
@@ -70,7 +70,7 @@ export default function WorkshopEditorModal() {
           sessionsAr: '',
           sessionsEn: '',
           pattern: 'blueprint',
-          sortOrder: 0,
+          sortOrder: 0 as number | string,
         });
       }
     }
@@ -123,7 +123,7 @@ export default function WorkshopEditorModal() {
 
     setForm(prev => ({
       ...prev,
-      [name]: name === 'sortOrder' ? Number(value) : value,
+      [name]: name === 'sortOrder' ? (value === '' ? '' : Number(value)) : value,
     }));
   };
 
@@ -145,7 +145,7 @@ export default function WorkshopEditorModal() {
       sessionsEn: form.sessionsEn || undefined,
       pattern: form.pattern || undefined,
       isActive: true,
-      sortOrder: form.sortOrder,
+      sortOrder: Number(form.sortOrder) || 0,
     };
 
     if (isNew) {
