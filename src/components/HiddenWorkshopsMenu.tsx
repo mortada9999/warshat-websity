@@ -18,6 +18,35 @@ export function HiddenWorkshopsMenu({ category }: { category: Category }) {
     setMounted(true);
   }, []);
 
+  // Aggressive scroll lock (Native + Lenis)
+  useEffect(() => {
+    if (isOpen) {
+      const html = document.documentElement;
+      const body = document.body;
+      
+      const prevHtmlOverflow = html.style.overflow;
+      const prevBodyOverflow = body.style.overflow;
+      
+      html.style.overflow = 'hidden';
+      body.style.overflow = 'hidden';
+
+      // Stop Lenis smooth scroll if it exists
+      const win = window as unknown as Record<string, any>;
+      if (win.__lenis && typeof win.__lenis.stop === 'function') {
+        win.__lenis.stop();
+      }
+
+      return () => {
+        html.style.overflow = prevHtmlOverflow;
+        body.style.overflow = prevBodyOverflow;
+        
+        if (win.__lenis && typeof win.__lenis.start === 'function') {
+          win.__lenis.start();
+        }
+      };
+    }
+  }, [isOpen]);
+
   if (!isAdmin) return null;
 
   // Filter for hidden workshops in this specific category
