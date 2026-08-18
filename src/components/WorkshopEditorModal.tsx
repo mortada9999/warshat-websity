@@ -19,6 +19,7 @@ export default function WorkshopEditorModal() {
   const { isOpen, workshop, defaultCategory } = editorState;
 
   const isNew = !workshop;
+  const [isDragging, setIsDragging] = useState(false);
 
   const [form, setForm] = useState({
     titleAr: '',
@@ -211,22 +212,36 @@ export default function WorkshopEditorModal() {
 
           {/* Image Upload */}
           <div>
-            <label style={labelStyle}>الصورة</label>
             <div 
+              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDragging(false);
+                const file = e.dataTransfer.files?.[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                  if (event.target?.result) {
+                    setForm(prev => ({ ...prev, image: event.target!.result as string }));
+                  }
+                };
+                reader.readAsDataURL(file);
+              }}
               style={{
-                ...inputStyle,
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                padding: '24px',
-                border: '2px dashed #C5C8B6',
-                background: form.image ? 'transparent' : '#FDFBF7',
+                padding: '32px',
+                border: isDragging ? '1.5px dashed #059669' : '1.5px dashed #D1D5DB',
+                borderRadius: '6px',
+                background: isDragging ? '#F0FDF4' : '#FFFFFF',
                 cursor: 'pointer',
                 textAlign: 'center',
-                gap: '8px',
                 overflow: 'hidden',
+                transition: 'all 0.2s ease',
               }}
               onClick={() => document.getElementById('image-upload')?.click()}
             >
@@ -238,14 +253,25 @@ export default function WorkshopEditorModal() {
                     backgroundSize: 'contain', 
                     backgroundPosition: 'center', 
                     backgroundRepeat: 'no-repeat',
-                    marginBottom: '8px'
+                    marginBottom: '12px'
                   }} />
-                  <span style={{ fontSize: '12px', color: '#4D6314', fontWeight: 600 }}>تغيير الصورة</span>
+                  <span style={{ fontSize: '14px', color: '#059669', fontWeight: 600 }}>تغيير الصورة</span>
                 </>
               ) : (
                 <>
-                  <span style={{ fontSize: '24px' }}>🖼️</span>
-                  <span style={{ fontSize: '13px', color: '#6B6B6B' }}>اضغط هنا لاختيار صورة من جهازك</span>
+                  <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: '12px' }}>
+                    <rect x="3" y="5" width="14" height="14" rx="2" ry="2" />
+                    <polyline points="17 14 13 10 3 20" />
+                    <circle cx="7.5" cy="9.5" r="1.5" />
+                    <line x1="20" y1="2" x2="20" y2="8" />
+                    <line x1="17" y1="5" x2="23" y2="5" />
+                  </svg>
+                  <div style={{ fontSize: '15px', color: '#4B5563', marginBottom: '6px' }}>
+                    <span style={{ color: '#059669', fontWeight: 500 }}>ارفع ملفات</span> أو اسحب وأفلت الصور هنا
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#9CA3AF' }}>
+                    PNG, JPG, GIF حتى 5 ميجابايت لكل صورة
+                  </div>
                 </>
               )}
               <input 
