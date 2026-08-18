@@ -7,7 +7,7 @@ import type { WorkshopItem } from '@/lib/workshopStore';
 import type { Category } from '@/lib/types';
 
 /* ──────────────────────────────────────────────────────────────
-   AdminCardOverlay — shown on each workshop card in admin mode
+   AdminCardOverlay — elegant controls on each card in admin mode
    ────────────────────────────────────────────────────────────── */
 export function AdminCardOverlay({ workshop }: { workshop: WorkshopItem }) {
   const { isAdmin, openEditor } = useAdmin();
@@ -18,42 +18,69 @@ export function AdminCardOverlay({ workshop }: { workshop: WorkshopItem }) {
   return (
     <div style={{
       position: 'absolute',
-      top: '4px',
-      left: '4px',
+      top: 0,
+      left: 0,
+      right: 0,
       display: 'flex',
-      gap: '4px',
+      justifyContent: 'flex-start',
+      gap: '1px',
       zIndex: 50,
+      opacity: 0.9,
     }}>
+      {/* Edit */}
       <button
         onClick={(e) => { e.preventDefault(); e.stopPropagation(); openEditor(workshop); }}
-        style={btnStyle}
+        style={{
+          ...btnBase,
+          background: '#121212',
+          color: '#F6F6F4',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = '#C4622D')}
+        onMouseLeave={e => (e.currentTarget.style.background = '#121212')}
         title="تعديل"
       >
-        ✏️
+        تعديل
       </button>
+
+      {/* Toggle visibility */}
       <button
         onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleActive(workshop.id); }}
-        style={btnStyle}
+        style={{
+          ...btnBase,
+          background: workshop.isActive ? '#121212' : '#C4622D',
+          color: '#F6F6F4',
+        }}
+        onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+        onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
         title={workshop.isActive ? 'إخفاء' : 'إظهار'}
       >
-        {workshop.isActive ? '👁️' : '👁️‍🗨️'}
+        {workshop.isActive ? 'إخفاء' : 'إظهار'}
       </button>
+
+      {/* Delete */}
       <button
         onClick={(e) => {
           e.preventDefault(); e.stopPropagation();
           if (confirm('حذف هذه الورشة نهائياً؟')) deleteWorkshop(workshop.id);
         }}
-        style={{ ...btnStyle, background: 'rgba(196,98,45,0.9)' }}
+        style={{
+          ...btnBase,
+          background: 'transparent',
+          color: '#C4622D',
+          border: '1px solid #C4622D',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = '#C4622D'; e.currentTarget.style.color = '#F6F6F4'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#C4622D'; }}
         title="حذف نهائي"
       >
-        🗑️
+        حذف
       </button>
     </div>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────
-   AdminAddButton — "Add new workshop" at the end of a section
+   AdminAddButton — dashed "Add new workshop" at section end
    ────────────────────────────────────────────────────────────── */
 export function AdminAddButton({ category }: { category: Category }) {
   const { isAdmin, openEditor } = useAdmin();
@@ -70,7 +97,7 @@ export function AdminAddButton({ category }: { category: Category }) {
         gap: '8px',
         padding: '12px 24px',
         background: 'transparent',
-        border: '2px dashed #C4622D',
+        border: '1.5px dashed #C4622D',
         color: '#C4622D',
         cursor: 'pointer',
         fontFamily: 'IBM Plex Arabic, sans-serif',
@@ -78,10 +105,11 @@ export function AdminAddButton({ category }: { category: Category }) {
         fontSize: '14px',
         borderRadius: '0',
         width: '100%',
-        minHeight: '60px',
+        minHeight: '56px',
         transition: 'background 0.2s ease, color 0.2s ease',
+        letterSpacing: '0.02em',
       }}
-      onMouseEnter={e => { e.currentTarget.style.background = '#C4622D'; e.currentTarget.style.color = 'white'; }}
+      onMouseEnter={e => { e.currentTarget.style.background = '#C4622D'; e.currentTarget.style.color = '#F6F6F4'; }}
       onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#C4622D'; }}
     >
       + إضافة ورشة جديدة
@@ -90,7 +118,7 @@ export function AdminAddButton({ category }: { category: Category }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
-   Inactive overlay — dims archived cards in admin view
+   InactiveOverlay — dims archived cards in admin view
    ────────────────────────────────────────────────────────────── */
 export function InactiveOverlay({ workshop }: { workshop: WorkshopItem }) {
   const { isAdmin } = useAdmin();
@@ -101,7 +129,7 @@ export function InactiveOverlay({ workshop }: { workshop: WorkshopItem }) {
     <div style={{
       position: 'absolute',
       inset: 0,
-      background: 'rgba(246,246,244,0.7)',
+      background: 'rgba(246,246,244,0.65)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
@@ -111,10 +139,11 @@ export function InactiveOverlay({ workshop }: { workshop: WorkshopItem }) {
       <span style={{
         background: '#121212',
         color: '#F6F6F4',
-        padding: '4px 16px',
+        padding: '4px 14px',
         fontFamily: 'IBM Plex Arabic, sans-serif',
-        fontSize: '13px',
+        fontSize: '12px',
         fontWeight: 600,
+        letterSpacing: '0.04em',
       }}>
         مخفي عن الزوار
       </span>
@@ -122,14 +151,16 @@ export function InactiveOverlay({ workshop }: { workshop: WorkshopItem }) {
   );
 }
 
-/* ── Shared button style ── */
-const btnStyle: React.CSSProperties = {
-  background: 'rgba(18,18,18,0.85)',
+/* ── Shared button base ── */
+const btnBase: React.CSSProperties = {
   border: 'none',
   borderRadius: '0',
-  padding: '4px 8px',
+  padding: '5px 12px',
   cursor: 'pointer',
-  fontSize: '14px',
-  lineHeight: 1,
-  transition: 'opacity 0.2s ease',
+  fontSize: '11px',
+  fontFamily: 'IBM Plex Arabic, sans-serif',
+  fontWeight: 600,
+  lineHeight: 1.4,
+  transition: 'background 0.2s ease, color 0.2s ease, opacity 0.2s ease',
+  letterSpacing: '0.02em',
 };

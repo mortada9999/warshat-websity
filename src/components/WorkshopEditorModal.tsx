@@ -75,6 +75,15 @@ export default function WorkshopEditorModal() {
     }
   }, [isOpen, workshop, defaultCategory]);
 
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -121,6 +130,7 @@ export default function WorkshopEditorModal() {
   return (
     <div
       onClick={closeEditor}
+      onWheel={e => e.stopPropagation()}
       style={{
         position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
         background: 'rgba(18,18,18,0.6)',
