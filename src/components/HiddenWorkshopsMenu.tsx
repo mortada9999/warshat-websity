@@ -61,44 +61,43 @@ export function HiddenWorkshopsMenu({ category }: { category: Category }) {
 
   return (
     <>
-      <button
-        onClick={() => setIsOpen(true)}
-        style={{
-          position: 'absolute',
-          top: '24px',
-          left: '24px', // Assuming LTR/RTL positioning based on user's screenshot
-          zIndex: 50,
-          background: 'rgba(255, 255, 255, 0.9)',
-          border: '1.5px dashed #4D6314',
-          color: '#4D6314',
-          padding: '8px 16px',
-          borderRadius: '8px',
-          fontFamily: 'IBM Plex Arabic, sans-serif',
-          fontWeight: 600,
-          fontSize: '13px',
-          cursor: 'pointer',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '8px',
-        }}
-        title="عرض الورش المخفية"
-      >
-        <span>الورش المخفية</span>
-        <span style={{ 
-          background: '#4D6314', 
-          color: '#FFF', 
-          borderRadius: '50%', 
-          width: '20px', 
-          height: '20px', 
-          display: 'flex', 
-          alignItems: 'center', 
-          justifyContent: 'center', 
-          fontSize: '11px' 
-        }}>
-          {hiddenWorkshops.length}
-        </span>
-      </button>
+      <div className="w-full flex justify-end px-4 md:px-8 pt-4 md:pt-6 pb-2">
+        <button
+          onClick={() => setIsOpen(true)}
+          style={{
+            zIndex: 50,
+            background: 'rgba(255, 255, 255, 0.9)',
+            border: '1.5px dashed #4D6314',
+            color: '#4D6314',
+            padding: '6px 12px',
+            borderRadius: '8px',
+            fontFamily: 'IBM Plex Arabic, sans-serif',
+            fontWeight: 600,
+            fontSize: '12px',
+            cursor: 'pointer',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+          }}
+          title="عرض الورش المخفية"
+        >
+          <span>الورش المخفية</span>
+          <span style={{ 
+            background: '#4D6314', 
+            color: '#FFF', 
+            borderRadius: '50%', 
+            width: '20px', 
+            height: '20px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            fontSize: '11px' 
+          }}>
+            {hiddenWorkshops.length}
+          </span>
+        </button>
+      </div>
 
       {isOpen && mounted && createPortal(
         <div 
