@@ -89,19 +89,23 @@ export function AdminCardOverlay({ workshop }: { workshop: WorkshopItem }) {
             تعديل
           </button>
 
-          {/* Toggle visibility */}
+          {/* Toggle visibility / Publish */}
           <button
             onClick={(e) => {
               e.preventDefault(); e.stopPropagation();
               setMenuOpen(false);
-              toggleActive(workshop.id);
+              if (workshop.isActive) {
+                toggleActive(workshop.id);
+              } else {
+                openEditor(workshop); // User asked to edit before publishing
+              }
             }}
             style={menuItemStyle}
             onMouseEnter={e => (e.currentTarget.style.background = '#E8E6E0')}
             onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
           >
-            <span style={{ fontSize: '12px', opacity: 0.6 }}>{workshop.isActive ? '◡' : '◉'}</span>
-            {workshop.isActive ? 'إخفاء' : 'إظهار'}
+            <span style={{ fontSize: '12px', opacity: 0.6 }}>{workshop.isActive ? '◡' : '▲'}</span>
+            {workshop.isActive ? 'إخفاء' : 'تحديث ونشر'}
           </button>
 
           {/* Divider */}

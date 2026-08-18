@@ -21,7 +21,7 @@ export default function CoursesBannerSection() {
   const { isAdmin } = useAdmin();
   const { getByCategory } = useWorkshopStore();
 
-  const courses = getByCategory('course', isAdmin);
+  const courses = getByCategory('course', false);
 
   return (
     <section 

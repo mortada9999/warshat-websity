@@ -15,7 +15,7 @@ export default function TrainingSection() {
   const { isAdmin } = useAdmin();
   const { getByCategory } = useWorkshopStore();
 
-  const workshops = getByCategory('workshop', isAdmin);
+  const workshops = getByCategory('workshop', false);
 
   return (
     <section 

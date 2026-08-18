@@ -10,6 +10,7 @@ import RecreationalSection from '@/components/RecreationalSection';
 import TrainingSection from '@/components/TrainingSection';
 import CoursesBannerSection from '@/components/CoursesBannerSection';
 import KidsBannerSection from '@/components/KidsBannerSection';
+import HiddenWorkshopsSection from '@/components/HiddenWorkshopsSection';
 import FooterSection from '@/components/FooterSection';
 import TornEdge from '@/components/TornEdge';
 
@@ -94,6 +95,7 @@ export default function HomePage() {
           </div>
         ))}
       </main>
+      <HiddenWorkshopsSection />
       <FooterSection />
     </>
   );

@@ -13,7 +13,7 @@ export default function RecreationalSection() {
   const { isAdmin } = useAdmin();
   const { getByCategory } = useWorkshopStore();
 
-  const activities = getByCategory('open_activity', isAdmin);
+  const activities = getByCategory('open_activity');
 
   return (
     <section 
