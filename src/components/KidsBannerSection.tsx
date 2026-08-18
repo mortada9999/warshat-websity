@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
+import KidsEntryButton from './kids/KidsEntryButton';
 
 export default function KidsBannerSection() {
   const { t } = useLanguage();
@@ -59,9 +60,7 @@ export default function KidsBannerSection() {
                   "We offer fun, stimulating art workshops that spark children's imagination, helping them discover their talents in a colorful, playful environment.",
                 )}
               </p>
-              <button className="px-8 py-3 bg-[#A25F00] text-white font-ibm-plex font-semibold text-sm md:text-base uppercase tracking-widest rounded-full shadow-lg transition-transform hover:scale-105 hover:bg-[#7D713C]">
-                {t('احجز الآن', 'Book Now')}
-              </button>
+              <KidsEntryButton />
             </div>
 
             {/* Circular Kid Photo */}

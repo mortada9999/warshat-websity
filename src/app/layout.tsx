@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import './tailwind.css';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
+import { WorkshopStoreProvider } from '@/lib/workshopStore';
+import { AdminProvider } from '@/components/AdminProvider';
+import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import Header from '@/components/Header';
 
@@ -29,12 +32,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl" className="bg-[#F6F6F4]">
       <head />
       <body>
-        <LanguageProvider>
-          <Header />
-          <SmoothScroll>
-            {children}
-          </SmoothScroll>
-        </LanguageProvider>
+        <WorkshopStoreProvider>
+          <AdminProvider>
+            <LanguageProvider>
+              <Header />
+              <SmoothScroll>
+                {children}
+              </SmoothScroll>
+              <WorkshopEditorModal />
+            </LanguageProvider>
+          </AdminProvider>
+        </WorkshopStoreProvider>
       </body>
     </html>
   );

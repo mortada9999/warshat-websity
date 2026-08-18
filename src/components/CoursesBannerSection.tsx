@@ -3,47 +3,12 @@
 import React from 'react';
 import Image from 'next/image';
 import { useLanguage } from './LanguageProvider';
+import { useAdmin } from './AdminProvider';
+import { useWorkshopStore } from '@/lib/workshopStore';
+import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
 import styles from './CoursesBannerSection.module.css';
 
 type CoursePattern = 'crochet' | 'music' | 'blueprint';
-
-const COURSES: {
-  id: number;
-  titleAr: string;
-  titleEn: string;
-  sessionsAr: string;
-  sessionsEn: string;
-  image: string;
-  pattern: CoursePattern;
-}[] = [
-  {
-    id: 1,
-    titleAr: 'كورس تعليم الرسم',
-    titleEn: 'Fine Art Fundamentals',
-    sessionsAr: '8 جلسات',
-    sessionsEn: '8 Sessions',
-    image: '/images/figma/pottery.png',
-    pattern: 'blueprint',
-  },
-  {
-    id: 2,
-    titleAr: 'تقنيات الفخار المتقدمة',
-    titleEn: 'Advanced Pottery Techniques',
-    sessionsAr: '12 جلسة',
-    sessionsEn: '12 Sessions',
-    image: '/images/figma/mirror.png',
-    pattern: 'music',
-  },
-  {
-    id: 3,
-    titleAr: 'كورس الحياكة',
-    titleEn: 'Textile Design',
-    sessionsAr: '6 جلسات',
-    sessionsEn: '6 Sessions',
-    image: '/images/figma/tote-bag.png',
-    pattern: 'crochet',
-  },
-];
 
 const PATTERN_CLASSES: Record<CoursePattern, string> = {
   crochet:   styles.patternCrochet,
@@ -53,6 +18,11 @@ const PATTERN_CLASSES: Record<CoursePattern, string> = {
 
 export default function CoursesBannerSection() {
   const { t } = useLanguage();
+  const { isAdmin } = useAdmin();
+  const { getByCategory } = useWorkshopStore();
+
+  const courses = getByCategory('course', isAdmin);
+
   return (
     <section 
       id="courses" 
@@ -73,38 +43,52 @@ export default function CoursesBannerSection() {
 
         {/* ── Vertical Card Stack ── */}
         <div className={styles.cardStack}>
-          {COURSES.map((course) => (
-            <article key={course.id} className={styles.card}>
-              
-              {/* Pattern background layer */}
-              <div className={`${styles.patternLayer} ${PATTERN_CLASSES[course.pattern]}`} aria-hidden="true" />
-
-              {/* Card content */}
-              <div className={styles.cardInner}>
+          {courses.map((course) => {
+            const pattern = (course.pattern || 'blueprint') as CoursePattern;
+            return (
+              <article key={course.id} className={styles.card}>
                 
-                {/* Image */}
-                <div className={styles.cardImageWrap}>
-                  <Image
-                    src={course.image}
-                    alt={course.titleAr}
-                    fill
-                    className={styles.cardImage}
-                    sizes="(max-width: 768px) 100vw, 280px"
-                  />
-                </div>
+                {/* Admin Controls */}
+                <AdminCardOverlay workshop={course} />
+                <InactiveOverlay workshop={course} />
 
-                {/* Text — solid bg for readability over pattern */}
-                <div className={styles.cardText}>
-                  <h3 className={styles.cardTitle}>{t(course.titleAr, course.titleEn)}</h3>
-                  <p className={styles.cardEn}>{t(course.titleEn, course.titleAr)}</p>
-                  <p className={styles.cardSessions}>{t(course.sessionsAr, course.sessionsEn)}</p>
-                  <a href="#book" className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</a>
-                </div>
+                {/* Pattern background layer */}
+                <div className={`${styles.patternLayer} ${PATTERN_CLASSES[pattern] || PATTERN_CLASSES.blueprint}`} aria-hidden="true" />
 
-              </div>
-            </article>
-          ))}
+                {/* Card content */}
+                <div className={styles.cardInner}>
+                  
+                  {/* Image */}
+                  <div className={styles.cardImageWrap}>
+                    <Image
+                      src={course.image}
+                      alt={course.titleAr}
+                      fill
+                      className={styles.cardImage}
+                      sizes="(max-width: 768px) 100vw, 280px"
+                    />
+                  </div>
+
+                  {/* Text — solid bg for readability over pattern */}
+                  <div className={styles.cardText}>
+                    <h3 className={styles.cardTitle}>{t(course.titleAr, course.titleEn)}</h3>
+                    <p className={styles.cardEn}>{t(course.titleEn, course.titleAr)}</p>
+                    <p className={styles.cardSessions}>{t(course.sessionsAr || '', course.sessionsEn || '')}</p>
+                    <a href="#book" className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</a>
+                  </div>
+
+                </div>
+              </article>
+            );
+          })}
         </div>
+
+        {/* Admin Add Button */}
+        {isAdmin && (
+          <div className="w-full max-w-4xl mt-8">
+            <AdminAddButton category="course" />
+          </div>
+        )}
 
         {/* ── View All CTA ── */}
         <div className="mt-12 md:mt-16">

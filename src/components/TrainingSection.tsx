@@ -5,43 +5,18 @@ import Image from 'next/image';
 import AnimatedTapedButton from './AnimatedTapedButton';
 import TapedWorkshopCard from './TapedWorkshopCard';
 import { useLanguage } from './LanguageProvider';
+import { useAdmin } from './AdminProvider';
+import { useWorkshopStore } from '@/lib/workshopStore';
+import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
 import styles from './TrainingSection.module.css';
-
-const WORKSHOPS = [
-  {
-    id: 1,
-    titleAr: 'ورشة الفخار',
-    titleEn: 'Pottery Workshop',
-    subtitleAr: 'استكشف مهارات تشكيل الطين وتحويله إلى قطع فنية تنبض بالحياة',
-    subtitleEn: 'Explore clay shaping and turn it into lively art pieces',
-    descAr: 'سواء كنتم مبتدئين أو تمتلكون خبرة سابقة، ستجدون في قسم الخزف فرصة للتعبير عن أنفسكم وابتكار أعمال فنية فريدة تحمل لمستكم الخاصة.',
-    descEn: 'Whether you are a beginner or have prior experience, the pottery section gives you a chance to express yourself and create unique works with your own touch.',
-    image: '/images/figma/pottery.png',
-  },
-  {
-    id: 2,
-    titleAr: 'الطباعة باللينو',
-    titleEn: 'Lino Cut Printing',
-    subtitleAr: 'تعلم فن الطباعة البارزة واستخراج التصاميم المعقدة',
-    subtitleEn: 'Learn relief printing and carve intricate designs',
-    descAr: 'مساحة إبداعية للتعرف على أدوات الحفر وإنشاء طبعات فنية بلمساتك الخاصة، لا تتطلب خبرة مسبقة.',
-    descEn: 'A creative space to explore carving tools and create prints with your own touch — no prior experience needed.',
-    image: '/images/figma/mirror.png',
-  },
-  {
-    id: 3,
-    titleAr: 'تلبيد الصوف بالإبرة',
-    titleEn: 'Needle Felting',
-    subtitleAr: 'شكل الصوف واصنع مجسمات ناعمة ودقيقة',
-    subtitleEn: 'Shape wool into soft, detailed figurines',
-    descAr: 'اكتشف متعة التلبيد بالإبرة، مهارة يدوية مريحة للأعصاب تتيح لك تشكيل الصوف الحر إلى شخصيات وأشكال لطيفة.',
-    descEn: 'Discover the joy of needle felting — a relaxing craft that lets you shape loose wool into cute characters and forms.',
-    image: '/images/figma/tote-bag.png',
-  },
-];
 
 export default function TrainingSection() {
   const { t } = useLanguage();
+  const { isAdmin } = useAdmin();
+  const { getByCategory } = useWorkshopStore();
+
+  const workshops = getByCategory('workshop', isAdmin);
+
   return (
     <section 
       id="training" 
@@ -63,10 +38,30 @@ export default function TrainingSection() {
 
         {/* Workshop Cards List */}
         <div className={styles.workshopList}>
-          {WORKSHOPS.map((w, index) => (
-            <TapedWorkshopCard key={w.id} workshop={w} index={index} />
+          {workshops.map((w, index) => (
+            <div key={w.id} className="relative">
+              <AdminCardOverlay workshop={w} />
+              <InactiveOverlay workshop={w} />
+              <TapedWorkshopCard workshop={{
+                id: index + 1,
+                titleAr: w.titleAr,
+                titleEn: w.titleEn,
+                subtitleAr: w.subtitleAr || '',
+                subtitleEn: w.subtitleEn || '',
+                descAr: w.descAr || '',
+                descEn: w.descEn || '',
+                image: w.image,
+              }} index={index} />
+            </div>
           ))}
         </div>
+
+        {/* Admin Add Button */}
+        {isAdmin && (
+          <div className="w-full max-w-[800px]">
+            <AdminAddButton category="workshop" />
+          </div>
+        )}
 
         {/* Section Footer - Booking CTA */}
         <div className="flex flex-col items-center gap-4 mt-8 md:mt-12 pt-6 md:pt-8 w-full">

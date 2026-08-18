@@ -4,20 +4,17 @@ import React from 'react';
 import Image from 'next/image';
 import AnimatedTapedButton from './AnimatedTapedButton';
 import { useLanguage } from './LanguageProvider';
-
-const ACTIVITIES = [
-  { titleAr: 'الرسم على الأكواب الفخارية', titleEn: 'Cup Painting', price: '10,000', image: '/images/figma/pottery.png' },
-  { titleAr: 'الرسم على الحقائب القماشية', titleEn: 'Tote Bag Painting', price: '15,000', image: '/images/figma/tote-bag.png' },
-  { titleAr: 'الرسم على المرايا', titleEn: 'Mirror Painting', price: '15,000', image: '/images/figma/mirror.png' },
-  { titleAr: 'صناعة الاكسسوارات', titleEn: 'Accessory Making', price: '15,000', image: '/images/figma/pottery.png' },
-  { titleAr: 'الرسم على القطع الخشبية', titleEn: 'Wood Painting', price: '10,000', image: '/images/figma/tote-bag.png' },
-  { titleAr: 'الرسم على اللوحات', titleEn: 'Canvas Painting', price: '15,000', image: '/images/figma/mirror.png' },
-  { titleAr: 'الرسم على الزجاج', titleEn: 'Glass Painting', price: '20,000', image: '/images/figma/pottery.png' },
-  { titleAr: 'الرسم و الزراعة', titleEn: 'Painting & Planting', price: '15,000', image: '/images/figma/tote-bag.png' },
-];
+import { useAdmin } from './AdminProvider';
+import { useWorkshopStore } from '@/lib/workshopStore';
+import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
 
 export default function RecreationalSection() {
   const { t } = useLanguage();
+  const { isAdmin } = useAdmin();
+  const { getByCategory } = useWorkshopStore();
+
+  const activities = getByCategory('open_activity', isAdmin);
+
   return (
     <section 
       id="entertainment" 
@@ -48,9 +45,13 @@ export default function RecreationalSection() {
 
         {/* Activities Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 md:gap-x-12 gap-y-12 w-full pb-8">
-          {ACTIVITIES.map((act, i) => (
-            <div key={i} className="flex flex-col items-center justify-start text-center relative pt-4 group">
+          {activities.map((act, i) => (
+            <div key={act.id} className="flex flex-col items-center justify-start text-center relative pt-4 group">
               
+              {/* Admin Controls */}
+              <AdminCardOverlay workshop={act} />
+              <InactiveOverlay workshop={act} />
+
               {/* Title positioned at top of card */}
               <h3 className="font-amiri text-base md:text-2xl text-[#374A00] mb-3 h-10 flex items-center justify-center leading-[120%]">
                 {t(act.titleAr, act.titleEn)}
@@ -71,13 +72,20 @@ export default function RecreationalSection() {
               {/* The GSAP Animated Button (formerly with tape) */}
               <div className="mt-[-40px] z-10 scale-[0.8] md:scale-100 origin-top">
                 <AnimatedTapedButton 
-                  text={`${act.price} IQD`} 
+                  text={`${act.price || '—'} IQD`} 
                   tapeStyle={i % 3 === 0 ? 'tape1' : i % 2 === 0 ? 'tape2' : 'tape3'}
                 />
               </div>
 
             </div>
           ))}
+
+          {/* Add New Button (admin only) */}
+          {isAdmin && (
+            <div className="flex items-center justify-center pt-4">
+              <AdminAddButton category="open_activity" />
+            </div>
+          )}
         </div>
 
         {/* Section Footer - View All CTA */}

@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
 
 /* â”€â”€â”€ Design Tokens (from Figma) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
@@ -104,6 +104,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p { /* color inherited â€” component-level classes control */  }
+
+/* Playful handwritten style for the kids section */
+.font-handwritten {
+  font-family: 'Permanent Marker', 'Baloo Bhaijaan 2', 'Amiri', cursive;
+}
 
 a {
   color: inherit;

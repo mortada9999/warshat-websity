@@ -1,0 +1,158 @@
+'use client';
+
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import type { Category } from '@/lib/types';
+
+/* ──────────────────────────────────────────────────────────────
+   Workshop item shape (matches existing types but with local fields)
+   ────────────────────────────────────────────────────────────── */
+export interface WorkshopItem {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  subtitleAr?: string;
+  subtitleEn?: string;
+  descAr?: string;
+  descEn?: string;
+  price?: string;        // display price like "10,000"
+  priceNum?: number;     // numeric price for API
+  image: string;
+  category: Category;
+  sessionsAr?: string;
+  sessionsEn?: string;
+  pattern?: string;
+  isActive: boolean;     // true = visible to visitors
+  sortOrder: number;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Hardcoded defaults (the original design placeholders)
+   ────────────────────────────────────────────────────────────── */
+const DEFAULT_ACTIVITIES: WorkshopItem[] = [
+  { id: 'act-1', titleAr: 'الرسم على الأكواب الفخارية', titleEn: 'Cup Painting', price: '10,000', image: '/images/figma/pottery.png', category: 'open_activity', isActive: true, sortOrder: 0 },
+  { id: 'act-2', titleAr: 'الرسم على الحقائب القماشية', titleEn: 'Tote Bag Painting', price: '15,000', image: '/images/figma/tote-bag.png', category: 'open_activity', isActive: true, sortOrder: 1 },
+  { id: 'act-3', titleAr: 'الرسم على المرايا', titleEn: 'Mirror Painting', price: '15,000', image: '/images/figma/mirror.png', category: 'open_activity', isActive: true, sortOrder: 2 },
+  { id: 'act-4', titleAr: 'صناعة الاكسسوارات', titleEn: 'Accessory Making', price: '15,000', image: '/images/figma/pottery.png', category: 'open_activity', isActive: true, sortOrder: 3 },
+  { id: 'act-5', titleAr: 'الرسم على القطع الخشبية', titleEn: 'Wood Painting', price: '10,000', image: '/images/figma/tote-bag.png', category: 'open_activity', isActive: true, sortOrder: 4 },
+  { id: 'act-6', titleAr: 'الرسم على اللوحات', titleEn: 'Canvas Painting', price: '15,000', image: '/images/figma/mirror.png', category: 'open_activity', isActive: true, sortOrder: 5 },
+  { id: 'act-7', titleAr: 'الرسم على الزجاج', titleEn: 'Glass Painting', price: '20,000', image: '/images/figma/pottery.png', category: 'open_activity', isActive: true, sortOrder: 6 },
+  { id: 'act-8', titleAr: 'الرسم و الزراعة', titleEn: 'Painting & Planting', price: '15,000', image: '/images/figma/tote-bag.png', category: 'open_activity', isActive: true, sortOrder: 7 },
+];
+
+const DEFAULT_WORKSHOPS: WorkshopItem[] = [
+  { id: 'ws-1', titleAr: 'ورشة الفخار', titleEn: 'Pottery Workshop', subtitleAr: 'استكشف مهارات تشكيل الطين وتحويله إلى قطع فنية تنبض بالحياة', subtitleEn: 'Explore clay shaping and turn it into lively art pieces', descAr: 'سواء كنتم مبتدئين أو تمتلكون خبرة سابقة، ستجدون في قسم الخزف فرصة للتعبير عن أنفسكم وابتكار أعمال فنية فريدة تحمل لمستكم الخاصة.', descEn: 'Whether you are a beginner or have prior experience, the pottery section gives you a chance to express yourself and create unique works with your own touch.', image: '/images/figma/pottery.png', category: 'workshop', isActive: true, sortOrder: 0 },
+  { id: 'ws-2', titleAr: 'الطباعة باللينو', titleEn: 'Lino Cut Printing', subtitleAr: 'تعلم فن الطباعة البارزة واستخراج التصاميم المعقدة', subtitleEn: 'Learn relief printing and carve intricate designs', descAr: 'مساحة إبداعية للتعرف على أدوات الحفر وإنشاء طبعات فنية بلمساتك الخاصة، لا تتطلب خبرة مسبقة.', descEn: 'A creative space to explore carving tools and create prints with your own touch — no prior experience needed.', image: '/images/figma/mirror.png', category: 'workshop', isActive: true, sortOrder: 1 },
+  { id: 'ws-3', titleAr: 'تلبيد الصوف بالإبرة', titleEn: 'Needle Felting', subtitleAr: 'شكل الصوف واصنع مجسمات ناعمة ودقيقة', subtitleEn: 'Shape wool into soft, detailed figurines', descAr: 'اكتشف متعة التلبيد بالإبرة، مهارة يدوية مريحة للأعصاب تتيح لك تشكيل الصوف الحر إلى شخصيات وأشكال لطيفة.', descEn: 'Discover the joy of needle felting — a relaxing craft that lets you shape loose wool into cute characters and forms.', image: '/images/figma/tote-bag.png', category: 'workshop', isActive: true, sortOrder: 2 },
+];
+
+const DEFAULT_COURSES: WorkshopItem[] = [
+  { id: 'cr-1', titleAr: 'كورس تعليم الرسم', titleEn: 'Fine Art Fundamentals', sessionsAr: '8 جلسات', sessionsEn: '8 Sessions', image: '/images/figma/pottery.png', pattern: 'blueprint', category: 'course', isActive: true, sortOrder: 0 },
+  { id: 'cr-2', titleAr: 'تقنيات الفخار المتقدمة', titleEn: 'Advanced Pottery Techniques', sessionsAr: '12 جلسة', sessionsEn: '12 Sessions', image: '/images/figma/mirror.png', pattern: 'music', category: 'course', isActive: true, sortOrder: 1 },
+  { id: 'cr-3', titleAr: 'كورس الحياكة', titleEn: 'Textile Design', sessionsAr: '6 جلسات', sessionsEn: '6 Sessions', image: '/images/figma/tote-bag.png', pattern: 'crochet', category: 'course', isActive: true, sortOrder: 2 },
+];
+
+const ALL_DEFAULTS: WorkshopItem[] = [
+  ...DEFAULT_ACTIVITIES,
+  ...DEFAULT_WORKSHOPS,
+  ...DEFAULT_COURSES,
+];
+
+const STORAGE_KEY = 'warshat_workshops';
+
+/* ──────────────────────────────────────────────────────────────
+   Context
+   ────────────────────────────────────────────────────────────── */
+interface WorkshopStoreContextType {
+  /** All workshops (admin sees archived too) */
+  allWorkshops: WorkshopItem[];
+  /** Get workshops by category, optionally include archived */
+  getByCategory: (cat: Category, includeArchived?: boolean) => WorkshopItem[];
+  /** Add a new workshop */
+  addWorkshop: (item: Omit<WorkshopItem, 'id'>) => void;
+  /** Update an existing workshop */
+  updateWorkshop: (id: string, updates: Partial<WorkshopItem>) => void;
+  /** Toggle active/archived */
+  toggleActive: (id: string) => void;
+  /** Delete permanently */
+  deleteWorkshop: (id: string) => void;
+}
+
+const WorkshopStoreContext = createContext<WorkshopStoreContextType>({
+  allWorkshops: [],
+  getByCategory: () => [],
+  addWorkshop: () => {},
+  updateWorkshop: () => {},
+  toggleActive: () => {},
+  deleteWorkshop: () => {},
+});
+
+/* ──────────────────────────────────────────────────────────────
+   Provider
+   ────────────────────────────────────────────────────────────── */
+export function WorkshopStoreProvider({ children }: { children: React.ReactNode }) {
+  const [workshops, setWorkshops] = useState<WorkshopItem[]>(ALL_DEFAULTS);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Hydrate from localStorage on mount (instant — no API call)
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        const parsed = JSON.parse(stored) as WorkshopItem[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setWorkshops(parsed);
+        }
+      }
+    } catch {
+      // corrupt data — use defaults
+    }
+    setHydrated(true);
+  }, []);
+
+  // Persist to localStorage on every change (after hydration)
+  useEffect(() => {
+    if (hydrated) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(workshops));
+    }
+  }, [workshops, hydrated]);
+
+  const getByCategory = useCallback((cat: Category, includeArchived = false) => {
+    return workshops
+      .filter(w => w.category === cat && (includeArchived || w.isActive))
+      .sort((a, b) => a.sortOrder - b.sortOrder);
+  }, [workshops]);
+
+  const addWorkshop = useCallback((item: Omit<WorkshopItem, 'id'>) => {
+    const id = `ws-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    setWorkshops(prev => [...prev, { ...item, id }]);
+  }, []);
+
+  const updateWorkshop = useCallback((id: string, updates: Partial<WorkshopItem>) => {
+    setWorkshops(prev => prev.map(w => w.id === id ? { ...w, ...updates } : w));
+  }, []);
+
+  const toggleActive = useCallback((id: string) => {
+    setWorkshops(prev => prev.map(w => w.id === id ? { ...w, isActive: !w.isActive } : w));
+  }, []);
+
+  const deleteWorkshop = useCallback((id: string) => {
+    setWorkshops(prev => prev.filter(w => w.id !== id));
+  }, []);
+
+  return (
+    <WorkshopStoreContext.Provider value={{
+      allWorkshops: workshops,
+      getByCategory,
+      addWorkshop,
+      updateWorkshop,
+      toggleActive,
+      deleteWorkshop,
+    }}>
+      {children}
+    </WorkshopStoreContext.Provider>
+  );
+}
+
+export function useWorkshopStore() {
+  return useContext(WorkshopStoreContext);
+}
