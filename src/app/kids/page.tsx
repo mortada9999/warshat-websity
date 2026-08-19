@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import KidsPage from '@/components/kids/KidsPage';
 
 export const metadata: Metadata = {
-  title: 'قسم الأطفال — ورشة فن',
+  title: 'ورش واشتراكات الأطفال — ورشة فن',
   description: 'كورسات وورش تدريبية ملوّنة للأطفال في ورشة فن — بغداد.',
 };
 
