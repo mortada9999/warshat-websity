@@ -123,11 +123,11 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       raf = 0;
 
       if (isMobile && gyroActive && !touched) {
-        // Gyro directly drives the card — fast and smooth
+        // Gyro = same feel as finger touch, 1:1
         gyroSmooth.step();
         tilt.target = {
-          x: gyroSmooth.value.x * 0.4,
-          y: gyroSmooth.value.y * 0.4,
+          x: gyroSmooth.value.x,
+          y: gyroSmooth.value.y,
         };
       } else if (!touched) {
         if (isMobile) {
@@ -258,10 +258,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
       gyroActive = true;
 
-      // NO continuous recalibration — that was killing the signal!
-      // ±40° from rest = full range
-      const x = clamp((e.gamma - gyroGamma0) / 40, -1, 1);
-      const y = clamp((e.beta - gyroBeta0) / 40, -1, 1);
+      // ±30° from rest = full range (same feel as finger drag edge-to-edge)
+      const x = clamp((e.gamma - gyroGamma0) / 30, -1, 1);
+      const y = clamp((e.beta - gyroBeta0) / 30, -1, 1);
 
       gyroSmooth.target = { x, y };
       wake();
