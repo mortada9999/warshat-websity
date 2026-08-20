@@ -199,7 +199,8 @@
   }
 
   .loyaltyLink {
-    display: none;
+    font-size: 11px;
+    padding: 4px 8px;
   }
 
   .langBtn {

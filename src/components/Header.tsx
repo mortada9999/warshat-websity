@@ -56,7 +56,7 @@ export default function Header() {
                 {t(link.ar, link.en)}
               </Link>
             ))}
-            <Link href="/profile" className={`${styles.loyaltyLink} hidden md:inline-block`}>
+            <Link href="/profile" className={styles.loyaltyLink}>
               {t('الملف الشخصي', 'My Profile')}
             </Link>
           </nav>
