@@ -125,11 +125,11 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       // On mobile with gyro: gyroSmooth drives the card when not touched
       if (isMobile && gyroActive && !touched) {
         gyroSmooth.step();
-        // Very subtle shimmer on top of gentle gyro
-        idle += 0.004;
+        // Gentle shimmer on top of gyro
+        idle += 0.005;
         tilt.target = {
-          x: gyroSmooth.value.x * 0.25 + Math.sin(idle) * 0.03,
-          y: gyroSmooth.value.y * 0.25 + Math.cos(idle * 0.73) * 0.02,
+          x: gyroSmooth.value.x * 0.35 + Math.sin(idle) * 0.04,
+          y: gyroSmooth.value.y * 0.35 + Math.cos(idle * 0.73) * 0.03,
         };
       } else if (!touched) {
         if (isMobile) {
@@ -254,7 +254,6 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     // ── Gyroscope (mobile — polished) ──
     const onDeviceOrientation = (e: DeviceOrientationEvent) => {
       if (e.gamma === null || e.beta === null) return;
-      // When touched, don't update gyro target — let finger drive
       if (touched) return;
 
       // Auto-calibrate on first valid reading
@@ -265,18 +264,38 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
       gyroActive = true;
 
-      // Slowly drift baseline toward current angle (prevents locking in one direction)
-      gyroBeta0 += (e.beta - gyroBeta0) * 0.002;
-      gyroGamma0 += (e.gamma - gyroGamma0) * 0.002;
+      // Very slow baseline drift (0.0002) — prevents permanent lock
+      // but doesn't eat the signal like 0.002 did
+      gyroBeta0 += (e.beta - gyroBeta0) * 0.0002;
+      gyroGamma0 += (e.gamma - gyroGamma0) * 0.0002;
 
-      // Delta from drifting baseline, ±70° = full range (very gentle)
-      const x = clamp((e.gamma - gyroGamma0) / 70, -1, 1);
-      const y = clamp((e.beta - gyroBeta0) / 70, -1, 1);
+      // ±40° from rest = full range, responsive but not crazy
+      const x = clamp((e.gamma - gyroGamma0) / 40, -1, 1);
+      const y = clamp((e.beta - gyroBeta0) / 40, -1, 1);
 
-      // Feed into the gyro smoother
       gyroSmooth.target = { x, y };
       wake();
     };
+
+    // ── iOS requires permission for DeviceOrientation ──
+    const requestGyroPermission = () => {
+      const DOE = DeviceOrientationEvent as unknown as {
+        requestPermission?: () => Promise<string>;
+      };
+      if (typeof DOE.requestPermission === 'function') {
+        DOE.requestPermission()
+          .then((state: string) => {
+            if (state === 'granted') {
+              window.addEventListener('deviceorientation', onDeviceOrientation, { passive: true });
+            }
+          })
+          .catch(() => {});
+      }
+    };
+    // Try iOS permission on first user interaction
+    if (isMobile) {
+      host.addEventListener('touchstart', requestGyroPermission, { once: true });
+    }
 
     // ── Scroll fallback (mobile without gyro) ──
     const onScroll = () => {
@@ -317,7 +336,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     };
     document.addEventListener('visibilitychange', onVis);
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Android doesn't need permission — listen directly
     window.addEventListener('deviceorientation', onDeviceOrientation, { passive: true });
+    // iOS permission is handled via touchstart above
 
     host.addEventListener('pointermove', onPointer);
     host.addEventListener('pointerleave', onLeave);
