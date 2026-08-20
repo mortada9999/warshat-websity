@@ -112,13 +112,28 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     let grabFrom = { x: 0, y: 0 };
     let aim = { x: 0, y: 0 };
 
+    // ── Gyroscope state (mobile only) ──
+    let gyroActive = false;
+    let gyroCalibrated = false;
+    let gyroBeta0 = 0;   // initial beta (front-back angle when page loaded)
+    let gyroGamma0 = 0;  // initial gamma (left-right angle when page loaded)
+    const gyroSmooth = new Follow(0.12); // dedicated smoother to kill jitter
+
     const frame = () => {
       raf = 0;
 
-      if (!touched) {
-        // Faster idle wobble on mobile to immediately draw attention
+      // On mobile with gyro: gyroSmooth drives the card when not touched
+      if (isMobile && gyroActive && !touched) {
+        gyroSmooth.step();
+        // Small idle shimmer layered on top of gyro for a living feel
+        idle += 0.006;
+        tilt.target = {
+          x: gyroSmooth.value.x + Math.sin(idle) * 0.08,
+          y: gyroSmooth.value.y + Math.cos(idle * 0.73) * 0.06,
+        };
+      } else if (!touched) {
+        // Desktop idle or mobile without gyro
         idle += isMobile ? 0.02 : 0.0042;
-        // Center the wobble around 'aim' (which is driven by gyroscope/scroll)
         const drift = {
           x: aim.x + Math.sin(idle) * (isMobile ? 0.5 : 0.28),
           y: aim.y + Math.cos(idle * 0.73) * (isMobile ? 0.35 : 0.2),
@@ -132,7 +147,8 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
 
       if (touched) {
-        grab = Math.min(1, grab + 0.018);
+        // Faster grab on mobile for 1:1 feel
+        grab = Math.min(1, grab + (isMobile ? 0.06 : 0.018));
         const k = grab * grab;
         tilt.target = {
           x: grabFrom.x + (aim.x - grabFrom.x) * k,
@@ -159,9 +175,11 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
         sheet.velocity,
       );
 
+      // On mobile with gyro, never settle — phone micro-movements keep it alive
+      const gyroKeepAlive = isMobile && gyroActive && !touched;
       if (
         running &&
-        (!touched || release < 1 || grab < 1 || kick.active || !tilt.settled || !sheet.settled)
+        (gyroKeepAlive || !touched || release < 1 || grab < 1 || kick.active || !tilt.settled || !sheet.settled)
       ) {
         raf = requestAnimationFrame(frame);
       }
@@ -174,7 +192,6 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
 
     // ── Pointer (desktop) ──
     const onPointer = (e: PointerEvent) => {
-      // Ignore touch-originated pointer events — handled separately
       if (e.pointerType === 'touch') return;
       aim = fromPointer(host.getBoundingClientRect(), e.clientX, e.clientY);
       if (!touched) {
@@ -210,7 +227,6 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
 
     const onTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 0) return;
-      // Removed e.preventDefault() so user can scroll smoothly!
       const t = e.touches[0];
       aim = fromTouch(host.getBoundingClientRect(), t);
       wake();
@@ -225,25 +241,36 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       wake();
     };
 
-    // ── Gyroscope & Scroll Parallax (mobile illusion) ──
-    let hasOrientation = false;
+    // ── Gyroscope (mobile — polished) ──
     const onDeviceOrientation = (e: DeviceOrientationEvent) => {
-      if (touched || e.gamma === null || e.beta === null) return;
-      hasOrientation = true;
-      // gamma: left-to-right (-90 to 90). beta: front-to-back (-180 to 180).
-      // We assume user holds phone at ~40 degrees.
-      const x = clamp(e.gamma / 40, -1, 1);
-      const y = clamp((e.beta - 40) / 40, -1, 1);
-      aim = { x, y };
+      if (e.gamma === null || e.beta === null) return;
+      // When touched, don't update gyro target — let finger drive
+      if (touched) return;
+
+      // Auto-calibrate on first valid reading
+      if (!gyroCalibrated) {
+        gyroBeta0 = e.beta;
+        gyroGamma0 = e.gamma;
+        gyroCalibrated = true;
+      }
+      gyroActive = true;
+
+      // Delta from initial holding angle, mapped to -1..1
+      // ±25° of tilt from rest = full range (comfortable wrist movement)
+      const x = clamp((e.gamma - gyroGamma0) / 25, -1, 1);
+      const y = clamp((e.beta - gyroBeta0) / 25, -1, 1);
+
+      // Feed into the gyro smoother (kills sensor jitter)
+      gyroSmooth.target = { x, y };
       wake();
     };
 
+    // ── Scroll fallback (mobile without gyro) ──
     const onScroll = () => {
-      if (touched || hasOrientation) return;
+      if (touched || gyroActive) return;
       const rect = host.getBoundingClientRect();
       const centerY = rect.top + rect.height / 2;
       const windowCenterY = window.innerHeight / 2;
-      // Tilt Y based on scroll position (when card is at bottom, tilts up, etc)
       const y = clamp((centerY - windowCenterY) / (window.innerHeight / 2), -1, 1);
       aim = { x: 0, y };
       wake();
@@ -271,6 +298,8 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
 
     const onVis = () => {
       hidden = document.hidden;
+      // Re-calibrate gyro when user comes back (phone may have moved)
+      if (!hidden) gyroCalibrated = false;
       sync();
     };
     document.addEventListener('visibilitychange', onVis);
