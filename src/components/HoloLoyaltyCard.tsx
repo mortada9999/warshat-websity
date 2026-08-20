@@ -14,6 +14,7 @@ import {
   applyFoil,
   applyFrame,
   WARSHAT_FOIL,
+  clamp,
 } from '@/lib/holoEngine';
 import type { LoyaltyMember } from '@/lib/loyaltyStore';
 import styles from './HoloLoyaltyCard.module.css';
