@@ -117,7 +117,7 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     let gyroCalibrated = false;
     let gyroBeta0 = 0;   // initial beta (front-back angle when page loaded)
     let gyroGamma0 = 0;  // initial gamma (left-right angle when page loaded)
-    const gyroSmooth = new Follow(0.12); // dedicated smoother to kill jitter
+    const gyroSmooth = new Follow(0.25); // fast smoother — kills jitter without feeling sluggish
 
     const frame = () => {
       raf = 0;
@@ -125,11 +125,11 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       // On mobile with gyro: gyroSmooth drives the card when not touched
       if (isMobile && gyroActive && !touched) {
         gyroSmooth.step();
-        // Small idle shimmer layered on top of gyro for a living feel
+        // Subtle shimmer on top of gentle gyro
         idle += 0.006;
         tilt.target = {
-          x: gyroSmooth.value.x + Math.sin(idle) * 0.08,
-          y: gyroSmooth.value.y + Math.cos(idle * 0.73) * 0.06,
+          x: gyroSmooth.value.x * 0.45 + Math.sin(idle) * 0.06,
+          y: gyroSmooth.value.y * 0.45 + Math.cos(idle * 0.73) * 0.04,
         };
       } else if (!touched) {
         // Desktop idle or mobile without gyro
@@ -255,12 +255,15 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
       gyroActive = true;
 
-      // Delta from initial holding angle, mapped to -1..1
-      // ±25° of tilt from rest = full range (comfortable wrist movement)
-      const x = clamp((e.gamma - gyroGamma0) / 25, -1, 1);
-      const y = clamp((e.beta - gyroBeta0) / 25, -1, 1);
+      // Slowly drift baseline toward current angle (prevents locking in one direction)
+      gyroBeta0 += (e.beta - gyroBeta0) * 0.002;
+      gyroGamma0 += (e.gamma - gyroGamma0) * 0.002;
 
-      // Feed into the gyro smoother (kills sensor jitter)
+      // Delta from drifting baseline, ±50° = full range (gentle, not over the top)
+      const x = clamp((e.gamma - gyroGamma0) / 50, -1, 1);
+      const y = clamp((e.beta - gyroBeta0) / 50, -1, 1);
+
+      // Feed into the gyro smoother
       gyroSmooth.target = { x, y };
       wake();
     };
