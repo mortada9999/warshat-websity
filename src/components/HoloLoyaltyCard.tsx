@@ -93,8 +93,10 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduced) return;
 
-    const tilt = new Follow(0.16);
-    const sheet = new Follow(0.09);
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+    // Higher stiffness on mobile = snappier, lighter, 1-to-1 feel when touched
+    const tilt = new Follow(isMobile ? 0.35 : 0.16);
+    const sheet = new Follow(isMobile ? 0.18 : 0.09);
     const kick = new Kick();
     const t0 = performance.now();
 
@@ -114,10 +116,12 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       raf = 0;
 
       if (!touched) {
-        idle += 0.0042;
+        // Faster idle wobble on mobile to immediately draw attention
+        idle += isMobile ? 0.02 : 0.0042;
+        // Center the wobble around 'aim' (which is driven by gyroscope/scroll)
         const drift = {
-          x: Math.sin(idle) * 0.28,
-          y: Math.cos(idle * 0.73) * 0.2,
+          x: aim.x + Math.sin(idle) * (isMobile ? 0.5 : 0.28),
+          y: aim.y + Math.cos(idle * 0.73) * (isMobile ? 0.35 : 0.2),
         };
         release = Math.min(1, release + 0.016);
         const k = release * release;
