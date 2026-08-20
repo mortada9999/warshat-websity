@@ -205,7 +205,7 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
 
     const onTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 0) return;
-      e.preventDefault(); // Prevent scroll while interacting with card
+      // Removed e.preventDefault() so user can scroll smoothly!
       const t = e.touches[0];
       aim = fromTouch(host.getBoundingClientRect(), t);
       wake();
@@ -217,6 +217,30 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       release = 0;
       grab = 1;
       kick.fire(tilt.velocity);
+      wake();
+    };
+
+    // ── Gyroscope & Scroll Parallax (mobile illusion) ──
+    let hasOrientation = false;
+    const onDeviceOrientation = (e: DeviceOrientationEvent) => {
+      if (touched || e.gamma === null || e.beta === null) return;
+      hasOrientation = true;
+      // gamma: left-to-right (-90 to 90). beta: front-to-back (-180 to 180).
+      // We assume user holds phone at ~40 degrees.
+      const x = clamp(e.gamma / 40, -1, 1);
+      const y = clamp((e.beta - 40) / 40, -1, 1);
+      aim = { x, y };
+      wake();
+    };
+
+    const onScroll = () => {
+      if (touched || hasOrientation) return;
+      const rect = host.getBoundingClientRect();
+      const centerY = rect.top + rect.height / 2;
+      const windowCenterY = window.innerHeight / 2;
+      // Tilt Y based on scroll position (when card is at bottom, tilts up, etc)
+      const y = clamp((centerY - windowCenterY) / (window.innerHeight / 2), -1, 1);
+      aim = { x: 0, y };
       wake();
     };
 
@@ -245,11 +269,13 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       sync();
     };
     document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('deviceorientation', onDeviceOrientation, { passive: true });
 
     host.addEventListener('pointermove', onPointer);
     host.addEventListener('pointerleave', onLeave);
     host.addEventListener('touchstart', onTouchStart, { passive: true });
-    host.addEventListener('touchmove', onTouchMove, { passive: false });
+    host.addEventListener('touchmove', onTouchMove, { passive: true });
     host.addEventListener('touchend', onTouchEnd);
 
     return () => {
@@ -257,6 +283,8 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       if (raf) cancelAnimationFrame(raf);
       io.disconnect();
       document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('deviceorientation', onDeviceOrientation);
       host.removeEventListener('pointermove', onPointer);
       host.removeEventListener('pointerleave', onLeave);
       host.removeEventListener('touchstart', onTouchStart);
