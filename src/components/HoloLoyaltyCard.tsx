@@ -126,8 +126,8 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
         // Gyro directly drives the card — fast and smooth
         gyroSmooth.step();
         tilt.target = {
-          x: gyroSmooth.value.x * 0.7,
-          y: gyroSmooth.value.y * 0.7,
+          x: gyroSmooth.value.x * 0.4,
+          y: gyroSmooth.value.y * 0.4,
         };
       } else if (!touched) {
         if (isMobile) {
