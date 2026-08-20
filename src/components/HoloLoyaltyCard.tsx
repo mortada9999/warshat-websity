@@ -115,21 +115,20 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     // ── Gyroscope state (mobile only) ──
     let gyroActive = false;
     let gyroCalibrated = false;
-    let gyroBeta0 = 0;   // initial beta (front-back angle when page loaded)
-    let gyroGamma0 = 0;  // initial gamma (left-right angle when page loaded)
-    const gyroSmooth = new Follow(0.25); // fast smoother — kills jitter without feeling sluggish
+    let gyroBeta0 = 0;
+    let gyroGamma0 = 0;
+    const gyroSmooth = new Follow(0.22);
 
     const frame = () => {
       raf = 0;
 
-      // On mobile with gyro: gyroSmooth drives the card when not touched
       if (isMobile && gyroActive && !touched) {
+        // Gyro drives the card — visible wobble so it never looks frozen
         gyroSmooth.step();
-        // Gentle shimmer on top of gyro
-        idle += 0.005;
+        idle += 0.012;
         tilt.target = {
-          x: gyroSmooth.value.x * 0.35 + Math.sin(idle) * 0.04,
-          y: gyroSmooth.value.y * 0.35 + Math.cos(idle * 0.73) * 0.03,
+          x: gyroSmooth.value.x * 0.35 + Math.sin(idle) * 0.15,
+          y: gyroSmooth.value.y * 0.35 + Math.cos(idle * 0.73) * 0.1,
         };
       } else if (!touched) {
         if (isMobile) {
@@ -157,7 +156,6 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
 
       if (touched) {
-        // Faster grab on mobile for 1:1 feel
         grab = Math.min(1, grab + (isMobile ? 0.06 : 0.018));
         const k = grab * grab;
         tilt.target = {
@@ -185,12 +183,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
         sheet.velocity,
       );
 
-      // On mobile with gyro, never settle — phone micro-movements keep it alive
-      const gyroKeepAlive = isMobile && gyroActive && !touched;
-      if (
-        running &&
-        (gyroKeepAlive || !touched || release < 1 || grab < 1 || kick.active || !tilt.settled || !sheet.settled)
-      ) {
+      // On mobile: ALWAYS keep running (idle shimmer or gyro)
+      // On desktop: keep running while settling back to flat
+      if (running && (isMobile || !touched || release < 1 || grab < 1 || kick.active || !tilt.settled || !sheet.settled)) {
         raf = requestAnimationFrame(frame);
       }
     };
@@ -251,12 +246,12 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       wake();
     };
 
-    // ── Gyroscope (mobile — polished) ──
+    // ── Gyroscope (mobile) ──
     const onDeviceOrientation = (e: DeviceOrientationEvent) => {
       if (e.gamma === null || e.beta === null) return;
       if (touched) return;
 
-      // Auto-calibrate on first valid reading
+      // Calibrate once — captures the angle you're holding the phone at
       if (!gyroCalibrated) {
         gyroBeta0 = e.beta;
         gyroGamma0 = e.gamma;
@@ -264,12 +259,8 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
       gyroActive = true;
 
-      // Very slow baseline drift (0.0002) — prevents permanent lock
-      // but doesn't eat the signal like 0.002 did
-      gyroBeta0 += (e.beta - gyroBeta0) * 0.0002;
-      gyroGamma0 += (e.gamma - gyroGamma0) * 0.0002;
-
-      // ±40° from rest = full range, responsive but not crazy
+      // NO continuous recalibration — that was killing the signal!
+      // ±40° from rest = full range
       const x = clamp((e.gamma - gyroGamma0) / 40, -1, 1);
       const y = clamp((e.beta - gyroBeta0) / 40, -1, 1);
 
