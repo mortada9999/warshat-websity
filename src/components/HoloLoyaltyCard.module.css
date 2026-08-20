@@ -271,21 +271,38 @@
   color: #a25f00;
 }
 
-.starsRow {
+.gemsRow {
   display: flex;
   gap: 0.1rem;
   align-items: center;
 }
 
-.starsGrid {
+.gemsGrid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.1rem;
   align-items: center;
 }
 
-.starSvg {
-  transition: fill 0.25s ease, stroke 0.25s ease;
+.gemSvg {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 0 transparent);
+  stroke-linejoin: round;
+}
+
+.gemFilled {
+  animation: shinePulse 2s infinite alternate ease-in-out;
+}
+
+@keyframes shinePulse {
+  0% {
+    filter: drop-shadow(0 0 2px rgba(192, 138, 45, 0.4));
+    transform: scale(1);
+  }
+  100% {
+    filter: drop-shadow(0 0 6px rgba(192, 138, 45, 0.8));
+    transform: scale(1.05);
+  }
 }
 
 .rewardProgress {

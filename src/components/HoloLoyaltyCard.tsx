@@ -18,9 +18,9 @@ import {
 import type { LoyaltyMember } from '@/lib/loyaltyStore';
 import styles from './HoloLoyaltyCard.module.css';
 
-/* ── Star component ─────────────────────────────────────────────────────── */
+/* ── Gem component (replaces stars for a premium feel) ─────────────────── */
 
-function Star({ filled, color }: { filled: boolean; color: string }) {
+function Gem({ filled, color }: { filled: boolean; color: string }) {
   return (
     <svg
       width="22"
@@ -29,10 +29,19 @@ function Star({ filled, color }: { filled: boolean; color: string }) {
       fill={filled ? color : 'none'}
       stroke={filled ? color : 'rgba(74,82,64,0.2)'}
       strokeWidth="1.5"
+      strokeLinejoin="round"
       aria-hidden="true"
-      className={styles.starSvg}
+      className={`${styles.gemSvg} ${filled ? styles.gemFilled : ''}`}
     >
-      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      <path d="M6 2L2 8l10 14L22 8l-4-6H6z" />
+      {filled && (
+        <>
+          <path d="M2 8h20" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" />
+          <path d="M12 22V8" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" />
+          <path d="M6 2l6 6" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" />
+          <path d="M18 2l-6 6" stroke="rgba(255,255,255,0.4)" strokeWidth="1" fill="none" />
+        </>
+      )}
     </svg>
   );
 }
@@ -308,9 +317,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                   <span className={styles.rewardLabel}>
                     {card5Complete && member.reward5Claimed ? '✓ تم الصرف' : 'خصم ٥٠٪'}
                   </span>
-                  <div className={styles.starsRow}>
+                  <div className={styles.gemsRow}>
                     {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
+                      <Gem
                         key={`s5-${i}`}
                         filled={i < card5Progress}
                         color={card5Complete ? '#a25f00' : '#597257'}
@@ -325,9 +334,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                   <span className={styles.rewardLabel}>
                     {card10Complete && member.reward10Claimed ? '✓ تم الصرف' : 'ورشة مجانية'}
                   </span>
-                  <div className={styles.starsGrid}>
+                  <div className={styles.gemsGrid}>
                     {Array.from({ length: 10 }).map((_, i) => (
-                      <Star
+                      <Gem
                         key={`s10-${i}`}
                         filled={i < card10Progress}
                         color={card10Complete ? '#C08A2D' : '#597257'}
