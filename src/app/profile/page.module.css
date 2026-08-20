@@ -1,0 +1,302 @@
+/* ── Profile Page Styles ────────────────────────────────────────────────── */
+
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding: var(--nav-h) 1.25rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* ── Top bar ──────────────────────────────────────────────────────────── */
+.topBar {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.25rem;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.backLink:hover {
+  color: var(--text);
+}
+
+[dir="rtl"] .backLink svg {
+  transform: scaleX(-1);
+}
+
+.pageLabel {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ── Profile Header ──────────────────────────────────────────────────── */
+.profileHeader {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #374a00, #597257);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.profileName {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.profileMeta {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ── Card Section ────────────────────────────────────────────────────── */
+.cardSection {
+  width: 100%;
+  max-width: 620px;
+}
+
+/* ── Stats Grid ──────────────────────────────────────────────────────── */
+.statsGrid {
+  width: 100%;
+  max-width: 620px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.statCard {
+  border: 1px solid var(--border);
+  padding: 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  transition: transform 0.2s ease;
+  background: var(--surface);
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+}
+
+.statNum {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1;
+}
+
+.statLabel {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ── Activity Section ────────────────────────────────────────────────── */
+.activitySection {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text);
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.emptyText {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.activityList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.activityItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.activityLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.activityIcon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.activityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.activityLabel {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.activityDate {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.activityBadge {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.badgeSession {
+  background: rgba(74, 82, 64, 0.08);
+  color: var(--olive);
+  border: 1px solid rgba(74, 82, 64, 0.15);
+}
+
+.badgeReward5 {
+  background: rgba(162, 95, 0, 0.08);
+  color: #a25f00;
+  border: 1px solid rgba(162, 95, 0, 0.2);
+}
+
+.badgeReward10 {
+  background: rgba(192, 138, 45, 0.1);
+  color: #C08A2D;
+  border: 1px solid rgba(192, 138, 45, 0.25);
+}
+
+/* ── How it works ────────────────────────────────────────────────────── */
+.howSection {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.howGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.howCard {
+  border: 1px solid var(--border);
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  background: var(--surface);
+}
+
+.howNum {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.howText {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .howGrid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .howCard {
+    flex-direction: row;
+    text-align: start;
+    padding: 1rem;
+  }
+
+  .profileName {
+    font-size: 1.25rem;
+  }
+
+  .avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
+}

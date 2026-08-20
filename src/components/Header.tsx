@@ -56,8 +56,8 @@ export default function Header() {
                 {t(link.ar, link.en)}
               </Link>
             ))}
-            <Link href="#loyalty" className={`${styles.loyaltyLink} hidden md:inline-block`}>
-              {t('تذكرة الولاء', 'Loyalty Ticket')}
+            <Link href="/profile" className={`${styles.loyaltyLink} hidden md:inline-block`}>
+              {t('الملف الشخصي', 'My Profile')}
             </Link>
           </nav>
 

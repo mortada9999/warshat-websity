@@ -3,6 +3,7 @@ import './tailwind.css';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
 import { WorkshopStoreProvider } from '@/lib/workshopStore';
+import { LoyaltyProvider } from '@/lib/loyaltyStore';
 import { AdminProvider } from '@/components/AdminProvider';
 import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
@@ -33,15 +34,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head />
       <body>
         <WorkshopStoreProvider>
-          <AdminProvider>
-            <LanguageProvider>
-              <Header />
-              <SmoothScroll>
-                {children}
-              </SmoothScroll>
-              <WorkshopEditorModal />
-            </LanguageProvider>
-          </AdminProvider>
+          <LoyaltyProvider>
+            <AdminProvider>
+              <LanguageProvider>
+                <Header />
+                <SmoothScroll>
+                  {children}
+                </SmoothScroll>
+                <WorkshopEditorModal />
+              </LanguageProvider>
+            </AdminProvider>
+          </LoyaltyProvider>
         </WorkshopStoreProvider>
       </body>
     </html>
