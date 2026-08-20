@@ -95,8 +95,8 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
 
     const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
     // Higher stiffness on mobile = snappier, lighter, 1-to-1 feel when touched
-    const tilt = new Follow(isMobile ? 0.5 : 0.16);
-    const sheet = new Follow(isMobile ? 0.25 : 0.09);
+    const tilt = new Follow(isMobile ? 0.65 : 0.16);
+    const sheet = new Follow(isMobile ? 0.35 : 0.09);
     const kick = new Kick();
     const t0 = performance.now();
 
@@ -117,7 +117,7 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     let gyroCalibrated = false;
     let gyroBeta0 = 0;
     let gyroGamma0 = 0;
-    const gyroSmooth = new Follow(0.5); // Very responsive — no lag
+    const gyroSmooth = new Follow(0.7); // Near-instant — buttery smooth
 
     const frame = () => {
       raf = 0;
