@@ -125,25 +125,35 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       // On mobile with gyro: gyroSmooth drives the card when not touched
       if (isMobile && gyroActive && !touched) {
         gyroSmooth.step();
-        // Subtle shimmer on top of gentle gyro
-        idle += 0.006;
+        // Very subtle shimmer on top of gentle gyro
+        idle += 0.004;
         tilt.target = {
-          x: gyroSmooth.value.x * 0.45 + Math.sin(idle) * 0.06,
-          y: gyroSmooth.value.y * 0.45 + Math.cos(idle * 0.73) * 0.04,
+          x: gyroSmooth.value.x * 0.25 + Math.sin(idle) * 0.03,
+          y: gyroSmooth.value.y * 0.25 + Math.cos(idle * 0.73) * 0.02,
         };
       } else if (!touched) {
-        // Desktop idle or mobile without gyro
-        idle += isMobile ? 0.02 : 0.0042;
-        const drift = {
-          x: aim.x + Math.sin(idle) * (isMobile ? 0.5 : 0.28),
-          y: aim.y + Math.cos(idle * 0.73) * (isMobile ? 0.35 : 0.2),
-        };
-        release = Math.min(1, release + 0.016);
-        const k = release * release;
-        tilt.target = {
-          x: handoff.x + (drift.x - handoff.x) * k,
-          y: handoff.y + (drift.y - handoff.y) * k,
-        };
+        if (isMobile) {
+          // Mobile without gyro: gentle wobble to invite interaction
+          idle += 0.02;
+          const drift = {
+            x: aim.x + Math.sin(idle) * 0.5,
+            y: aim.y + Math.cos(idle * 0.73) * 0.35,
+          };
+          release = Math.min(1, release + 0.016);
+          const k = release * release;
+          tilt.target = {
+            x: handoff.x + (drift.x - handoff.x) * k,
+            y: handoff.y + (drift.y - handoff.y) * k,
+          };
+        } else {
+          // Desktop: ease back to flat (0,0) when mouse is not on the card
+          release = Math.min(1, release + 0.016);
+          const k = release * release;
+          tilt.target = {
+            x: handoff.x * (1 - k),
+            y: handoff.y * (1 - k),
+          };
+        }
       }
 
       if (touched) {
@@ -259,9 +269,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       gyroBeta0 += (e.beta - gyroBeta0) * 0.002;
       gyroGamma0 += (e.gamma - gyroGamma0) * 0.002;
 
-      // Delta from drifting baseline, ±50° = full range (gentle, not over the top)
-      const x = clamp((e.gamma - gyroGamma0) / 50, -1, 1);
-      const y = clamp((e.beta - gyroBeta0) / 50, -1, 1);
+      // Delta from drifting baseline, ±70° = full range (very gentle)
+      const x = clamp((e.gamma - gyroGamma0) / 70, -1, 1);
+      const y = clamp((e.beta - gyroBeta0) / 70, -1, 1);
 
       // Feed into the gyro smoother
       gyroSmooth.target = { x, y };
