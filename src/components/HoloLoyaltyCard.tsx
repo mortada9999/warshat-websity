@@ -258,9 +258,22 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
       gyroActive = true;
 
-      // ±30° from rest = full range (same feel as finger drag edge-to-edge)
-      const x = clamp((e.gamma - gyroGamma0) / 30, -1, 1);
-      const y = clamp((e.beta - gyroBeta0) / 30, -1, 1);
+      const rawX = e.gamma - gyroGamma0;
+      const rawY = e.beta - gyroBeta0;
+
+      // Smart recalibration: when phone is near-straight (small delta),
+      // slowly drift baseline to fix sensor drift.
+      // When actively tilting (large delta), don't touch the baseline.
+      const mag = Math.abs(rawX) + Math.abs(rawY);
+      if (mag < 8) {
+        // Near center — correct drift slowly
+        gyroBeta0 += (e.beta - gyroBeta0) * 0.005;
+        gyroGamma0 += (e.gamma - gyroGamma0) * 0.005;
+      }
+
+      // ±30° from rest = full range
+      const x = clamp(rawX / 30, -1, 1);
+      const y = clamp(rawY / 30, -1, 1);
 
       gyroSmooth.target = { x, y };
       wake();
