@@ -155,11 +155,11 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }
 
       if (touched) {
-        grab = Math.min(1, grab + (isMobile ? 0.06 : 0.018));
+        grab = Math.min(1, grab + (isMobile ? 0.2 : 0.018));
         const k = grab * grab;
         tilt.target = {
-          x: grabFrom.x + (aim.x - grabFrom.x) * k,
-          y: grabFrom.y + (aim.y - grabFrom.y) * k,
+          x: grabFrom.x + (aim.x * (isMobile ? 0.7 : 1) - grabFrom.x) * k,
+          y: grabFrom.y + (aim.y * (isMobile ? 0.7 : 1) - grabFrom.y) * k,
         };
       }
 
