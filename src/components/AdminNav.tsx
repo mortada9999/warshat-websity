@@ -8,7 +8,6 @@ export default function AdminNav() {
   return (
     <nav className={styles.nav} aria-label="Admin navigation">
       <Link href="/" className={styles.brand} id="admin-home-link">
-        <span className={styles.icon}>✦</span>
         ورشة فن
       </Link>
       <div className={styles.links}>
