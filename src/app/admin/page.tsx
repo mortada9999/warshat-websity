@@ -9,15 +9,15 @@ import styles from './page.module.css';
 
 export default function AdminPage() {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
-  const [loading, setLoading]     = useState(true);
-  const [deleting, setDeleting]   = useState<string | null>(null);
-  const [error, setError]         = useState('');
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState<string | null>(null);
+  const [error, setError] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
     const secret = localStorage.getItem('admin_secret') ?? '';
     try {
-      const res  = await fetch('/api/workshops?admin=1', {
+      const res = await fetch('/api/workshops?admin=1', {
         headers: { 'Authorization': `Bearer ${secret}` },
       });
       const data: any = await res.json();
