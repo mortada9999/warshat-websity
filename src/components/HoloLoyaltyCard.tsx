@@ -393,7 +393,7 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
           <div className={styles.ticketTop}>
             {/* Brand stripe */}
             <div className={styles.brandStripe}>
-              <span className={styles.brandName}>ورشة فن ✦</span>
+              <span className={styles.brandName}>ورشة فن</span>
               <span className={styles.memberSince}>عضو منذ {member.createdAt}</span>
             </div>
 
