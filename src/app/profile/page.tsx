@@ -21,7 +21,7 @@ export default function ProfilePage() {
 
   // Activity type icons
   const getIcon = (type: string) => {
-    if (type === 'session') return '🎨';
+    if (type === 'session') return '';
     if (type === 'reward5') return '🎁';
     if (type === 'reward10') return '🎉';
     return '✦';
@@ -108,9 +108,9 @@ export default function ProfilePage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.55, delay: 0.35 }}
         className={styles.activitySection}
-        aria-label="سجل النشاطات"
+        aria-label="ورش تدريبية"
       >
-        <h2 className={styles.sectionTitle}>سجل النشاطات</h2>
+        <h2 className={styles.sectionTitle}>ورش تدريبية</h2>
         {member.history.length === 0 ? (
           <p className={styles.emptyText}>لم تحضر أي جلسة بعد</p>
         ) : (
