@@ -87,27 +87,39 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
 
   return (
     <div ref={containerRef} className="relative w-full pt-8">
-      {/* Card Element */}
-      <article
-        ref={cardRef}
-        className={`relative ${styles.workshopCard} ${index % 2 === 0 ? styles.cardAlt : styles.cardWarm}`}
-      >
-        {/* Tape Elements (Realistic Glossy Scotch Tape Collage) */}
-        {cardTapes.map((tape, i) => (
-          <div 
-            key={i}
-            className={`collage-tape absolute z-20 bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm ${styles.collageTape}`}
-            style={{ 
-              top: tape.top,
-              left: tape.left,
-              right: 'right' in tape ? (tape as any).right : undefined,
-              width: tape.width,
-              height: tape.height,
-              transform: `scale(var(--tape-scale, 1)) rotate(${tape.rotate})`,
-              backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
-            }}
-          />
-        ))}
+      {/* Tape Elements — OUTSIDE the masked article so they're not clipped */}
+      {cardTapes.map((tape, i) => (
+        <div 
+          key={i}
+          className={`collage-tape absolute z-20 bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm ${styles.collageTape}`}
+          style={{ 
+            top: tape.top,
+            left: tape.left,
+            right: 'right' in tape ? (tape as any).right : undefined,
+            width: tape.width,
+            height: tape.height,
+            transform: `scale(var(--tape-scale, 1)) rotate(${tape.rotate})`,
+            backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
+          }}
+        />
+      ))}
+
+
+      {/* Shadow wrapper — drop-shadow follows torn edges */}
+      <div style={{ filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.18)) drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}>
+        {/* Card Element */}
+        <article
+          ref={cardRef}
+          className={`relative ${styles.workshopCard} ${styles.tornpaper} ${index % 2 === 0 ? styles.cardAlt : styles.cardWarm}`}
+        >
+        {/* Mask SVG — only first card defines it, all cards reference it via CSS */}
+        {index === 0 && (
+          <svg className={styles.tornpaperMaskSvg}>
+            <mask id="mask_tornpaper">
+              <use href="#symbol_tornpaper" />
+            </mask>
+          </svg>
+        )}
 
         {/* Image Container */}
         <div className={styles.workshopImageWrap}>
@@ -144,6 +156,7 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
           <a href="#book" className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</a>
         </div>
       </article>
+      </div>
     </div>
   );
 }

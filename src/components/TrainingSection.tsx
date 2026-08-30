@@ -25,6 +25,30 @@ export default function TrainingSection() {
       aria-label={t('الورش التدريبية', 'Training workshops')}
     >
       <HiddenWorkshopsMenu category="workshop" />
+
+      {/* ── Torn Paper SVG Definitions ── */}
+      <svg preserveAspectRatio="none" aria-hidden="true" style={{ position: 'absolute', top: 0, left: 0, width: 0, height: 0, zIndex: -1 }}>
+        <symbol id="symbol_tornpaper">
+          <filter id="filter_tornpaper">
+            <feTurbulence baseFrequency="0.05" type="turbulence" numOctaves="10" seed="24" result="edge_noise" />
+            <feGaussianBlur stdDeviation="0.5" in="SourceGraphic" />
+            <feMorphology operator="erode" radius="5" />
+            <feOffset dx="-1" dy="-1" />
+            <feDisplacementMap scale="10" xChannelSelector="B" yChannelSelector="G" in2="edge_noise" />
+          </filter>
+          <rect width="100%" height="100%" fill="white" filter="url(#filter_tornpaper)" />
+        </symbol>
+      </svg>
+      <svg aria-hidden="true" style={{ position: 'absolute', top: 0, left: 0, width: 0, height: 0, zIndex: -1 }}>
+        <filter id="filter_grungepaper">
+          <feTurbulence type="fractalNoise" baseFrequency="0.05" result="grunge_noise" numOctaves="5" seed="15" />
+          <feDiffuseLighting in="grunge_noise" lightingColor="white" surfaceScale="2">
+            <feDistantLight azimuth="45" elevation="60" />
+          </feDiffuseLighting>
+          <feBlend mode="multiply" in="SourceGraphic" />
+        </filter>
+      </svg>
+
       <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-8 md:mt-12 h-full">
         
         {/* Section Heading */}
