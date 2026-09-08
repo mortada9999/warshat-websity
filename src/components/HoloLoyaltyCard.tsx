@@ -67,6 +67,7 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
   // Long press detection refs
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
+  const pressStartPos = useRef<{ x: number; y: number } | null>(null);
   const LONG_PRESS_MS = 600;
 
   // Track client mount
@@ -104,12 +105,14 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     }
     setShowPressRing(false);
     setPressPos(null);
+    pressStartPos.current = null;
   }, []);
 
   const startLongPress = useCallback((clientX: number, clientY: number) => {
     const host = hostRef.current;
     if (!host) return;
     isLongPress.current = false;
+    pressStartPos.current = { x: clientX, y: clientY };
 
     // Calculate position relative to host
     const rect = host.getBoundingClientRect();
@@ -121,12 +124,23 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       setIsFlipped(prev => !prev);
       setShowPressRing(false);
       setPressPos(null);
+      pressStartPos.current = null;
       // Haptic feedback on mobile if available
       if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
         navigator.vibrate(30);
       }
     }, LONG_PRESS_MS);
   }, []);
+
+  const handleMove = useCallback((clientX: number, clientY: number) => {
+    if (!pressStartPos.current) return;
+    const dx = clientX - pressStartPos.current.x;
+    const dy = clientY - pressStartPos.current.y;
+    // 10px threshold squared = 100
+    if (dx * dx + dy * dy > 100) {
+      clearLongPress();
+    }
+  }, [clearLongPress]);
 
   const endLongPress = useCallback(() => {
     clearLongPress();
@@ -438,11 +452,26 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
         if (e.pointerType === 'touch') return; // touch handled separately
         startLongPress(e.clientX, e.clientY);
       }}
-      onPointerUp={() => endLongPress()}
-      onPointerCancel={() => clearLongPress()}
+      onPointerMove={(e) => {
+        if (e.pointerType === 'touch') return;
+        handleMove(e.clientX, e.clientY);
+      }}
+      onPointerUp={(e) => {
+        if (e.pointerType === 'touch') return;
+        endLongPress();
+      }}
+      onPointerCancel={(e) => {
+        if (e.pointerType === 'touch') return;
+        clearLongPress();
+      }}
       onTouchStart={(e) => {
         if (e.touches.length > 0) {
           startLongPress(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }}
+      onTouchMove={(e) => {
+        if (e.touches.length > 0) {
+          handleMove(e.touches[0].clientX, e.touches[0].clientY);
         }
       }}
       onTouchEnd={() => endLongPress()}
