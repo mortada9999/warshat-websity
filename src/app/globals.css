@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Epilogue:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Permanent+Marker&family=Baloo+Bhaijaan+2:wght@400;500;600;700;800&display=swap');
 
 /* â”€â”€â”€ Design Tokens (from Figma) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 :root {
@@ -53,8 +53,8 @@
   --clr-peach:       #F1E7D3;
 
   /* Figma Fonts */
-  --font-heading: 'Amiri', Georgia, serif;
-  --font-body:    'IBM Plex Sans', 'Segoe UI', sans-serif;
+  --font-heading: var(--font-dg-forsha), 'Amiri', Georgia, serif;
+  --font-body:    var(--font-dg-forsha), 'IBM Plex Sans', 'Segoe UI', sans-serif;
   --font-display: 'Epilogue', 'IBM Plex Sans', sans-serif;
 
   --nav-h:     80px;
@@ -107,7 +107,7 @@ p { /* color inherited â€” component-level classes control */  }
 
 /* Playful handwritten style for the kids section */
 .font-handwritten {
-  font-family: 'Permanent Marker', 'Baloo Bhaijaan 2', 'Amiri', cursive;
+  font-family: 'Permanent Marker', 'Baloo Bhaijaan 2', var(--font-dg-forsha), cursive;
 }
 
 a {

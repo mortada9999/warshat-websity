@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import localFont from 'next/font/local';
 import './tailwind.css';
 import './globals.css';
 import { LanguageProvider } from '@/components/LanguageProvider';
@@ -8,6 +9,24 @@ import { AdminProvider } from '@/components/AdminProvider';
 import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import Header from '@/components/Header';
+
+// Load DG Forsha font
+const dgForsha = localFont({
+  src: [
+    {
+      path: './fonts/DG Forsha Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/DG Forsha Scribble.ttf',
+      weight: '700', // Using scribble as bold for now or as an alternate
+      style: 'normal',
+    },
+  ],
+  variable: '--font-dg-forsha',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'ورشة فن — مساحة الإبداع والتعلم',
@@ -30,7 +49,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className="bg-[#F6F6F4]">
+    <html lang="ar" dir="rtl" className={`bg-[#F6F6F4] ${dgForsha.variable}`}>
       <head />
       <body>
         <WorkshopStoreProvider>

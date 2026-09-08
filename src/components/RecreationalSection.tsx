@@ -56,7 +56,7 @@ export default function RecreationalSection() {
               <InactiveOverlay workshop={act} />
 
               {/* Title positioned at top of card */}
-              <h3 className="font-amiri text-base md:text-2xl text-[#374A00] mb-3 h-10 flex items-center justify-center leading-[120%]">
+              <h3 className="font-amiri text-sm md:text-xl text-[#374A00] mb-3 min-h-[2.5rem] flex items-center justify-center leading-snug text-center line-clamp-2 px-1">
                 {t(act.titleAr, act.titleEn)}
               </h3>
               

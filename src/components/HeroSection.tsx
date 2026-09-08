@@ -12,7 +12,7 @@ if (typeof window !== 'undefined') {
 }
 
 export default function HeroSection() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
@@ -120,24 +120,39 @@ export default function HeroSection() {
           className="relative flex flex-col items-center justify-center w-full max-w-[512px]"
         >
           <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
+            <div className="absolute top-[32%] left-[18%] w-[55%] h-[32%] flex flex-col items-center justify-between">
+              
+             <span className="text-[#4A5830] text-lg md:text-3xl font-bold relative bottom-3 md:bottom-8">
+  {t('ورشة فن', 'Warshat Fan')}
+</span>
+              
+              {/* العنوان الرئيسي في المنتصف */}
+              <h1 className="text-center text-[#34401F] text-base md:text-2xl font-normal leading-[160%] relative bottom-2 md:bottom-6">
+  {t('المكان المثالي للترفيه', 'The ideal place for')}
+  <br />
+  {t('عن طريق الفن', 'entertainment through art')}
+</h1>
+              
+           <p className="text-center text-[#4A5830] text-[9px] md:text-sm relative right-[2%] md:right-[4%] w-full">
+  {t('و لتعلم مختلف الفنون بأحترافية', 'And to learn various arts professionally!')}
+</p>
+            </div>
+            {/* صورة اليد — طبقة أمام النص مع multiply لإظهار النص من خلال الورقة الفاتحة */}
             <Image
               src="/images/figma/hero-hand.png"
               alt={t('يد تمسك ورقة فنية — ورشة فن', 'A hand holding an art paper — Warshat Fan')}
               width={512}
               height={684}
-              className="w-full h-auto object-contain"
+              className="relative z-20 w-full h-auto object-contain"
               style={{
                 width: '100%',
                 height: 'auto',
+                mixBlendMode: 'multiply',
                 maskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
               }}
               priority
             />
-            {/* مساحة مخصصة للنصوص المستقبلية داخل اليد */}
-            <div className="absolute inset-0 flex items-center justify-center p-8 md:p-16 pointer-events-none z-20">
-              {/* ضع النص المستقبلي هنا */}
-            </div>
           </div>
         </div>
 
@@ -156,8 +171,12 @@ export default function HeroSection() {
             
             {/* The paper card */}
             <div className="hero-btn-paper flex flex-col items-center justify-center px-6 md:px-16 py-5 md:py-8 -rotate-3 bg-[#F8F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <span className="font-amiri text-[#374A00] text-2xl md:text-5xl leading-[130%]">من نحن</span>
-              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-1.5 md:mt-2 tracking-widest uppercase">About Us</span>
+              <span className="font-amiri text-[#374A00] text-2xl md:text-5xl leading-[130%]">
+                {t('من نحن', 'About Us')}
+              </span>
+              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-1.5 md:mt-2 tracking-widest uppercase">
+                {lang === 'ar' ? 'About Us' : 'من نحن'}
+              </span>
             </div>
           </a>
 
@@ -173,8 +192,12 @@ export default function HeroSection() {
             
             {/* The paper card */}
             <div className="hero-btn-paper flex flex-col items-center justify-center px-6 md:px-16 py-5 md:py-8 rotate-2 bg-[#F4F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <span className="font-amiri text-[#374A00] text-2xl md:text-5xl leading-[130%]">قهوة فن</span>
-              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-1.5 md:mt-2 tracking-widest uppercase">Art Caffe</span>
+              <span className="font-amiri text-[#374A00] text-2xl md:text-5xl leading-[130%]">
+                {t('قهوة فن', 'Art Caffe')}
+              </span>
+              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-1.5 md:mt-2 tracking-widest uppercase">
+                {lang === 'ar' ? 'Art Caffe' : 'قهوة فن'}
+              </span>
             </div>
           </a>
 
