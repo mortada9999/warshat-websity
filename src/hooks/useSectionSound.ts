@@ -42,7 +42,8 @@ export function useSectionSound<T extends HTMLElement>(
         });
       },
       {
-        threshold,
+        threshold: 0.1,
+        rootMargin: '-10% 0px -10% 0px',
       }
     );
 

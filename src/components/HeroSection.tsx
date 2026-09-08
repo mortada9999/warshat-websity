@@ -69,8 +69,6 @@ export default function HeroSection() {
           start: `top ${50 + index * 15}%`, 
           end: `top ${10 - index * 10}%`,
           scrub: 1.5,
-          onEnter: () => playRustle(),
-          onEnterBack: () => playRustle(),
         }
       });
 
