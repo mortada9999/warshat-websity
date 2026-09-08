@@ -64,11 +64,15 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
   const [pressPos, setPressPos] = useState<{ x: number; y: number } | null>(null);
   const [showPressRing, setShowPressRing] = useState(false);
 
-  // Long press detection refs
+  // Long press detection refs (for desktop)
   const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isLongPress = useRef(false);
   const pressStartPos = useRef<{ x: number; y: number } | null>(null);
   const LONG_PRESS_MS = 600;
+
+  // Double tap detection refs (for mobile)
+  const tapStartPos = useRef<{ x: number; y: number } | null>(null);
+  const lastTapTime = useRef(0);
 
   // Track client mount
   useEffect(() => { setMounted(true); }, []);
@@ -151,6 +155,33 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
     }
     isLongPress.current = false;
   }, [clearLongPress, isFlipped]);
+
+  // ── Double tap handlers (Mobile) ────────────────────────────────────
+  const handleTouchStart = useCallback((clientX: number, clientY: number) => {
+    tapStartPos.current = { x: clientX, y: clientY };
+  }, []);
+
+  const handleTouchEnd = useCallback((clientX: number, clientY: number) => {
+    if (!tapStartPos.current) return;
+    const dx = clientX - tapStartPos.current.x;
+    const dy = clientY - tapStartPos.current.y;
+    tapStartPos.current = null;
+    
+    // If moved more than 10px, it's a swipe, not a tap
+    if (dx * dx + dy * dy > 100) return;
+
+    const now = performance.now();
+    // 400ms threshold for double tap
+    if (now - lastTapTime.current < 400) {
+      setIsFlipped(prev => !prev);
+      lastTapTime.current = 0; // consume tap
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate(30);
+      }
+    } else {
+      lastTapTime.current = now;
+    }
+  }, []);
 
   // Apply static foil properties
   useEffect(() => {
@@ -466,16 +497,17 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       }}
       onTouchStart={(e) => {
         if (e.touches.length > 0) {
-          startLongPress(e.touches[0].clientX, e.touches[0].clientY);
+          handleTouchStart(e.touches[0].clientX, e.touches[0].clientY);
         }
       }}
-      onTouchMove={(e) => {
-        if (e.touches.length > 0) {
-          handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      onTouchEnd={(e) => {
+        if (e.changedTouches.length > 0) {
+          handleTouchEnd(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
         }
       }}
-      onTouchEnd={() => endLongPress()}
-      onTouchCancel={() => clearLongPress()}
+      onTouchCancel={() => {
+        tapStartPos.current = null;
+      }}
       onContextMenu={(e) => e.preventDefault()}
     >
       <div ref={cardRef} className={`${styles.card} ${isFlipped ? styles.cardFlipped : ''}`}>
