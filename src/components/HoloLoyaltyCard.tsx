@@ -2,9 +2,10 @@
 
 // HoloLoyaltyCard — Holographic train-ticket loyalty card for Warshat Fan
 // Tilt-reactive foil with olive/gold spectrum, perforation, QR code stub.
+// Long-press flips to reveal a large QR code on the back for admin scanning.
 // Works with pointer (desktop) AND touch (mobile) for smooth interaction.
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import QRCode from 'qrcode';
 import {
   Follow,
@@ -57,27 +58,85 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
   const hostRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [qrSrc, setQrSrc] = useState<string>('');
+  const [qrBackSrc, setQrBackSrc] = useState<string>('');
   const [mounted, setMounted] = useState(false);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [pressPos, setPressPos] = useState<{ x: number; y: number } | null>(null);
+  const [showPressRing, setShowPressRing] = useState(false);
+
+  // Long press detection refs
+  const longPressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isLongPress = useRef(false);
+  const LONG_PRESS_MS = 600;
 
   // Track client mount
   useEffect(() => { setMounted(true); }, []);
 
-  // Generate QR code as data URL (client-side only)
+  // Generate QR codes as data URLs (client-side only)
   useEffect(() => {
     if (!mounted) return;
     const url = `${window.location.origin}/staff/rewards?member=${member.code}`;
+    // Small QR for the front stub
     QRCode.toDataURL(url, {
       width: 160,
       margin: 1,
-      color: {
-        dark: '#374a00',
-        light: '#00000000',
-      },
+      color: { dark: '#374a00', light: '#00000000' },
       errorCorrectionLevel: 'M',
     })
       .then((dataUrl: string) => setQrSrc(dataUrl))
       .catch(() => {});
+    // Larger QR for the back face
+    QRCode.toDataURL(url, {
+      width: 320,
+      margin: 2,
+      color: { dark: '#374a00', light: '#00000000' },
+      errorCorrectionLevel: 'H',
+    })
+      .then((dataUrl: string) => setQrBackSrc(dataUrl))
+      .catch(() => {});
   }, [member.code, mounted]);
+
+  // ── Long press handlers ──────────────────────────────────────────────
+  const clearLongPress = useCallback(() => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    setShowPressRing(false);
+    setPressPos(null);
+  }, []);
+
+  const startLongPress = useCallback((clientX: number, clientY: number) => {
+    const host = hostRef.current;
+    if (!host) return;
+    isLongPress.current = false;
+
+    // Calculate position relative to host
+    const rect = host.getBoundingClientRect();
+    setPressPos({ x: clientX - rect.left, y: clientY - rect.top });
+    setShowPressRing(true);
+
+    longPressTimer.current = setTimeout(() => {
+      isLongPress.current = true;
+      setIsFlipped(prev => !prev);
+      setShowPressRing(false);
+      setPressPos(null);
+      // Haptic feedback on mobile if available
+      if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+        navigator.vibrate(30);
+      }
+    }, LONG_PRESS_MS);
+  }, []);
+
+  const endLongPress = useCallback(() => {
+    clearLongPress();
+    // If it was a long press, we already flipped — don't do anything else
+    // If it was a short tap while flipped, flip back
+    if (!isLongPress.current && isFlipped) {
+      setIsFlipped(false);
+    }
+    isLongPress.current = false;
+  }, [clearLongPress, isFlipped]);
 
   // Apply static foil properties
   useEffect(() => {
@@ -375,103 +434,149 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
       className={styles.host}
       role="img"
       aria-label={`بطاقة ولاء ورشة فن — ${member.name} — ${member.sessions} جلسات`}
+      onPointerDown={(e) => {
+        if (e.pointerType === 'touch') return; // touch handled separately
+        startLongPress(e.clientX, e.clientY);
+      }}
+      onPointerUp={() => endLongPress()}
+      onPointerCancel={() => clearLongPress()}
+      onTouchStart={(e) => {
+        if (e.touches.length > 0) {
+          startLongPress(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }}
+      onTouchEnd={() => endLongPress()}
+      onTouchCancel={() => clearLongPress()}
+      onContextMenu={(e) => e.preventDefault()}
     >
-      <div ref={cardRef} className={styles.card}>
+      <div ref={cardRef} className={`${styles.card} ${isFlipped ? styles.cardFlipped : ''}`}>
 
-        {/* ── Foil layers ── */}
-        <div className={styles.foil} />
-        <div className={styles.foilB} />
-        <div className={styles.foilC} />
-        <div className={styles.glare} />
-        <div className={styles.sheen} />
-        <div className={styles.spot} />
+          {/* ══ FRONT FACE — foil + ticket content ══ */}
+          <div className={styles.frontFace}>
+            {/* Foil layers live inside frontFace so they flip with the card */}
+            <div className={styles.foil} />
+            <div className={styles.foilB} />
+            <div className={styles.foilC} />
+            <div className={styles.glare} />
+            <div className={styles.sheen} />
+            <div className={styles.spot} />
 
-        {/* ── Ticket content ── */}
-        <div className={styles.content}>
+            <div className={styles.content}>
 
-          {/* ── Top section ── */}
-          <div className={styles.ticketTop}>
-            {/* Brand stripe */}
-            <div className={styles.brandStripe}>
-              <span className={styles.brandName}>ورشة فن</span>
-              <span className={styles.memberSince}>عضو منذ {member.createdAt}</span>
-            </div>
-
-            {/* Member info + cards */}
-            <div className={styles.topBody}>
-              {/* Left: name + code */}
-              <div className={styles.memberInfo}>
-                <h2 className={styles.memberName}>{member.name}</h2>
-                <p className={styles.memberCode}>{member.code}</p>
-                {member.cycle > 1 && (
-                  <span className={styles.cycleBadge}>الدورة {member.cycle}</span>
-                )}
-              </div>
-
-              {/* Right: reward cards */}
-              <div className={styles.rewardCards}>
-                {/* Card 1: 5 sessions → 50% discount */}
-                <div className={`${styles.rewardCard} ${card5Complete ? styles.rewardComplete : ''}`}>
-                  <span className={styles.rewardLabel}>
-                    {card5Complete && member.reward5Claimed ? '✓ تم الصرف' : 'خصم ٥٠٪'}
-                  </span>
-                  <div className={styles.gemsRow}>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Gem
-                        key={`s5-${i}`}
-                        filled={i < card5Progress}
-                        color={card5Complete ? '#a25f00' : '#597257'}
-                      />
-                    ))}
-                  </div>
-                  <span className={`${styles.rewardProgress} ${styles.ltrNum}`}>{card5Progress} / ٥</span>
+              {/* ── Top section ── */}
+              <div className={styles.ticketTop}>
+                {/* Brand stripe */}
+                <div className={styles.brandStripe}>
+                  <span className={styles.brandName}>ورشة فن</span>
+                  <span className={styles.memberSince}>عضو منذ {member.createdAt}</span>
                 </div>
 
-                {/* Card 2: 10 sessions → free workshop */}
-                <div className={`${styles.rewardCard} ${card10Complete ? styles.rewardComplete : ''}`}>
-                  <span className={styles.rewardLabel}>
-                    {card10Complete && member.reward10Claimed ? '✓ تم الصرف' : 'ورشة مجانية'}
-                  </span>
-                  <div className={styles.gemsGrid}>
-                    {Array.from({ length: 10 }).map((_, i) => (
-                      <Gem
-                        key={`s10-${i}`}
-                        filled={i < card10Progress}
-                        color={card10Complete ? '#C08A2D' : '#597257'}
-                      />
-                    ))}
+                {/* Member info + cards */}
+                <div className={styles.topBody}>
+                  {/* Left: name + code */}
+                  <div className={styles.memberInfo}>
+                    <h2 className={styles.memberName}>{member.name}</h2>
+                    <p className={styles.memberCode}>{member.code}</p>
+                    {member.cycle > 1 && (
+                      <span className={styles.cycleBadge}>الدورة {member.cycle}</span>
+                    )}
                   </div>
-                  <span className={`${styles.rewardProgress} ${styles.ltrNum}`}>{card10Progress} / ١٠</span>
+
+                  {/* Right: reward cards */}
+                  <div className={styles.rewardCards}>
+                    {/* Card 1: 5 sessions → 50% discount */}
+                    <div className={`${styles.rewardCard} ${card5Complete ? styles.rewardComplete : ''}`}>
+                      <span className={styles.rewardLabel}>
+                        {card5Complete && member.reward5Claimed ? '✓ تم الصرف' : 'خصم ٥٠٪'}
+                      </span>
+                      <div className={styles.gemsRow}>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <Gem
+                            key={`s5-${i}`}
+                            filled={i < card5Progress}
+                            color={card5Complete ? '#a25f00' : '#597257'}
+                          />
+                        ))}
+                      </div>
+                      <span className={`${styles.rewardProgress} ${styles.ltrNum}`}>{card5Progress} / ٥</span>
+                    </div>
+
+                    {/* Card 2: 10 sessions → free workshop */}
+                    <div className={`${styles.rewardCard} ${card10Complete ? styles.rewardComplete : ''}`}>
+                      <span className={styles.rewardLabel}>
+                        {card10Complete && member.reward10Claimed ? '✓ تم الصرف' : 'ورشة مجانية'}
+                      </span>
+                      <div className={styles.gemsGrid}>
+                        {Array.from({ length: 10 }).map((_, i) => (
+                          <Gem
+                            key={`s10-${i}`}
+                            filled={i < card10Progress}
+                            color={card10Complete ? '#C08A2D' : '#597257'}
+                          />
+                        ))}
+                      </div>
+                      <span className={`${styles.rewardProgress} ${styles.ltrNum}`}>{card10Progress} / ١٠</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ── Perforation ── */}
+              <div className={styles.perforation} aria-hidden="true">
+                <div className={styles.notchRight} />
+                <div className={styles.dots}>
+                  {Array.from({ length: 20 }).map((_, i) => (
+                    <div key={i} className={styles.dot} />
+                  ))}
+                </div>
+                <div className={styles.notchLeft} />
+              </div>
+
+              {/* ── Bottom stub ── */}
+              <div className={styles.ticketBottom}>
+                <div className={styles.qrWrap}>
+                  {qrSrc && (
+                    <img src={qrSrc} alt="QR Code" className={styles.qrImg} width={56} height={56} />
+                  )}
+                </div>
+                <div className={styles.stubInfo}>
+                  <p className={styles.stubText}>امسح للتحقق من عضويتك</p>
+                  <p className={styles.stubCode}>{member.code}</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* ── Perforation ── */}
-          <div className={styles.perforation} aria-hidden="true">
-            <div className={styles.notchRight} />
-            <div className={styles.dots}>
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className={styles.dot} />
-              ))}
-            </div>
-            <div className={styles.notchLeft} />
-          </div>
+          {/* ══ BACK FACE — same foil + QR only ══ */}
+          <div className={styles.backFace}>
+            {/* Same foil layers as front for identical holographic effect */}
+            <div className={styles.foil} />
+            <div className={styles.foilB} />
+            <div className={styles.foilC} />
+            <div className={styles.glare} />
+            <div className={styles.sheen} />
+            <div className={styles.spot} />
 
-          {/* ── Bottom stub ── */}
-          <div className={styles.ticketBottom}>
-            <div className={styles.qrWrap}>
-              {qrSrc && (
-                <img src={qrSrc} alt="QR Code" className={styles.qrImg} width={56} height={56} />
+            <div className={styles.backQrWrap}>
+              {qrBackSrc && (
+                <img src={qrBackSrc} alt="QR Code" className={styles.backQrImg} width={140} height={140} />
               )}
             </div>
-            <div className={styles.stubInfo}>
-              <p className={styles.stubText}>امسح للتحقق من عضويتك</p>
-              <p className={styles.stubCode}>{member.code}</p>
-            </div>
           </div>
-        </div>
+
       </div>
+
+      {/* ── Long-press progress ring ── */}
+      {showPressRing && pressPos && (
+        <div
+          className={styles.pressRing}
+          style={{ left: pressPos.x, top: pressPos.y }}
+        >
+          <svg className={styles.pressRingSvg} viewBox="0 0 44 44">
+            <circle className={styles.pressRingCircle} cx="22" cy="22" r="20" />
+          </svg>
+        </div>
+      )}
     </div>
   );
 }
