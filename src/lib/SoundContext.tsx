@@ -38,7 +38,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   
   const [playRustle, { stop: stopRustleSound }] = useSound('/sounds/rustle.mp3', { 
     soundEnabled: !isMuted,
-    volume: 1.0,
+    volume: 0.4,
   });
 
   const toggleMute = useCallback(() => {

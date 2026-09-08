@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { useSoundContext } from '@/lib/SoundContext';
 
 import HeroSection from '@/components/HeroSection';
 import RecreationalSection from '@/components/RecreationalSection';
@@ -27,25 +28,36 @@ const SECTIONS = [
 
 export default function HomePage() {
   const containerRef = useRef<HTMLElement>(null);
+  const { playSwoosh } = useSoundContext();
 
   useGSAP(() => {
     const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
     
     sections.forEach((section, index) => {
-      if (index === sections.length - 1) return;
+      if (index !== sections.length - 1) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'bottom bottom',
+          end: 'bottom top',
+          pin: true,
+          pinSpacing: false,
+          invalidateOnRefresh: true,
+        });
+      }
 
-      ScrollTrigger.create({
-        trigger: section,
-        start: 'bottom bottom',
-        end: 'bottom top',
-        pin: true,
-        pinSpacing: false,
-        invalidateOnRefresh: true,
-      });
+      // Play swoosh sound when section enters the viewport
+      if (index > 0) {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 50%',
+          onEnter: () => playSwoosh(),
+          onEnterBack: () => playSwoosh(),
+        });
+      }
     });
 
     ScrollTrigger.refresh();
-  }, { scope: containerRef });
+  }, { scope: containerRef, dependencies: [playSwoosh] });
 
   return (
     <>
