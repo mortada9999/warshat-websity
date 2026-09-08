@@ -33,11 +33,8 @@ export function useSectionSound<T extends HTMLElement>(
               hasPlayed = true;
             }
           } else {
-            // Reset when it completely leaves the viewport
-            // so it can play again when user scrolls back
-            if (entry.intersectionRatio === 0) {
-              hasPlayed = false;
-            }
+            // Reset when it leaves the viewport
+            hasPlayed = false;
           }
         });
       },
