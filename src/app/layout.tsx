@@ -6,9 +6,11 @@ import { LanguageProvider } from '@/components/LanguageProvider';
 import { WorkshopStoreProvider } from '@/lib/workshopStore';
 import { LoyaltyProvider } from '@/lib/loyaltyStore';
 import { AdminProvider } from '@/components/AdminProvider';
+import { SoundProvider } from '@/lib/SoundContext';
 import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import Header from '@/components/Header';
+import SoundMuteButton from '@/components/SoundMuteButton';
 
 // Load DG Forsha font
 const dgForsha = localFont({
@@ -52,19 +54,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl" className={`bg-[#F6F6F4] ${dgForsha.variable}`}>
       <head />
       <body>
-        <WorkshopStoreProvider>
-          <LoyaltyProvider>
-            <AdminProvider>
-              <LanguageProvider>
-                <Header />
-                <SmoothScroll>
-                  {children}
-                </SmoothScroll>
-                <WorkshopEditorModal />
-              </LanguageProvider>
-            </AdminProvider>
-          </LoyaltyProvider>
-        </WorkshopStoreProvider>
+        <SoundProvider>
+          <WorkshopStoreProvider>
+            <LoyaltyProvider>
+              <AdminProvider>
+                <LanguageProvider>
+                  <Header />
+                  <SoundMuteButton />
+                  <SmoothScroll>
+                    {children}
+                  </SmoothScroll>
+                  <WorkshopEditorModal />
+                </LanguageProvider>
+              </AdminProvider>
+            </LoyaltyProvider>
+          </WorkshopStoreProvider>
+        </SoundProvider>
       </body>
     </html>
   );

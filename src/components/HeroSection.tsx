@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { useLanguage } from './LanguageProvider';
+import { useSoundContext } from '@/lib/SoundContext';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -13,6 +14,7 @@ if (typeof window !== 'undefined') {
 
 export default function HeroSection() {
   const { t, lang } = useLanguage();
+  const { playRustle } = useSoundContext();
   const sectionRef = useRef<HTMLElement>(null);
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
@@ -67,6 +69,8 @@ export default function HeroSection() {
           start: `top ${50 + index * 15}%`, 
           end: `top ${10 - index * 10}%`,
           scrub: 1.5,
+          onEnter: () => playRustle(),
+          onEnterBack: () => playRustle(),
         }
       });
 

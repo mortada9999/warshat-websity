@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useSectionSound } from '@/hooks/useSectionSound';
 
 interface ScrollSectionProps {
   children: React.ReactNode;
@@ -25,6 +26,7 @@ export default function ScrollSection({
   isSticky = true,
 }: ScrollSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  useSectionSound(0.3, sectionRef);
   
   // Each section owns a scroll range proportional to its index
   const { scrollYProgress } = useScroll({
