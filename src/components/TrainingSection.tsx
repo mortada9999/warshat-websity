@@ -54,11 +54,13 @@ export default function TrainingSection() {
         
         {/* Section Heading */}
         <div className="relative flex flex-col items-center justify-center w-full pb-4 z-40">
-          <h2 className="font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-center leading-[120%] mb-2">
-            {t('الورش التدريبية', 'Training Workshops')}
-          </h2>
-          {/* Curved Line under heading — draws itself on scroll */}
-          <AnimatedUnderline strokeColor="#4D6314" />
+          <div className="w-fit mx-auto flex flex-col items-center">
+            <h2 className="font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-center leading-[120%]">
+              {t('الورش التدريبية', 'Training Workshops')}
+            </h2>
+            {/* Curved Line under heading — draws itself on scroll */}
+            <AnimatedUnderline variant={0} strokeColor="#4D6314" />
+          </div>
         </div>
 
         {/* Workshop Cards List */}

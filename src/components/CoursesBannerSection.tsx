@@ -36,16 +36,12 @@ export default function CoursesBannerSection() {
         
         {/* Section Header */}
         <div className="relative flex flex-col items-center justify-center w-full -mt-12 md:-mt-16 gsap-header bg-transparent z-30">
-          <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%] mb-3">
-            {t('الكورسات', 'Courses')}
-          </h2>
-          <AnimatedUnderline
-            strokeColor="#C5C8B6"
-            strokeWidth={2}
-            svgWidth="160"
-            svgHeight="10"
-            className={styles.headingLine}
-          />
+          <div className="w-fit mx-auto flex flex-col items-center">
+            <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%]">
+              {t('الكورسات', 'Courses')}
+            </h2>
+            <AnimatedUnderline variant={1} strokeColor="#374A00" />
+          </div>
         </div>
 
         {/* ── Vertical Card Stack ── */}
