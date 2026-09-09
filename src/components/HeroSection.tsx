@@ -14,7 +14,6 @@ if (typeof window !== 'undefined') {
 
 export default function HeroSection() {
   const { t, lang } = useLanguage();
-  const { playRustle } = useSoundContext();
   const sectionRef = useRef<HTMLElement>(null);
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation

@@ -1,55 +1,16 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import { useSoundContext } from '@/lib/SoundContext';
+import { useRef } from 'react';
 
 /**
  * Hook to play a swoosh sound when a section scrolls into view.
- * 
- * @param threshold The intersection ratio required to trigger the sound (0 to 1)
- * @returns A ref to attach to the `<section>` element
+ * (Currently a no-op as scroll sounds were removed by request).
  */
 export function useSectionSound<T extends HTMLElement>(
   threshold = 0.3,
   externalRef?: React.RefObject<T | null>
 ) {
-  const { playSwoosh } = useSoundContext();
   const internalRef = useRef<T>(null);
   const ref = externalRef || internalRef;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    // Track if it has been played to avoid spamming if scrolling slowly
-    let hasPlayed = false;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            if (!hasPlayed) {
-              playSwoosh();
-              hasPlayed = true;
-            }
-          } else {
-            // Reset when it leaves the viewport
-            hasPlayed = false;
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '-10% 0px -10% 0px',
-      }
-    );
-
-    observer.observe(el);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [playSwoosh, threshold]);
-
   return ref;
 }
