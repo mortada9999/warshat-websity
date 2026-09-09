@@ -20,7 +20,7 @@ interface AnimatedUnderlineProps {
   strokeColor?: string;
   /** Stroke width */
   strokeWidth?: number;
-  /** CSS width of the SVG element (e.g. '234', '160') */
+  /** CSS width of the SVG element (e.g. '234px', '160px') */
   svgWidth?: string;
   /** CSS height of the SVG element */
   svgHeight?: string;
@@ -30,18 +30,15 @@ interface AnimatedUnderlineProps {
   end?: string;
   /** Scrub value for smoothness */
   scrub?: number | boolean;
-  /** Extra className for the wrapper */
+  /** Extra className for the SVG */
   className?: string;
 }
 
 /**
- * A reusable animated SVG underline that "draws itself" as the user scrolls.
- * Uses stroke-dasharray & stroke-dashoffset with GSAP ScrollTrigger scrub.
+ * A reusable animated SVG underline that "draws itself" via clip-path reveal
+ * as the user scrolls. Uses GSAP ScrollTrigger with scrub.
  *
- * Usage:
- * ```tsx
- * <AnimatedUnderline strokeColor="#4D6314" />
- * ```
+ * RTL direction: reveals from right → left (inset from left shrinks to 0).
  */
 export default function AnimatedUnderline({
   width = 234,
@@ -52,60 +49,52 @@ export default function AnimatedUnderline({
   svgWidth,
   svgHeight,
   start = 'top 85%',
-  end = 'top 40%',
+  end = 'top 50%',
   scrub = 1,
   className = '',
 }: AnimatedUnderlineProps) {
-  const pathRef = useRef<SVGPathElement>(null);
-  const svgRef = useRef<SVGSVGElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    const path = pathRef.current;
-    if (!path) return;
+    const el = wrapperRef.current;
+    if (!el) return;
 
-    // Get the total length of the SVG path
-    const totalLength = path.getTotalLength();
-
-    // Set initial state: path fully hidden (dashoffset = totalLength)
-    gsap.set(path, {
-      strokeDasharray: totalLength,
-      strokeDashoffset: totalLength,
+    // Start fully hidden (clip from the left = 100%)
+    gsap.set(el, {
+      clipPath: 'inset(0 0 0 100%)',
     });
 
-    // Animate: draw the path by reducing dashoffset to 0
-    gsap.to(path, {
-      strokeDashoffset: 0,
+    // Animate: reveal from right to left (Arabic RTL direction)
+    gsap.to(el, {
+      clipPath: 'inset(0 0 0 0%)',
       ease: 'none',
       scrollTrigger: {
-        trigger: svgRef.current,
+        trigger: el,
         start,
         end,
         scrub,
       },
     });
-  }, { scope: svgRef });
+  }, { scope: wrapperRef });
 
   return (
-    <svg
-      ref={svgRef}
-      viewBox={`0 0 ${width} ${height}`}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden="true"
-      style={{
-        width: svgWidth || '80%',
-        maxWidth: svgWidth ? `${svgWidth}px` : undefined,
-        height: 'auto',
-      }}
-    >
-      <path
-        ref={pathRef}
-        d={pathD}
-        stroke={strokeColor}
-        strokeWidth={strokeWidth}
-        strokeLinecap="round"
-      />
-    </svg>
+    <div ref={wrapperRef} className="inline-block w-fit">
+      <svg
+        width={svgWidth || String(width)}
+        height={svgHeight || String(height)}
+        viewBox={`0 0 ${width} ${height}`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+        aria-hidden="true"
+      >
+        <path
+          d={pathD}
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+          strokeLinecap="round"
+        />
+      </svg>
+    </div>
   );
 }

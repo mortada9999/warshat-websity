@@ -41,7 +41,9 @@ export default function CoursesBannerSection() {
           </h2>
           <AnimatedUnderline
             strokeColor="#C5C8B6"
-            strokeWidth={3}
+            strokeWidth={2}
+            svgWidth="160"
+            svgHeight="10"
             className={styles.headingLine}
           />
         </div>
