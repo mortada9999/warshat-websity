@@ -88,13 +88,16 @@ export default function AnimatedUnderline({
   return (
     <svg
       ref={svgRef}
-      width={svgWidth || String(width)}
-      height={svgHeight || String(height)}
       viewBox={`0 0 ${width} ${height}`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       aria-hidden="true"
+      style={{
+        width: svgWidth || '80%',
+        maxWidth: svgWidth ? `${svgWidth}px` : undefined,
+        height: 'auto',
+      }}
     >
       <path
         ref={pathRef}
