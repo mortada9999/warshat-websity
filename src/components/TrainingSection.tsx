@@ -3,6 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import AnimatedTapedButton from './AnimatedTapedButton';
+import AnimatedUnderline from './AnimatedUnderline';
 import TapedWorkshopCard from './TapedWorkshopCard';
 import { useLanguage } from './LanguageProvider';
 import { useAdmin } from './AdminProvider';
@@ -56,10 +57,8 @@ export default function TrainingSection() {
           <h2 className="font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-center leading-[120%] mb-2">
             {t('الورش التدريبية', 'Training Workshops')}
           </h2>
-          {/* Curved Line under heading */}
-          <svg width="234" height="16" viewBox="0 0 234 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#4D6314" strokeWidth="3.9245" strokeLinecap="round" />
-          </svg>
+          {/* Curved Line under heading — draws itself on scroll */}
+          <AnimatedUnderline strokeColor="#4D6314" />
         </div>
 
         {/* Workshop Cards List */}

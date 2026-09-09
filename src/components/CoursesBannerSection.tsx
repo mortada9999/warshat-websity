@@ -7,6 +7,7 @@ import { useAdmin } from './AdminProvider';
 import { useWorkshopStore } from '@/lib/workshopStore';
 import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from './AdminOverlay';
 import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
+import AnimatedUnderline from './AnimatedUnderline';
 import styles from './CoursesBannerSection.module.css';
 
 type CoursePattern = 'crochet' | 'music' | 'blueprint';
@@ -38,9 +39,13 @@ export default function CoursesBannerSection() {
           <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%] mb-3">
             {t('الكورسات', 'Courses')}
           </h2>
-          <svg width="160" height="10" viewBox="0 0 234 16" fill="none" className={styles.headingLine}>
-            <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#C5C8B6" strokeWidth="2" strokeLinecap="round" />
-          </svg>
+          <AnimatedUnderline
+            strokeColor="#C5C8B6"
+            strokeWidth={2}
+            svgWidth="160"
+            svgHeight="10"
+            className={styles.headingLine}
+          />
         </div>
 
         {/* ── Vertical Card Stack ── */}

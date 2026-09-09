@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useLanguage } from './LanguageProvider';
+import AnimatedUnderline from './AnimatedUnderline';
 import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
 
 export default function KidsBannerSection() {
@@ -24,9 +25,7 @@ export default function KidsBannerSection() {
           <h2 className="font-amiri font-bold text-3xl md:text-6xl text-[#374A00] text-center leading-[120%] mb-2">
             {t('ورش و اشتراكات الأطفال', 'Kids Workshops & Subscriptions')}
           </h2>
-          <svg width="234" height="16" viewBox="0 0 234 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 8C77.4833 13.3333 154.967 10.6667 232.45 0" stroke="#C5D475" strokeWidth="3.9245" strokeLinecap="round" />
-          </svg>
+          <AnimatedUnderline strokeColor="#C5D475" />
         </div>
 
       </div>
