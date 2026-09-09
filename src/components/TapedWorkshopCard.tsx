@@ -48,7 +48,6 @@ interface Props {
 
 export default function TapedWorkshopCard({ workshop: w, index }: Props) {
   const { lang, t } = useLanguage();
-  const { playRustle } = useSoundContext();
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLElement>(null);
 
@@ -62,8 +61,6 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
         start: 'top 25%', // Wait until card is higher up before peeling
         end: 'top -20%',  
         scrub: 1, 
-        onEnter: () => playRustle(),
-        onEnterBack: () => playRustle(),
       }
     });
 

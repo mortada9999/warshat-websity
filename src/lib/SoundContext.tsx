@@ -6,17 +6,11 @@ import useSound from 'use-sound';
 interface SoundContextType {
   isMuted: boolean;
   toggleMute: () => void;
-  playSwoosh: () => void;
-  playRustle: () => void;
-  stopRustle: () => void;
 }
 
 const SoundContext = createContext<SoundContextType>({
   isMuted: false,
   toggleMute: () => {},
-  playSwoosh: () => {},
-  playRustle: () => {},
-  stopRustle: () => {},
 });
 
 export const useSoundContext = () => useContext(SoundContext);
@@ -25,37 +19,15 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   // Global mute state, defaults to false
   const [isMuted, setIsMuted] = useState(false);
 
-  // Initialize sounds
+  // Initialize click sound
   const [playClick] = useSound('/sounds/click.mp3', { 
     soundEnabled: !isMuted,
     volume: 0.5 
-  });
-  
-  const [playSwoosh] = useSound('/sounds/swoosh.mp3', { 
-    soundEnabled: !isMuted,
-    volume: 1.0 
-  });
-  
-  const [playRustle, { stop: stopRustleSound }] = useSound('/sounds/rustle.mp3', { 
-    soundEnabled: !isMuted,
-    volume: 0.75,
   });
 
   const toggleMute = useCallback(() => {
     setIsMuted((prev) => !prev);
   }, []);
-
-  const playRustleSafe = useCallback(() => {
-    if (!isMuted) playRustle();
-  }, [isMuted, playRustle]);
-
-  const stopRustleSafe = useCallback(() => {
-    stopRustleSound();
-  }, [stopRustleSound]);
-
-  const playSwooshSafe = useCallback(() => {
-    if (!isMuted) playSwoosh();
-  }, [isMuted, playSwoosh]);
 
   // Global click listener for buttons and links
   useEffect(() => {
@@ -80,10 +52,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   return (
     <SoundContext.Provider value={{ 
       isMuted, 
-      toggleMute, 
-      playSwoosh: playSwooshSafe, 
-      playRustle: playRustleSafe, 
-      stopRustle: stopRustleSafe 
+      toggleMute
     }}>
       {children}
     </SoundContext.Provider>
