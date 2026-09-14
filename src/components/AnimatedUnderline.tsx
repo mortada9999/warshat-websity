@@ -27,8 +27,8 @@ const BRUSH_PATHS = [
  */
 const VARIANT_STYLES: Record<number, React.CSSProperties> = {
   0: {},                                           // natural
-  1: { transform: 'scaleY(-1)' },                  // vertical flip only
-  2: { transform: 'rotate(-0.7deg)' },             // subtle tilt
+  1: { transform: 'rotate(0.4deg)' },              // gentle organic tilt
+  2: { transform: 'rotate(-0.5deg)' },             // subtle reverse tilt
 };
 
 interface AnimatedUnderlineProps {
@@ -38,6 +38,8 @@ interface AnimatedUnderlineProps {
   strokeColor?: string;
   /** Stroke thickness */
   strokeWidth?: number;
+  /** Optional custom CSS classes (e.g. margin/spacing) */
+  className?: string;
   /** ScrollTrigger start */
   start?: string;
   /** ScrollTrigger end */
@@ -60,6 +62,7 @@ export default function AnimatedUnderline({
   variant = 0,
   strokeColor = '#4D6314',
   strokeWidth = 5,
+  className = '',
   start = 'top 85%',
   end = 'top 50%',
   scrub = 1,
@@ -77,10 +80,10 @@ export default function AnimatedUnderline({
      * LTR (English): clip the RIGHT side → reveal left-to-right
      */
     const hiddenClip = isRtl
-      ? 'inset(0 0 0 100%)'   // left edge clips 100%
-      : 'inset(0 100% 0 0)';  // right edge clips 100%
+      ? 'inset(0% 0% 0% 100%)'   // left edge clips 100%
+      : 'inset(0% 100% 0% 0%)';  // right edge clips 100%
 
-    const visibleClip = 'inset(0 0 0 0)';
+    const visibleClip = 'inset(0% 0% 0% 0%)';
 
     gsap.set(el, { clipPath: hiddenClip });
 
@@ -99,14 +102,14 @@ export default function AnimatedUnderline({
   return (
     <div
       ref={wrapperRef}
-      className="w-full mt-2"
+      className={`w-full ${className || 'mt-3.5'}`}
       style={VARIANT_STYLES[idx] || {}}
       suppressHydrationWarning
     >
       <svg
         width="100%"
-        height="18"
-        viewBox="0 -15 300 25"
+        height="14"
+        viewBox="0 0 300 16"
         preserveAspectRatio="none"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

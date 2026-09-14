@@ -37,10 +37,10 @@ export default function CoursesBannerSection() {
         {/* Section Header */}
         <div className="relative flex flex-col items-center justify-center w-full -mt-12 md:-mt-16 gsap-header bg-transparent z-30">
           <div className="w-fit mx-auto flex flex-col items-center">
-            <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-[120%]">
+            <h2 className="font-amiri font-bold text-4xl md:text-5xl text-[#374A00] text-center leading-loose">
               {t('الكورسات', 'Courses')}
             </h2>
-            <AnimatedUnderline variant={1} strokeColor="#374A00" />
+            <AnimatedUnderline variant={1} strokeColor="#374A00" className="mt-2 translate-y-3" />
           </div>
         </div>
 

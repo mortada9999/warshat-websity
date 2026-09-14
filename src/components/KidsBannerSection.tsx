@@ -23,10 +23,10 @@ export default function KidsBannerSection() {
         {/* Section Heading */}
         <div className="relative flex flex-col items-center justify-center w-full pb-8 md:pb-12 z-40">
           <div className="w-fit mx-auto flex flex-col items-center">
-            <h2 className="font-amiri font-bold text-3xl md:text-6xl text-[#374A00] text-center leading-[120%]">
+            <h2 className="font-amiri font-bold text-3xl md:text-6xl text-[#374A00] text-center leading-loose">
               {t('ورش و اشتراكات الأطفال', 'Kids Workshops & Subscriptions')}
             </h2>
-            <AnimatedUnderline variant={2} strokeColor="#374A00" />
+            <AnimatedUnderline variant={2} strokeColor="#374A00" className="mt-2 translate-y-3" />
           </div>
         </div>
 
