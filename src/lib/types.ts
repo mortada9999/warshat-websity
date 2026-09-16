@@ -1,4 +1,4 @@
-export type Category = 'open_activity' | 'workshop' | 'kids' | 'course';
+export type Category = 'open_activity' | 'workshop' | 'kids_course' | 'kids_workshop' | 'course';
 export type Branch = 'zayouna' | 'yarmouk' | 'both';
 
 export interface Workshop {
@@ -28,7 +28,8 @@ export type Lang = 'ar' | 'en';
 export const CATEGORY_LABELS: Record<Category, { ar: string; en: string }> = {
   open_activity: { ar: 'نشاط مفتوح', en: 'Open Activity' },
   workshop:      { ar: 'ورشة عمل',   en: 'Workshop' },
-  kids:          { ar: 'أطفال',       en: 'Kids' },
+  kids_course:   { ar: 'كورس أطفال', en: 'Kids Course' },
+  kids_workshop: { ar: 'ورشة أطفال', en: 'Kids Workshop' },
   course:        { ar: 'دورة',        en: 'Course' },
 };
 

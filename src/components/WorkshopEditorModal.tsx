@@ -10,7 +10,8 @@ const CATEGORY_OPTIONS: { value: Category; label: string }[] = [
   { value: 'open_activity', label: 'نشاط مفتوح (يومي)' },
   { value: 'workshop', label: 'ورشة تدريبية' },
   { value: 'course', label: 'كورس' },
-  { value: 'kids', label: 'أطفال' },
+  { value: 'kids_course', label: 'كورس أطفال' },
+  { value: 'kids_workshop', label: 'ورشة أطفال' },
 ];
 
 export default function WorkshopEditorModal() {
@@ -157,8 +158,8 @@ export default function WorkshopEditorModal() {
     closeEditor();
   };
 
-  const showSessions = form.category === 'course';
-  const showDescription = form.category === 'workshop' || form.category === 'kids';
+  const showSessions = form.category === 'course' || form.category === 'kids_course';
+  const showDescription = form.category === 'workshop' || form.category === 'kids_course' || form.category === 'kids_workshop';
 
   return (
     <div

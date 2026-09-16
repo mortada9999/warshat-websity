@@ -51,13 +51,26 @@ const DEFAULT_COURSES: WorkshopItem[] = [
   { id: 'cr-3', titleAr: 'كورس الحياكة', titleEn: 'Textile Design', sessionsAr: '6 جلسات', sessionsEn: '6 Sessions', image: '/images/figma/tote-bag.png', pattern: 'crochet', category: 'course', isActive: true, sortOrder: 2 },
 ];
 
+const DEFAULT_KIDS: WorkshopItem[] = [
+  // 3 Courses
+  { id: 'kid-c1', titleAr: 'الرسم الإبداعي', titleEn: 'Creative Drawing', subtitleAr: '٨ جلسات · شهران · للأعمار ٥–١٢', subtitleEn: '8 sessions · 2 months · Ages 5–12', descAr: 'نبدأ من أساسيات الرسم ووصولاً لتقنيات الألوان المائية والزيتية — بجو مرح وآمن للعيال.', descEn: 'From drawing basics to watercolor and oil techniques in a fun, safe environment.', price: '150,000', image: '/images/figma/pottery.png', category: 'kids_course', pattern: 'blueprint', isActive: true, sortOrder: 0 },
+  { id: 'kid-c2', titleAr: 'السيراميك والطين', titleEn: 'Ceramics & Clay', subtitleAr: '١٢ جلسة · ٣ أشهر · للأعمار ٦–١٤', subtitleEn: '12 sessions · 3 months · Ages 6–14', descAr: 'عالم الطين — من التشكيل للتزجيج والحرق — تجربة حلوة تنمّي إبداع ولدك بطريقة ما تنكتاب.', descEn: 'The world of clay from shaping to glazing.', price: '220,000', image: '/images/figma/mirror.png', category: 'kids_course', pattern: 'featured', isActive: true, sortOrder: 1 },
+  { id: 'kid-c3', titleAr: 'فنون متكاملة', titleEn: 'Integrated Arts', subtitleAr: '١٠ جلسات · شهر ونصف · للأعمار ٤–١٢', subtitleEn: '10 sessions · 1.5 months · Ages 4–12', descAr: 'رسم وطين وحرف يدوية بكورس واحد — للطفل اللي يحب يجرب كل شي وما يشبع!', descEn: 'Drawing, clay and handcrafts in one program.', price: '180,000', image: '/images/figma/tote-bag.png', category: 'kids_course', pattern: 'crochet', isActive: true, sortOrder: 2 },
+  
+  // 3 Workshops
+  { id: 'kid-w1', titleAr: 'الرسم الأسبوعي', titleEn: 'Weekly Drawing', subtitleAr: 'السبت والأحد · ٥–١٢ سنة', subtitleEn: 'Sat & Sun · 5-12 yrs', descAr: 'جلسات مرنة بدون التزام — جيب ولدك واستمتع.', descEn: 'Flexible sessions with no prior commitment.', price: '25,000', image: '/images/figma/pottery.png', category: 'kids_workshop', isActive: true, sortOrder: 3 },
+  { id: 'kid-w2', titleAr: 'الطين الأسبوعي', titleEn: 'Weekly Clay', subtitleAr: 'الثلاثاء والخميس · ٦–١٤ سنة', subtitleEn: 'Tue & Thu · 6-14 yrs', descAr: 'جلسات لتشكيل الطين واللعب بحرية في بيئة آمنة.', descEn: 'Clay shaping and playing sessions.', price: '30,000', image: '/images/figma/mirror.png', category: 'kids_workshop', isActive: true, sortOrder: 4 },
+  { id: 'kid-w3', titleAr: 'الفن اليدوي', titleEn: 'Handcraft Session', subtitleAr: 'الأحد والأربعاء · ٤–١٠ سنوات', subtitleEn: 'Sun & Wed · 4-10 yrs', descAr: 'جلسات حرف يدوية ممتعة للأطفال تنمي قدراتهم الحركية.', descEn: 'Fun handcraft sessions for kids.', price: '20,000', image: '/images/figma/tote-bag.png', category: 'kids_workshop', isActive: true, sortOrder: 5 },
+];
+
 const ALL_DEFAULTS: WorkshopItem[] = [
   ...DEFAULT_ACTIVITIES,
   ...DEFAULT_WORKSHOPS,
   ...DEFAULT_COURSES,
+  ...DEFAULT_KIDS,
 ];
 
-const STORAGE_KEY = 'warshat_workshops';
+const STORAGE_KEY = 'warshat_workshops_v3';
 
 /* ──────────────────────────────────────────────────────────────
    Context

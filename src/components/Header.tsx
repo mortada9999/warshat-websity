@@ -7,10 +7,10 @@ import { useLanguage } from './LanguageProvider';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
-  { href: '#entertainment', ar: 'ترفيه', en: 'Entertainment' },
-  { href: '#training',      ar: 'ورش تدريبية', en: 'Training' },
-  { href: '#courses',       ar: 'كورسات', en: 'Courses' },
-  { href: '#kids',          ar: 'أطفال', en: 'Kids' },
+  { href: '/#entertainment', ar: 'ترفيه', en: 'Entertainment' },
+  { href: '/#training',      ar: 'ورش تدريبية', en: 'Training' },
+  { href: '/#courses',       ar: 'كورسات', en: 'Courses' },
+  { href: '/kids',           ar: 'أطفال', en: 'Kids' },
 ];
 
 export default function Header() {

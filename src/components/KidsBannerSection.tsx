@@ -1,34 +1,68 @@
 'use client';
 
 import React from 'react';
+import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
 import AnimatedUnderline from './AnimatedUnderline';
 import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
+import styles from './KidsBannerSection.module.css';
 
 export default function KidsBannerSection() {
   const { t } = useLanguage();
+
   return (
-    <section 
-      id="kids" 
-      className="relative flex flex-col items-center justify-center w-full h-full min-h-screen px-6 md:px-12 bg-[#F6F0E2] overflow-hidden z-20"
+    <section
+      id="kids"
+      className={styles.section}
       aria-label={t('ورش الأطفال', 'Kids workshops')}
     >
       <HiddenWorkshopsMenu category="kids" />
-      {/* Decorative Playful Elements */}
-      <div className="absolute top-[10%] left-[5%] md:left-[15%] w-16 h-16 bg-[#FFDF9D] opacity-60 rounded-full blur-xl" aria-hidden="true" />
-      <div className="absolute bottom-[20%] right-[5%] md:right-[15%] w-24 h-24 bg-[#C5D475] opacity-60 rounded-full blur-2xl" aria-hidden="true" />
 
-      <div className="flex flex-col items-center w-full max-w-[1280px] h-full justify-center">
-        
-        {/* Section Heading */}
-        <div className="relative flex flex-col items-center justify-center w-full pb-8 md:pb-12 z-40">
-          <div className="w-fit mx-auto flex flex-col items-center">
-            <h2 className="font-amiri font-bold text-3xl md:text-6xl text-[#374A00] text-center leading-loose">
-              {t('ورش و اشتراكات الأطفال', 'Kids Workshops & Subscriptions')}
-            </h2>
-            <AnimatedUnderline variant={2} strokeColor="#374A00" className="mt-2 translate-y-3" />
-          </div>
+      <div className={styles.inner}>
+
+        {/* Label */}
+        <p className={styles.label}>
+          {t('ورشة فن — قسم الأطفال', 'WARSHAT FAN — KIDS DEPT')}
+        </p>
+
+        {/* Heading + underline */}
+        <div className={styles.headingWrap}>
+          <h2 className={styles.heading}>
+            {t('ورش', 'Workshops')}{' '}
+            <span className={styles.hl}>{t('واشتراكات', '& Courses')}</span>
+            <br />
+            {t('الأطفال', 'for Kids')}
+          </h2>
+          <AnimatedUnderline variant={2} strokeColor="#374A00" className="mt-2 translate-y-1" />
         </div>
+
+        {/* Sub */}
+        <p className={styles.sub}>
+          {t(
+            'مكان آمن وممتع يكتشف فيه طفلك موهبته الفنية مع مدربين متخصصين.',
+            'A safe and fun place where your child discovers their artistic talent.',
+          )}
+        </p>
+
+        {/* Stats */}
+        <div className={styles.statsRow}>
+          {[
+            { nAr: '+٢٠٠', nEn: '200+', lAr: 'طفل مسجّل',   lEn: 'Kids Enrolled' },
+            { nAr: '٣',    nEn: '3',    lAr: 'ورش أسبوعية', lEn: 'Workshops' },
+            { nAr: '٤',    nEn: '4',    lAr: 'كورسات',      lEn: 'Courses' },
+          ].map((s, i) => (
+            <div key={i} className={styles.statItem}>
+              <span className={styles.statNum}>{t(s.nAr, s.nEn)}</span>
+              <span className={styles.statLabel}>{t(s.lAr, s.lEn)}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA → /kids */}
+        <Link href="/kids" className={styles.btn}>
+          {t('استعرض الورش والكورسات', 'Browse Workshops & Courses')}
+          <span>←</span>
+        </Link>
 
       </div>
     </section>

@@ -166,7 +166,11 @@ export function AdminAddButton({ category }: { category: Category }) {
       onMouseEnter={e => { e.currentTarget.style.background = '#4D6314'; e.currentTarget.style.color = '#F6F6F4'; }}
       onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#4D6314'; }}
     >
-      + إضافة ورشة جديدة
+      {category === 'course' ? '+ إضافة كورس جديد' : 
+       category === 'kids_course' ? '+ إضافة كورس للأطفال' : 
+       category === 'kids_workshop' ? '+ إضافة ورشة للأطفال' : 
+       category === 'open_activity' ? '+ إضافة نشاط جديد' : 
+       '+ إضافة ورشة جديدة'}
     </button>
   );
 }
