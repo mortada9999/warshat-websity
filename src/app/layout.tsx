@@ -11,6 +11,7 @@ import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import Header from '@/components/Header';
 import SoundMuteButton from '@/components/SoundMuteButton';
+import ScrollToTop from '@/components/ScrollToTop';
 
 // Load DG Forsha font
 const dgForsha = localFont({
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <LanguageProvider>
                   <Header />
                   <SoundMuteButton />
+                  <ScrollToTop />
                   <SmoothScroll>
                     {children}
                   </SmoothScroll>
