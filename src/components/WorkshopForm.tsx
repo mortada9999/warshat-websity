@@ -14,7 +14,8 @@ interface WorkshopFormProps {
 const CATEGORIES: { value: Category; ar: string; en: string }[] = [
   { value: 'open_activity', ar: 'نشاط مفتوح', en: 'Open Activity' },
   { value: 'workshop',      ar: 'ورشة عمل',   en: 'Workshop' },
-  { value: 'kids',          ar: 'أطفال',       en: 'Kids' },
+  { value: 'kids_course',   ar: 'كورس أطفال', en: 'Kids Course' },
+  { value: 'kids_workshop', ar: 'ورشة أطفال', en: 'Kids Workshop' },
   { value: 'course',        ar: 'دورة',        en: 'Course' },
 ];
 

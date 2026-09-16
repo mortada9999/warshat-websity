@@ -7,7 +7,7 @@ import type { WorkshopFilters } from '@/lib/types';
 
 export const runtime = 'edge';
 
-const CATEGORY_VALUES = ['open_activity', 'workshop', 'kids', 'course'] as const;
+const CATEGORY_VALUES = ['open_activity', 'workshop', 'kids_course', 'kids_workshop', 'course'] as const;
 const BRANCH_VALUES   = ['zayouna', 'yarmouk', 'both'] as const;
 
 const createSchema = z.object({

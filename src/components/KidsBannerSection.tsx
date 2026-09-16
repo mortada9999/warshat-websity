@@ -16,7 +16,8 @@ export default function KidsBannerSection() {
       className={styles.section}
       aria-label={t('ورش الأطفال', 'Kids workshops')}
     >
-      <HiddenWorkshopsMenu category="kids" />
+      <HiddenWorkshopsMenu category="kids_course" />
+      <HiddenWorkshopsMenu category="kids_workshop" />
 
       <div className={styles.inner}>
 

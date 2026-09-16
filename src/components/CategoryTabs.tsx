@@ -15,7 +15,8 @@ const ALL_TABS: { value: Category | 'all' }[] = [
   { value: 'all' },
   { value: 'open_activity' },
   { value: 'workshop' },
-  { value: 'kids' },
+  { value: 'kids_course' },
+  { value: 'kids_workshop' },
   { value: 'course' },
 ];
 
