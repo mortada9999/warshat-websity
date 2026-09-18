@@ -1,48 +1,23 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useGSAP } from '@gsap/react';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
-}
 
 export default function FooterSection() {
   const { t, lang } = useLanguage();
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLElement>(null);
-
-  useGSAP(() => {
-    // Parallax reveal effect: stable on both mobile and desktop
-    // Moves the footer down at half speed while scrolling up, creating a reveal illusion
-    gsap.fromTo(footerRef.current, {
-      yPercent: -50,
-    }, {
-      yPercent: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: wrapperRef.current,
-        start: 'top bottom', 
-        end: 'bottom bottom',
-        scrub: true,
-      }
-    });
-  }, { scope: wrapperRef });
 
   const arFont = "var(--font-dg-forsha), 'Amiri', serif";
   const enFont = "'Inter', sans-serif";
 
   return (
-    <div ref={wrapperRef} className="w-full h-[70dvh] md:h-[80dvh] overflow-hidden relative z-0">
+    <>
+      {/* Spacer div to allow scrolling past main content for the reveal effect */}
+      <div className="w-full h-[70dvh] md:h-[80dvh] pointer-events-none" aria-hidden="true" />
       
-      {/* Footer: Absolutely positioned within the wrapper, animated by GSAP */}
+      {/* Fixed footer that sits behind main content (z-0) and is revealed as we scroll into the spacer */}
       <footer 
-        ref={footerRef}
-        className="absolute bottom-0 left-0 w-full h-[70dvh] md:h-[80dvh] bg-stone-900 flex flex-col justify-between"
+        className="fixed bottom-0 left-0 w-full h-[70dvh] md:h-[80dvh] bg-stone-900 flex flex-col justify-between z-0"
         aria-label="تذييل الصفحة"
         suppressHydrationWarning
       >
@@ -86,6 +61,6 @@ export default function FooterSection() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
   );
 }
