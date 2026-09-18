@@ -61,8 +61,8 @@ export default function HomePage() {
 
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              minHeight: '100dvh',
-              paddingBottom: '60dvh',
+              minHeight: '100svh',
+              paddingBottom: '60svh',
             }}
           >
             {/* Single continuous red margin line for notebook sections.
