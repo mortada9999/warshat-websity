@@ -15,6 +15,7 @@ import TornEdge from '@/components/TornEdge';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
+  ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 const SECTIONS = [
@@ -60,8 +61,8 @@ export default function HomePage() {
 
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              minHeight: 'min(100dvh, 100vh)',
-              paddingBottom: '60vh',
+              minHeight: '100dvh',
+              paddingBottom: '60dvh',
             }}
           >
             {/* Single continuous red margin line for notebook sections.
