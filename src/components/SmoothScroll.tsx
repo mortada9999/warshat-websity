@@ -17,28 +17,27 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     // Detection covers Xiaomi, Realme, and all Android devices.
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouch) {
-      // On touch devices: use native scroll. Lenis causes jitter on fast swipes.
-      // Force GSAP to use 'transform' pinning instead of 'fixed' to avoid
-      // iOS address bar causing pinned elements to jump up/down.
-      ScrollTrigger.defaults({ pinType: 'transform' });
+      // We removed normalizeScroll(true) because it hijacks touch events 
+      // and completely breaks native pull-to-refresh on mobile devices.
+      // Instead, we rely on minHeight: '100dvh' in our sections.
 
-      const refresh = () => {
-        // Stagger refreshes to capture layout after fonts, images, and address-bar settle
+      // Use window.load instead of setTimeout: ensures all images are loaded
+      // before ScrollTrigger measures element positions (critical for hero-hand.png)
+      const onLoad = () => {
         ScrollTrigger.refresh();
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh();
-          setTimeout(() => ScrollTrigger.refresh(), 300);
-        });
+        // Second refresh after a tick in case layout shifted during first paint
+        requestAnimationFrame(() => ScrollTrigger.refresh());
       };
 
       if (document.readyState === 'complete') {
-        refresh();
+        // Page already loaded (e.g. client-side navigation)
+        onLoad();
       } else {
-        window.addEventListener('load', refresh, { once: true });
+        window.addEventListener('load', onLoad, { once: true });
       }
 
       return () => {
-        window.removeEventListener('load', refresh);
+        window.removeEventListener('load', onLoad);
       };
     }
 

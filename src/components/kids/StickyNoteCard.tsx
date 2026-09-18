@@ -38,7 +38,7 @@ export default function StickyNoteCard({
 
   return (
     <motion.div
-      drag={typeof window !== 'undefined' && !('ontouchstart' in window)}
+      drag
       dragSnapToOrigin
       dragElastic={0.35}
       dragTransition={{ bounceStiffness: 500, bounceDamping: 22 }}
@@ -46,7 +46,7 @@ export default function StickyNoteCard({
       whileHover={{ y: -6, scale: 1.04, rotate: 0 }}
       initial={{ opacity: 0, y: 30, rotate }}
       whileInView={{ opacity: 1, y: 0, rotate }}
-      viewport={{ once: true, amount: 0.1, margin: '50px' }}
+      viewport={{ once: true, margin: '-60px' }}
       transition={{ type: 'spring', stiffness: 220, damping: 18 }}
       className="relative w-40 cursor-grab select-none sm:w-48"
       style={{ transformOrigin: 'top center' }}

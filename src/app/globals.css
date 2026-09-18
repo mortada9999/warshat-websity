@@ -73,10 +73,11 @@ html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   background-color: var(--bg);
+  /* overflow-x: clip (NOT hidden!) prevents horizontal scroll without
+     creating a scroll container. overflow:hidden breaks position:sticky
+     on descendant elements (like the footer's sticky bottom-0 reveal). */
   overflow-x: clip;
   max-width: 100%;
-  /* Prevents rubber-banding / overscroll from triggering layout recalculation */
-  overscroll-behavior: contain;
 }
 
 body {
@@ -86,12 +87,10 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   direction: rtl;
+  /* clip instead of hidden: prevents horizontal overflow without breaking
+     position:sticky (footer reveal transition depends on sticky). */
   overflow-x: clip;
   max-width: 100%;
-  /* Prevent layout thrashing from iOS momentum scroll / rubber-banding */
-  overscroll-behavior-y: none;
-  /* GPU compositing layer — eliminates jitter on fixed elements */
-  -webkit-transform: translateZ(0);
 }
 
 body.ltr { direction: ltr; }
