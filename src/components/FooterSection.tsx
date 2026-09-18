@@ -60,6 +60,9 @@ export default function FooterSection() {
             <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
           </div>
         </div>
+
+        {/* Overscroll blocker: Prevents the background flash when rubber-banding past the bottom on iOS Safari */}
+        <div className="absolute top-full left-0 w-full h-[100vh] bg-stone-900 pointer-events-none" aria-hidden="true" />
       </footer>
     </>
   );
