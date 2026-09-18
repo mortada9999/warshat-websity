@@ -35,6 +35,8 @@ export default function CafeMenuPage() {
             <img
               src={src}
               alt={`menu ${i + 1}`}
+              width={800}
+              height={1131}
               className="w-full h-auto block
                          lg:h-full lg:max-w-3xl lg:object-contain"
               draggable={false}
