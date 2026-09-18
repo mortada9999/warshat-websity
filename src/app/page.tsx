@@ -85,7 +85,7 @@ export default function HomePage() {
               <div 
                 className="absolute left-0 right-0 bottom-0 pointer-events-none z-0 notebook-lines"
                 style={{ 
-                  top: '140px',
+                  top: '80px',
                 }}
                 aria-hidden="true"
               />
