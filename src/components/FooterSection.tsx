@@ -13,12 +13,12 @@ export default function FooterSection() {
 
   return (
     <>
-      {/* Spacer div to push document length and allow scrolling past main content */}
-      <div className="w-full h-[70dvh] md:h-[80dvh] pointer-events-none" aria-hidden="true" />
+      {/* Spacer div ONLY on desktop to allow scrolling past main content for the reveal effect */}
+      <div className="hidden md:block w-full h-[80dvh] pointer-events-none" aria-hidden="true" />
       
-      {/* Fixed footer that sits behind main content (-z-10) and is revealed as we scroll into the spacer */}
+      {/* Footer: relative flow on mobile (prevents scroll glitches), fixed reveal on desktop */}
       <footer 
-        className="fixed bottom-0 left-0 w-full h-[70dvh] md:h-[80dvh] bg-stone-900 flex flex-col justify-between z-0"
+        className="relative md:fixed md:bottom-0 md:left-0 w-full h-[70dvh] md:h-[80dvh] bg-stone-900 flex flex-col justify-between z-10 md:z-0"
         aria-label="تذييل الصفحة"
         suppressHydrationWarning
       >
