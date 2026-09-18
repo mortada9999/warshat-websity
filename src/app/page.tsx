@@ -23,7 +23,7 @@ const SECTIONS = [
   { Component: RecreationalSection, bg: '#E8F3E8', torn: true,  isNotebook: false },
   { Component: TrainingSection,     bg: '#F6F0E2', torn: true,  isNotebook: false },
   { Component: CoursesBannerSection,bg: '#FDFBF7', torn: true,  isNotebook: true  },
-  { Component: KidsBannerSection,   bg: '#F6F0E2', torn: true,  isNotebook: false },
+  { Component: KidsBannerSection,   bg: '#FDFBF7', torn: true,  isNotebook: true },
 ];
 
 export default function HomePage() {

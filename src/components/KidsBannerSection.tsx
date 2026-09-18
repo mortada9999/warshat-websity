@@ -19,17 +19,6 @@ export default function KidsBannerSection() {
       <HiddenWorkshopsMenu category="kids_course" />
       <HiddenWorkshopsMenu category="kids_workshop" />
 
-      {/* Red Notebook Margin Line */}
-      <div 
-        className="absolute pointer-events-none top-0 bottom-0 z-0"
-        style={{ 
-          right: 'calc(5% - 0.75px)',
-          width: '1.5px',
-          backgroundColor: 'rgba(210, 90, 90, 0.4)',
-        }}
-        aria-hidden="true"
-      />
-
       <div className={styles.inner}>
 
         {/* Label */}
