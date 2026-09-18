@@ -13,11 +13,12 @@ export default function FooterSection() {
   return (
     <>
       {/* Spacer div to allow scrolling past main content for the reveal effect */}
-      <div className="w-full h-[70svh] md:h-[80vh] pointer-events-none" aria-hidden="true" />
+      <div className="w-full h-[70vh] md:h-[80vh] pointer-events-none" aria-hidden="true" />
       
       {/* Fixed footer that sits behind main content (z-0) and is revealed as we scroll into the spacer */}
       <footer 
-        className="fixed bottom-0 left-0 w-full h-[70svh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0"
+        className="fixed bottom-0 left-0 w-full h-[70vh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-0"
+        style={{ willChange: 'transform' }}
         aria-label="تذييل الصفحة"
         suppressHydrationWarning
       >

@@ -41,7 +41,7 @@ export default function FeatureBanner({
       className={styles.imagePane}
       initial={{ opacity: 0, x: imageFirst ? -30 : 30 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
+      viewport={{ once: true, amount: 0.1, margin: '50px' }}
       transition={{ duration: 0.65, ease: 'easeOut' }}
     >
       {imageUrl ? (
@@ -58,7 +58,7 @@ export default function FeatureBanner({
       style={{ background: panelBg }}
       initial={{ opacity: 0, x: imageFirst ? 30 : -30 }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
+      viewport={{ once: true, amount: 0.1, margin: '50px' }}
       transition={{ duration: 0.65, delay: 0.1, ease: 'easeOut' }}
     >
       <div className={styles.textInner}>
@@ -66,7 +66,7 @@ export default function FeatureBanner({
           className={styles.title}
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1, margin: '50px' }}
           transition={{ duration: 0.5, delay: 0.25, ease: 'easeOut' }}
         >
           {title}
@@ -77,7 +77,7 @@ export default function FeatureBanner({
             className={styles.subtitle}
             initial={{ opacity: 0, y: 8 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.1, margin: '50px' }}
             transition={{ duration: 0.5, delay: 0.35, ease: 'easeOut' }}
           >
             {subtitle}
@@ -87,7 +87,7 @@ export default function FeatureBanner({
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.1, margin: '50px' }}
           transition={{ duration: 0.5, delay: 0.45, ease: 'easeOut' }}
         >
           <Link href={href} className={styles.cta}>

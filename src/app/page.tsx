@@ -57,12 +57,11 @@ export default function HomePage() {
             className="stackable-section relative w-full"
             style={{ 
               backgroundColor: bg,
-              // Background image is now handled by a separate absolute div to create a header margin
-
               zIndex: (i + 1) * 10,
               boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              minHeight: '100svh',
-              paddingBottom: '60svh',
+              minHeight: '100vh',
+              paddingBottom: '40vh',
+              willChange: 'transform',
             }}
           >
             {/* Single continuous red margin line for notebook sections.

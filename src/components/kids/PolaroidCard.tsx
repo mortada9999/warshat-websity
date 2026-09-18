@@ -21,7 +21,7 @@ export default function PolaroidCard({ title, image, rotate, alt }: PolaroidCard
       className="group relative flex flex-col items-center"
       initial={{ opacity: 0, y: 40, rotate }}
       whileInView={{ opacity: 1, y: 0, rotate }}
-      viewport={{ once: true, margin: '-60px' }}
+      viewport={{ once: true, amount: 0.1, margin: '50px' }}
       transition={{ type: 'spring', stiffness: 160, damping: 16 }}
       whileHover={{ scale: 1.1, rotate: 0, y: -10 }}
     >
