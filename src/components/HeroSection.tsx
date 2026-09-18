@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -182,7 +183,7 @@ export default function HeroSection() {
           </a>
 
           {/* Art Caffe Button */}
-          <a href="#cafe" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-2 hover:-rotate-2 duration-300">
+          <Link href="/cafe" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-2 hover:-rotate-2 duration-300">
             {/* Realistic Scotch Tape */}
             <div 
               className="hero-btn-tape absolute -top-5 left-1/2 -translate-x-1/2 w-[55px] md:w-[85px] h-[22px] md:h-[30px] -rotate-[8deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
@@ -200,7 +201,7 @@ export default function HeroSection() {
                 {lang === 'ar' ? 'Art Caffe' : 'قهوة فن'}
               </span>
             </div>
-          </a>
+          </Link>
 
         </div>
 
