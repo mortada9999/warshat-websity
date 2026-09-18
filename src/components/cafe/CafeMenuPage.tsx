@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useEffect } from 'react';
+import FooterSection from '@/components/FooterSection';
 
 const MENU_IMAGES = [
   '/cafe/0c640f_4a1428f8cd76456ab105391127061a70~mv2.jpg',
@@ -13,46 +13,42 @@ const MENU_IMAGES = [
 ];
 
 export default function CafeMenuPage() {
-  const [lightbox, setLightbox] = useState<string | null>(null);
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const lenis = (window as any).__lenis;
+    if (lenis) lenis.stop();
+    return () => { if (lenis) lenis.start(); };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-20">
-      <div className="container mx-auto p-4 md:p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {MENU_IMAGES.map((src, i) => (
-            <div
-              key={i}
-              className="cursor-zoom-in"
-              onClick={() => setLightbox(src)}
-            >
-              <Image
-                src={src}
-                alt={`menu ${i + 1}`}
-                width={800}
-                height={1100}
-                className="w-full h-auto rounded-lg shadow-md"
-              />
-            </div>
-          ))}
-        </div>
+    <>
+      {/* Stack wrapper */}
+      <div>
+        {MENU_IMAGES.map((src, i) => (
+          <div
+            key={i}
+            className="sticky top-0 w-full bg-[#f5f5f0]
+                       lg:h-[100dvh] lg:flex lg:items-center lg:justify-center"
+            style={{ zIndex: i + 1 }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={src}
+              alt={`menu ${i + 1}`}
+              className="w-full h-auto block
+                         lg:h-full lg:max-w-3xl lg:object-contain"
+              draggable={false}
+              style={{ userSelect: 'none', pointerEvents: 'none' }}
+            />
+          </div>
+        ))}
+
+        {/* Desktop spacer: gives last image room to fully slide up */}
+        <div className="hidden lg:block h-[100dvh]" aria-hidden="true" />
       </div>
 
-      {/* Lightbox */}
-      {lightbox && (
-        <div
-          className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4 cursor-zoom-out"
-          onClick={() => setLightbox(null)}
-        >
-          <Image
-            src={lightbox}
-            alt="menu"
-            width={900}
-            height={1200}
-            className="max-w-[95vw] max-h-[95vh] w-auto h-auto rounded-lg object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-        </div>
-      )}
-    </div>
+      {/* Footer revealed at the very end */}
+      <FooterSection />
+    </>
   );
 }
