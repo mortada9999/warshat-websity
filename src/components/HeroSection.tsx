@@ -122,26 +122,27 @@ export default function HeroSection() {
           className="relative flex flex-col items-center justify-center w-full max-w-[512px]"
         >
           <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
+            {/* النص فوق الورقة */}
             <div className="absolute top-[32%] left-[18%] w-[55%] h-[32%] flex flex-col items-center justify-between">
               
-             <span className="text-[#4A5830] text-lg md:text-3xl font-bold relative bottom-3 md:bottom-8">
-  {t('ورشة فن', 'Warshat Fan')}
-</span>
+              <span className="text-[#4A5830] text-lg md:text-3xl font-bold relative bottom-3 md:bottom-8">
+                {t('ورشة فن', 'Warshat Fan')}
+              </span>
               
               {/* العنوان الرئيسي في المنتصف */}
               <h1 className="text-center text-[#34401F] text-base md:text-2xl font-normal leading-[160%] relative bottom-2 md:bottom-6">
-  {t('المكان المثالي للترفيه', 'The ideal place for')}
-  <br />
-  {t('عن طريق الفن', 'entertainment through art')}
-</h1>
+                {t('المكان المثالي للترفيه', 'The ideal place for')}
+                <br />
+                {t('عن طريق الفن', 'entertainment through art')}
+              </h1>
               
-           <p className="text-center text-[#4A5830] text-[9px] md:text-sm relative right-[2%] md:right-[4%] w-full">
-  {t('و لتعلم مختلف الفنون بأحترافية', 'And to learn various arts professionally!')}
-</p>
+              <p className="text-center text-[#4A5830] text-[9px] md:text-sm relative right-[2%] md:right-[4%] w-full">
+                {t('و لتعلم مختلف الفنون بأحترافية', 'And to learn various arts professionally!')}
+              </p>
             </div>
             {/* صورة اليد — طبقة أمام النص مع multiply لإظهار النص من خلال الورقة الفاتحة */}
             <Image
-              src="/images/figma/hero-hand.png"
+              src="/images/figma/hero-hand3.png"
               alt={t('يد تمسك ورقة فنية — ورشة فن', 'A hand holding an art paper — Warshat Fan')}
               width={512}
               height={684}
@@ -154,6 +155,8 @@ export default function HeroSection() {
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
               }}
               priority
+              quality={100}
+              unoptimized
             />
           </div>
         </div>
