@@ -54,64 +54,76 @@ export default function HeroSection() {
       },
     });
 
-    // 3. Buttons Peeling Animation (like TapedWorkshopCard)
+    // 3. Buttons Peeling Animation
     const btns = gsap.utils.toArray('.hero-btn-container') as HTMLElement[];
     btns.forEach((btn, index) => {
-      const tape = btn.querySelector('.hero-btn-tape');
       const paper = btn.querySelector('.hero-btn-paper');
       
-      if (!tape || !paper) return;
+      if (!paper) return;
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: btn,
-          // Break synchronicity: second button triggers earlier/later
           start: `top ${50 + index * 15}%`, 
           end: `top ${10 - index * 10}%`,
           scrub: 1.5,
         }
       });
 
-      // Paper falls gracefully in place (not thrown away)
+      // Paper falls gracefully
       tl.to(paper, {
-        y: 250 + (index * 50), // Falls straight down
-        x: 0, // Stays in place horizontally
-        rotate: index === 0 ? 10 : -10, // Very gentle tilt
-        scale: 0.9, // Slight push back
+        y: 250 + (index * 50),
+        x: 0,
+        rotate: index === 0 ? 8 : -8,
+        scale: 0.9,
         opacity: 0,
         duration: 1,
         ease: 'power2.in'
       }, 0);
 
-      // Tape flies UP elegantly
-      tl.to(tape, {
-        y: -150 - (index * 30),
-        x: 0,
-        rotate: index === 0 ? -25 : 25,
-        opacity: 0,
-        duration: 1,
-        ease: 'power2.in'
-      }, 0);
+      // Tape flies UP
+      const tape = btn.querySelector('.hero-btn-tape');
+      if (tape) {
+        tl.to(tape, {
+          y: -150 - (index * 30),
+          rotate: index === 0 ? -45 : 45,
+          opacity: 0,
+          duration: 1,
+          ease: 'power2.in'
+        }, 0);
+      }
     });
+    
+    // Log sizes for debugging
+    setTimeout(() => {
+      btns.forEach((btn, index) => {
+        const paper = btn.querySelector('.hero-btn-paper');
+        if (paper) console.log(`Button ${index} paper width:`, paper.getBoundingClientRect().width);
+      });
+    }, 500);
+
   }, { scope: sectionRef });
 
   return (
     <section 
       ref={sectionRef}
-      className="relative flex flex-col items-center justify-center min-h-screen w-full bg-[#F6F0E2] overflow-x-hidden pt-24 pb-32 md:pb-64 px-6 md:px-12"
+      className="relative flex flex-col items-center justify-center min-h-screen w-full bg-[#F6F0E2] pt-24 pb-32 md:pb-64 px-6 md:px-12 z-30"
       aria-label={t('القسم الرئيسي للورش', 'Main workshops section')}
     >
-      {/* Background decorative shapes */}
-      {/* Yellow Blur */}
-      <div 
-        className="absolute w-[200px] h-[200px] md:w-[256px] md:h-[256px] rounded-full opacity-40 bg-[#FFDF9D] mix-blend-multiply blur-[30px] md:blur-[40px] left-[-20%] md:left-[10%] top-[10%] md:top-[20%]"
-        aria-hidden="true" 
-      />
-      {/* Green Blur */}
-      <div 
-        className="absolute w-[220px] h-[220px] md:w-[288px] md:h-[288px] rounded-full opacity-30 bg-[#C5D475] mix-blend-multiply blur-[30px] md:blur-[40px] right-[-20%] md:right-[5%] bottom-[15%] md:bottom-[20%]"
-        aria-hidden="true" 
-      />
+      {/* Background decorative shapes — placed in a clipping layer so they don't cause scroll, 
+          leaving the main section overflow visible so the papers can fall outside it. */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Yellow Blur */}
+        <div 
+          className="absolute w-[200px] h-[200px] md:w-[256px] md:h-[256px] rounded-full opacity-40 bg-[#FFDF9D] mix-blend-multiply blur-[30px] md:blur-[40px] left-[-20%] md:left-[10%] top-[10%] md:top-[20%]"
+          aria-hidden="true" 
+        />
+        {/* Green Blur */}
+        <div 
+          className="absolute w-[220px] h-[220px] md:w-[288px] md:h-[288px] rounded-full opacity-30 bg-[#C5D475] mix-blend-multiply blur-[30px] md:blur-[40px] right-[-20%] md:right-[5%] bottom-[15%] md:bottom-[20%]"
+          aria-hidden="true" 
+        />
+      </div>
 
       {/* Main Content Container — perspective enables 3D rotateX on child */}
       <div className="relative z-10 flex flex-col items-center gap-12 w-full max-w-[896px]" style={{ perspective: '1200px' }}>
@@ -142,7 +154,7 @@ export default function HeroSection() {
             </div>
             {/* صورة اليد — طبقة أمام النص مع multiply لإظهار النص من خلال الورقة الفاتحة */}
             <Image
-              src="/images/figma/hero-hand3.png"
+              src="/images/figma/hero-hand4.png"
               alt={t('يد تمسك ورقة فنية — ورشة فن', 'A hand holding an art paper — Warshat Fan')}
               width={512}
               height={684}
@@ -162,47 +174,105 @@ export default function HeroSection() {
         </div>
 
         {/* Navigation Options */}
-        <div className="flex flex-row flex-wrap items-center justify-center gap-3 md:gap-16 mt-4 z-30">
+        <div className="flex flex-row items-center justify-center gap-6 md:gap-8 mt-8 md:mt-12 z-30" dir="rtl">
           
           {/* About Us Button */}
-          <a href="#about" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-2 hover:rotate-2 duration-300">
-            {/* Realistic Scotch Tape */}
+          <a 
+            href="#about" 
+            className="hero-btn-container relative block cursor-pointer shrink-0 min-h-[44px] w-[118px] md:w-[145px]"
+          >
+            {/* Tape — flies UP on scroll */}
             <div 
-              className="hero-btn-tape absolute -top-5 left-1/2 -translate-x-1/2 w-[60px] md:w-[90px] h-[22px] md:h-[30px] rotate-[10deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
-              style={{
-                backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
-              }}
-            />
-            
-            {/* The paper card */}
-            <div className="hero-btn-paper flex flex-col items-center justify-center px-6 md:px-16 py-5 md:py-8 -rotate-3 bg-[#F8F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <span className="font-amiri text-[#374A00] text-2xl md:text-5xl leading-[130%]">
-                {t('من نحن', 'About Us')}
-              </span>
-              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-1.5 md:mt-2 tracking-widest uppercase">
-                {lang === 'ar' ? 'About Us' : 'من نحن'}
-              </span>
+              className="hero-btn-tape absolute top-0 left-1/2 w-[35%] h-[26px] md:h-[32px] z-20 pointer-events-none drop-shadow-sm"
+              style={{ transform: 'translate(-50%, -50%) rotate(3deg)' }}
+            >
+              <div 
+                className="w-full h-full bg-[#E2DBC3]/40 backdrop-blur-[2px]"
+                style={{
+                  clipPath: 'polygon(0% 2%, 98% 0%, 100% 97%, 2% 100%)',
+                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.15\'/%3E%3C/svg%3E")'
+                }}
+              />
+            </div>
+
+            {/* Paper — GSAP animates this */}
+            <div 
+              className="hero-btn-paper relative w-full active:scale-[0.96]" 
+              style={{ transform: 'rotate(2deg)' }}
+            >
+              <Image 
+                src="/images/figma/paper-about.png" 
+                alt="About Us"
+                width={1556} height={1201}
+                className="block w-full h-auto"
+                style={{ filter: 'drop-shadow(1px 3px 4px rgba(60,50,30,0.3))' }}
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
+                <span 
+                  className={`text-center text-[#374A00] leading-tight ${lang === 'ar' ? 'font-amiri font-bold pt-2' : 'font-ibm-plex font-semibold tracking-wider uppercase pt-1'}`} 
+                  style={{ fontSize: 'clamp(14px, 12cqi, 26px)' }}
+                >
+                  {t('من نحن', 'ABOUT US')}
+                </span>
+              </div>
             </div>
           </a>
 
           {/* Art Caffe Button */}
-          <Link href="/cafe" className="hero-btn-container group relative flex flex-col items-center transition-transform hover:-translate-y-2 hover:-rotate-2 duration-300">
-            {/* Realistic Scotch Tape */}
+          <Link 
+            href="/cafe" 
+            className="hero-btn-container relative block cursor-pointer shrink-0 min-h-[44px] w-[118px] md:w-[145px]"
+          >
+            {/* Tape — flies UP on scroll */}
             <div 
-              className="hero-btn-tape absolute -top-5 left-1/2 -translate-x-1/2 w-[55px] md:w-[85px] h-[22px] md:h-[30px] -rotate-[8deg] bg-white/20 backdrop-blur-[2px] border border-white/40 shadow-sm z-20"
-              style={{
-                backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 20%, transparent 60%, rgba(255,255,255,0.3) 100%)'
-              }}
-            />
-            
-            {/* The paper card */}
-            <div className="hero-btn-paper flex flex-col items-center justify-center px-6 md:px-16 py-5 md:py-8 rotate-2 bg-[#F4F5F0] shadow-[0_10px_30px_-10px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.05),inset_0_0_0_1px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <span className="font-amiri text-[#374A00] text-2xl md:text-5xl leading-[130%]">
-                {t('قهوة فن', 'Art Caffe')}
-              </span>
-              <span className="font-ibm-plex text-[#45483A] text-xs md:text-sm leading-[150%] mt-1.5 md:mt-2 tracking-widest uppercase">
-                {lang === 'ar' ? 'Art Caffe' : 'قهوة فن'}
-              </span>
+              className="hero-btn-tape absolute top-0 left-1/2 w-[35%] h-[26px] md:h-[32px] z-20 pointer-events-none drop-shadow-sm"
+              style={{ transform: 'translate(-50%, -50%) rotate(-4deg)' }}
+            >
+              <div 
+                className="w-full h-full bg-[#E2DBC3]/40 backdrop-blur-[2px]"
+                style={{
+                  clipPath: 'polygon(1% 0%, 100% 3%, 97% 100%, 0% 98%)',
+                  backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.15\'/%3E%3C/svg%3E")'
+                }}
+              />
+            </div>
+
+            {/* Paper — GSAP animates this */}
+            <div 
+              className="hero-btn-paper relative w-full active:scale-[0.96]"
+              style={{ transform: 'rotate(-2deg)' }}
+            >
+              <Image 
+                src="/images/figma/paper-cafe.png" 
+                alt="Art Caffe"
+                width={1156} height={873}
+                className="block w-full h-auto"
+                style={{ filter: 'drop-shadow(1px 3px 4px rgba(60,50,30,0.3))' }}
+              />
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
+                <span 
+                  className={`text-center text-[#374A00] leading-tight ${lang === 'ar' ? 'font-amiri font-bold pt-2' : 'font-ibm-plex font-semibold tracking-wider uppercase pt-1'}`} 
+                  style={{ fontSize: 'clamp(14px, 12cqi, 26px)' }}
+                >
+                  {t('قهوة فن', 'ART CAFFE')}
+                </span>
+              </div>
+
+              {/* Beans Sticker */}
+              <img 
+                src="/images/beans.png" 
+                alt=""
+                className="absolute z-10 pointer-events-none"
+                style={{ 
+                  width: '38%', 
+                  height: 'auto', 
+                  top: '5%',
+                  left: '-2%',
+                  transform: 'rotate(-6deg)', 
+                  mixBlendMode: 'multiply',
+                  filter: 'drop-shadow(1px 2px 2px rgba(60,50,30,0.3))'
+                }}
+              />
             </div>
           </Link>
 

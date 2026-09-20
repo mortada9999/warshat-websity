@@ -1,212 +1,540 @@
 /* ═══════════════════════════════════════════════
-   Courses — Artisan's Sketchbook
-   Lined notebook | Hand-cut cards | Blueprints
+   Courses — Receipt Dispenser (Marina-style)
+   كبسولة معدنية + ورقة إيصال تخرج بالـ scroll
    ═══════════════════════════════════════════════ */
 
-/* ── Notebook Page Background ── */
-.notebookPage {
-  background-color: #FDFBF7;
-}
-
-/* ── Vertical Card Stack ── */
-.cardStack {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-  width: 100%;
-  max-width: 900px;
-  margin: 3rem auto 0;
-}
-
-@media (min-width: 768px) {
-  .cardStack { gap: 5rem; }
-}
-
-/* ── Base Card — hand-cut paper ── */
-.card {
+/* ── Section ── */
+.coursesSection {
   position: relative;
-  width: 100%;
-  padding: 1.5rem;
-  background: #FFFFFF;
-  box-shadow: 
-    0 4px 6px rgba(0,0,0,0.07),
-    0 12px 20px rgba(0,0,0,0.05),
-    0 0 0 1px rgba(0,0,0,0.03);
-  border-radius: 2px 255px 3px 255px / 255px 5px 225px 3px;
+  /* Background is now controlled by the wrapper in page.tsx (#d4f0ff) */
+  padding: 4rem 0 4rem;
   overflow: hidden;
 }
+
 @media (min-width: 768px) {
-  .card { padding: 2rem; }
+  .coursesSection {
+    padding: 6rem 0 6rem;
+  }
 }
 
-.card:nth-child(odd)  { transform: rotate(-0.3deg); }
-.card:nth-child(even) { transform: rotate(0.4deg); }
-
-/* ── Pattern Overlay Layer (shared) ── */
-.patternLayer {
+/* Background clouds / texture */
+.coursesSection::before {
+  content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.06;
+  background:
+    radial-gradient(ellipse 60% 30% at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 25% at 80% 60%, rgba(255,255,255,0.3) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
 }
 
-/* ── Pattern 1: Crochet Stitch Chart ── */
-.patternCrochet {
-  background-image:
-    radial-gradient(circle at 15px 15px, #2C4A7C 1.5px, transparent 1.5px),
-    radial-gradient(circle at 45px 45px, #2C4A7C 1px, transparent 1px),
-    radial-gradient(circle at 30px 60px, #2C4A7C 1.5px, transparent 1.5px),
-    linear-gradient(90deg, rgba(44,74,124,0.2) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(44,74,124,0.2) 1px, transparent 1px);
-  background-size: 60px 60px, 60px 60px, 60px 60px, 30px 30px, 30px 30px;
-  background-position: 0 0, 30px 30px, 45px 15px, 0 0, 0 0;
-}
 
-/* ── Pattern 2: Sheet Music ── */
-.patternMusic {
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 14px, rgba(44,74,124,0.3) 14px, rgba(44,74,124,0.3) 15px),
-    radial-gradient(ellipse at 20% 35%, rgba(44,74,124,0.4) 2px, transparent 2px),
-    radial-gradient(ellipse at 55% 55%, rgba(44,74,124,0.4) 2.5px, transparent 2.5px),
-    radial-gradient(ellipse at 75% 25%, rgba(44,74,124,0.35) 1.8px, transparent 1.8px),
-    radial-gradient(ellipse at 40% 70%, rgba(44,74,124,0.4) 2px, transparent 2px);
-  background-size: 100% 45px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-}
 
-/* ── Pattern 3: Pottery Blueprint ── */
-.patternBlueprint {
-  background:
-    linear-gradient(90deg, rgba(30,60,114,0.15) 1px, transparent 1px),
-    linear-gradient(0deg, rgba(30,60,114,0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-.patternBlueprint::after {
-  content: '';
-  position: absolute;
-  top: 25%;
-  left: 5%; right: 5%;
-  height: 1px;
-  background: rgba(30,60,114,0.2);
-  box-shadow: 0 15px 0 rgba(30,60,114,0.15), 0 30px 0 rgba(30,60,114,0.1);
-}
-.patternBlueprint::before {
-  content: '';
-  position: absolute;
-  left: 50%; top: 20%;
-  transform: translateX(-50%);
-  width: 80px; height: 160px;
-  border: 2px solid rgba(30,60,114,0.12);
-  border-radius: 40px 40px 20px 20px / 60px 60px 30px 30px;
-  background: transparent;
-}
-
-/* ── Card Inner — horizontal on desktop and mobile ── */
-.cardInner {
+/* ── Heading area ── */
+.headingArea {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   display: flex;
-  flex-direction: row; /* Mobile side-by-side */
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
-}
-.card:nth-child(even) .cardInner {
-  flex-direction: row-reverse;
-}
-@media (min-width: 768px) {
-  .cardInner { gap: 2rem; }
+  padding: 1rem 1rem 3rem;
+  text-align: center;
 }
 
-/* ── Image ── */
-.cardImageWrap {
+@media (min-width: 768px) {
+  .headingArea {
+    padding: 2rem 1rem 4rem;
+  }
+}
+
+.headingLabel {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.85rem;
+  color: #374A00;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+/* Torn paper heading */
+.headingPaper {
   position: relative;
-  width: 120px; /* Small on mobile */
-  aspect-ratio: 3/4;
-  overflow: hidden;
-  background: #F0EDE5;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-@media (min-width: 768px) {
-  .cardImageWrap { width: 280px; }
-}
-.cardImage {
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-.card:hover .cardImage { transform: scale(1.04); }
-
-/* ── Text Content — solid bg for readability ── */
-.cardText {
-  flex: 1;
-  background: rgba(255,255,255,0.92);
-  padding: 0.75rem; /* Tighter on mobile */
-  text-align: right;
-  backdrop-filter: blur(2px);
-}
-@media (min-width: 768px) {
-  .cardText { padding: 1.25rem; }
+  background: #fdfaf5; /* --fg-card-warm */
+  padding: 1.25rem 3rem 2rem;
+  text-align: center;
+  /* Torn edges top & bottom */
+  clip-path: polygon(
+    0% 12%, 2% 4%, 4% 10%, 7% 2%, 10% 8%, 13% 2%, 16% 7%, 20% 0%,
+    24% 6%, 28% 1%, 32% 7%, 36% 2%, 40% 8%, 44% 1%, 48% 6%, 52% 0%,
+    56% 7%, 60% 2%, 64% 8%, 68% 1%, 72% 6%, 76% 2%, 80% 8%, 84% 2%,
+    88% 7%, 92% 1%, 96% 6%, 100% 2%,
+    100% 90%, 98% 98%, 95% 92%, 92% 100%, 89% 93%, 86% 100%,
+    83% 92%, 80% 99%, 77% 92%, 74% 100%, 71% 93%, 68% 100%,
+    65% 92%, 62% 99%, 59% 93%, 56% 100%, 53% 92%, 50% 99%,
+    47% 93%, 44% 100%, 41% 92%, 38% 99%, 35% 93%, 32% 100%,
+    29% 92%, 26% 99%, 23% 93%, 20% 100%, 17% 92%, 14% 99%,
+    11% 93%, 8% 100%, 5% 93%, 2% 99%, 0% 92%
+  );
+  box-shadow: 3px 6px 24px rgba(0,0,0,0.12);
+  min-width: 280px;
 }
 
-.cardTitle {
+.headingMain {
   font-family: 'Amiri', Georgia, serif;
-  font-size: 1.1rem; /* Smaller on mobile */
+  font-size: clamp(3rem, 7vw, 4.5rem);
   font-weight: 700;
   color: #374A00;
-  line-height: 1.3;
-  margin-bottom: 0.25rem;
-}
-@media (min-width: 768px) {
-  .cardTitle { font-size: 2rem; }
+  margin: 0;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
 }
 
-.cardEn {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.75rem;
-  color: #597257;
-  margin-bottom: 0.75rem;
-  letter-spacing: 0.03em;
+.headingMainFill {
+  color: #374A00;
+  -webkit-text-stroke: 0;
 }
 
-.cardSessions {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.8125rem;
+.headingScriptLine {
+  font-family: 'Amiri', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  color: #FFDF9D;
+  -webkit-text-stroke: 1.5px #4A5830;
+  margin: 0;
+}
+
+/* ── Cards grid ── */
+.cardsGrid {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1536px; /* Massive width for very large cards */
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  align-items: start;
+}
+
+@media (min-width: 640px) {
+  .cardsGrid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+}
+
+@media (min-width: 1024px) {
+  .cardsGrid { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+}
+
+/* ── Each slot+ticket wrapper ── */
+.slotWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4rem; /* More space on mobile for stacking */
+}
+
+/* ── THE METAL CAPSULE (key element) ── */
+.metalCapsule {
+  position: relative;
+  z-index: 2; /* background capsule */
+  width: 100%;
+  height: 90px;
+  border-radius: 45px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #E6E6E6 15%, #D0D0D0 50%, #B8B8B8 85%, #9E9E9E 100%);
+  box-shadow:
+    0 8px 25px rgba(0,0,0,0.12),
+    0 2px 6px rgba(0,0,0,0.06),
+    inset 0 4px 6px rgba(255,255,255,0.95),
+    inset 0 -3px 6px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+
+/* The dark slit opening in the center of the capsule */
+.slitOpening {
+  position: absolute;
+  top: 50px; /* Placed slightly below center */
+  left: 6%;
+  right: 6%;
+  height: 18px;
+  border-radius: 9px;
+  background: #151515;
+  box-shadow:
+    inset 0 4px 8px rgba(0,0,0,0.95),
+    inset 0 1px 3px rgba(0,0,0,1),
+    0 1px 1px rgba(255,255,255,0.7); /* Bright bottom highlight on the hole */
+}
+
+/* Round bolts/screws on left & right of capsule */
+.bolt {
+  position: absolute;
+  top: 45px; /* Center of the 90px capsule */
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F5F5F5 0%, #D0D0D0 50%, #A0A0A0 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.9),
+    inset 0 -1px 2px rgba(0,0,0,0.3),
+    0 2px 4px rgba(0,0,0,0.25),
+    0 -1px 1px rgba(255,255,255,0.6);
+}
+
+.bolt:first-child { left: 24px; }
+.bolt:last-child  { right: 24px; }
+
+/* ── Ticket Mask (hides ticket when scrolled up) ── */
+.ticketMask {
+  position: relative; /* Required for z-index to work! */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  /* Slit top is 50px. Height is 18px. Center is 59px.
+     Capsule height is 90px. Mask needs to start at 59px from top.
+     margin-top = -(90 - 59) = -31px */
+  margin-top: -31px; 
+  padding-top: 0; 
+  padding-bottom: 2rem; /* Give shadow some room */
+  z-index: 3; /* In front of the bottom lip of the capsule */
+  /* Fix Safari bug where overflow: hidden fails to clip GSAP transformed children */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* ── Receipt paper emerging from slot ── */
+.ticket {
+  position: relative;
+  /* Slit width is 88% (100% - 12%). We subtract 16px to fit inside the straight part of the slit */
+  width: calc(88% - 16px); 
+  background: #fdfaf5; /* --fg-card-warm */
+  padding: 3rem 2.5rem 0; /* Internal padding */
+  border-radius: 3px 3px 0 0; /* Slightly rounded top corners to fit the hole seamlessly */
+  box-shadow: 
+    inset 0 12px 14px -6px rgba(0,0,0,0.6), /* Inner shadow mimicking the inside of the dark slit */
+    0 10px 35px rgba(0,0,0,0.1), 
+    0 2px 8px rgba(0,0,0,0.06);
+
+  /* User requested the bottom to have the same perforations as the horizontal wide ticket 
+     So we add perforations at the BOTTOM edge like teeth */
+  --tooth-r: 8px;
+  padding-bottom: 2.5rem; /* extra space for the cut edge */
+  
+  -webkit-mask-image: radial-gradient(circle at 50% 100%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  -webkit-mask-size: 22px 100%;
+  -webkit-mask-position: bottom left;
+  -webkit-mask-repeat: repeat-x;
+  
+  mask-image: radial-gradient(circle at 50% 100%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  mask-size: 22px 100%;
+  mask-position: bottom left;
+  mask-repeat: repeat-x;
+}
+
+/* ── Course title inside ticket ── */
+.courseName {
+  font-family: 'Amiri', Georgia, serif;
+  font-size: 2.3rem; /* Bigger title */
   font-weight: 700;
-  color: #A25F00;
+  color: #374a00; /* --fg-olive-dark */
+  text-align: center;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.courseNameEn {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #597257; /* --fg-olive-mid */
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   margin-bottom: 1rem;
 }
 
-/* ── Book Now Button ── */
-.bookBtn {
-  display: inline-block;
-  padding: 0.5rem 1.5rem;
-  background: #4D6314;
-  color: #FFFFFF;
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 600;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  transition: background 0.2s ease, transform 0.2s ease;
+/* ── Image inside ticket ── */
+.cardImageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  margin: 1.25rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0ebd8; /* --fg-bg-training */
+  border: 1px solid #c5c8b6; /* --fg-border */
 }
-.bookBtn:hover { background: #374A00; transform: translateY(-1px); }
 
-/* ── View All CTA ── */
+.cardImage {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.cardImageWrap:hover .cardImage {
+  transform: scale(1.05);
+}
+
+/* ── Timeline badge (pink ribbon like reference) ── */
+.badge {
+  display: block;
+  width: calc(100% + 4rem);
+  margin: 0 -2rem 1.25rem;
+  padding: 0.55rem 2rem;
+  background: #f0ebd8; /* --fg-bg-training */
+  color: #374a00; /* --fg-olive-dark */
+  border-top: 1px solid #c5c8b6;
+  border-bottom: 1px solid #c5c8b6;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Divider ── */
+.divider {
+  border: none;
+  border-top: 2px dashed #c5c8b6; /* --fg-border */
+  margin: 1.25rem 0;
+}
+
+/* ── Features list ── */
+.featuresList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+  min-height: 140px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.4rem 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 1rem; /* Bigger features */
+  color: #45483a; /* --fg-text */
+  line-height: 1.5;
+  direction: rtl;
+  text-align: right;
+}
+
+.featureBullet {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  background: #a25f00; /* --fg-orange */
+  border-radius: 2px;
+  margin-top: 7px;
+}
+
+/* ── CTA Button ── */
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.2rem 1.5rem;
+  background: #a25f00; /* --fg-orange */
+  color: #ffffff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 6px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ctaBtn:hover {
+  background: #8a5000;
+  transform: translateY(-2px);
+}
+
+/* ── Small note ── */
+.smallNote {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem;
+  color: #444;
+  text-align: right;
+  margin: 0.25rem 0;
+  direction: rtl;
+}
+
+/* ── Barcode ── */
+.barcode {
+  display: flex;
+  justify-content: center;
+  gap: 1.5px;
+  height: 44px; /* Bigger barcode */
+  margin: 0.75rem 0 1.5rem;
+  overflow: hidden;
+}
+
+.barcode span {
+  display: block;
+  background: #000;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* ── Price area ── */
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-bottom: 2rem;
+  direction: rtl;
+}
+
+/* ── WhatsApp Horizontal Ticket ── */
+.whatsappWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 1.5rem 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+.whatsappTicket {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  background: #F8F6F0; /* Normal light paper color */
+  padding: 3.5rem 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  text-align: center;
+  
+  /* Left & Right Perforated Edges */
+  --tooth-r: 8px;
+  -webkit-mask-image: 
+    radial-gradient(circle at 0px 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px)), 
+    radial-gradient(circle at 100% 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  -webkit-mask-size: 51% 22px;
+  -webkit-mask-position: left center, right center;
+  -webkit-mask-repeat: repeat-y, repeat-y;
+
+  mask-image: 
+    radial-gradient(circle at 0px 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px)), 
+    radial-gradient(circle at 100% 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  mask-size: 51% 22px;
+  mask-position: left center, right center;
+  mask-repeat: repeat-y, repeat-y;
+}
+
+.whatsappContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.whatsappTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.whatsappTitleMain {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 900;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: #374a00; /* --fg-olive-dark */
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.whatsappTitleScript {
+  font-family: 'Amiri', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  color: #a25f00; /* --fg-orange */
+  line-height: 1.1;
+  margin-top: 0.5rem; /* No overlap! */
+  text-align: center;
+}
+
+.whatsappBtn {
+  display: inline-block;
+  background: #374a00; /* --fg-olive-dark */
+  color: #ffffff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  padding: 1.2rem 2.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: 90%;
+  max-width: 700px;
+}
+
+.whatsappBtn:hover {
+  background: #2a3800;
+  transform: translateY(-2px);
+}
+
+.priceFrom {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #000;
+  font-weight: 600;
+}
+
+.priceValue {
+  font-family: 'Amiri', Georgia, serif;
+  font-size: 3.2rem; /* Much bigger price */
+  font-weight: 900;
+  color: #a25f00; /* --fg-orange */
+  line-height: 1;
+}
+
+.priceCurrency {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #45483a; /* --fg-text */
+  font-weight: 700;
+}
+
+/* ── View all ── */
+.viewAllArea {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
 .viewAllLink {
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 700;
-  font-size: 0.8125rem;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: #A25F00;
+  color: #374A00;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: color 0.2s ease;
+  padding: 0.8rem 2.5rem;
+  border: 2.5px solid #374A00;
+  border-radius: 999px;
+  background: transparent;
+  transition: all 0.25s ease;
 }
-.viewAllLink:hover { color: #7D4A00; }
-.viewAllLink svg { transition: transform 0.2s ease; }
-.viewAllLink:hover svg { transform: translateX(-4px); }
 
-/* ── Heading ── */
-.headingLine { display: block; margin: 0 auto; }
+.viewAllLink:hover {
+  background: #374A00;
+  color: #F6F0E2;
+  transform: translateY(-2px);
+}

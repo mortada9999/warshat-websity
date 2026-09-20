@@ -22,7 +22,19 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const saved = localStorage.getItem('lang') as Lang | null;
-    if (saved === 'ar' || saved === 'en') setLangState(saved);
+    if (saved === 'ar' || saved === 'en') {
+      // الزائر سبق واختار لغة — احترم اختياره
+      setLangState(saved);
+    } else {
+      // أول زيارة — اكتشف لغة الجهاز
+      const deviceLang = navigator.language || navigator.languages?.[0] || 'ar';
+      const detected: Lang = deviceLang.toLowerCase().startsWith('ar') ? 'ar' : 'en';
+      setLangState(detected);
+      localStorage.setItem('lang', detected);
+      document.documentElement.lang = detected;
+      document.documentElement.dir = detected === 'ar' ? 'rtl' : 'ltr';
+      if (detected === 'en') document.body.classList.add('ltr');
+    }
   }, []);
 
   function setLang(l: Lang) {

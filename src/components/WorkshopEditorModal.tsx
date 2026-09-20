@@ -33,9 +33,10 @@ export default function WorkshopEditorModal() {
     image: '',
     category: (defaultCategory || 'open_activity') as Category,
     sessionsAr: '',
-    sessionsEn: '',
     pattern: 'blueprint',
     sortOrder: 0 as number | string,
+    featuresArStr: '',
+    featuresEnStr: '',
   });
 
   // Reset form when opening
@@ -56,6 +57,8 @@ export default function WorkshopEditorModal() {
           sessionsEn: workshop.sessionsEn || '',
           pattern: workshop.pattern || 'blueprint',
           sortOrder: workshop.sortOrder,
+          featuresArStr: workshop.featuresAr?.join('\n') || '',
+          featuresEnStr: workshop.featuresEn?.join('\n') || '',
         });
       } else {
         setForm({
@@ -72,6 +75,8 @@ export default function WorkshopEditorModal() {
           sessionsEn: '',
           pattern: 'blueprint',
           sortOrder: 0 as number | string,
+          featuresArStr: '',
+          featuresEnStr: '',
         });
       }
     }
@@ -144,6 +149,8 @@ export default function WorkshopEditorModal() {
       category: form.category,
       sessionsAr: form.sessionsAr || undefined,
       sessionsEn: form.sessionsEn || undefined,
+      featuresAr: form.featuresArStr.split('\n').map(s => s.trim()).filter(Boolean),
+      featuresEn: form.featuresEnStr.split('\n').map(s => s.trim()).filter(Boolean),
       pattern: form.pattern || undefined,
       isActive: true,
       sortOrder: Number(form.sortOrder) || 0,
@@ -320,6 +327,18 @@ export default function WorkshopEditorModal() {
               </div>
             </div>
           )}
+
+          {/* Features */}
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={labelStyle}>النقاط / الميزات (عربي) - نقطة في كل سطر</label>
+              <textarea name="featuresArStr" value={form.featuresArStr} onChange={handleChange} style={{ ...inputStyle, height: '80px', resize: 'vertical' }} placeholder="شهادة إتمام الكورس&#10;مشرف فني متخصص" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={labelStyle}>Features (English) - one per line</label>
+              <textarea name="featuresEnStr" value={form.featuresEnStr} onChange={handleChange} style={{ ...inputStyle, height: '80px', resize: 'vertical' }} placeholder="Completion certificate&#10;Specialist art instructor" dir="ltr" />
+            </div>
+          </div>
 
           {/* Description (workshops/kids) */}
           {showDescription && (

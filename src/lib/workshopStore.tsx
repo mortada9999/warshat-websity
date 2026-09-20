@@ -20,6 +20,8 @@ export interface WorkshopItem {
   category: Category;
   sessionsAr?: string;
   sessionsEn?: string;
+  featuresAr?: string[];
+  featuresEn?: string[];
   pattern?: string;
   isActive: boolean;     // true = visible to visitors
   sortOrder: number;

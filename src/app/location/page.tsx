@@ -102,7 +102,7 @@ export default function LocationPage() {
           custom={0}
         >
           <div className={styles.logoFrame}>
-            <img src="/logo.png" alt="ورشة فن" className={styles.logoImg} />
+            <img src="/images/figma/1logo.png" alt="ورشة فن" className={styles.logoImg} />
           </div>
           <h1 className={styles.brandName}>ورشة فن</h1>
           <span className={styles.brandSub}>مساحة الإبداع والتعلم</span>

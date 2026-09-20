@@ -22,7 +22,7 @@ export default function WixHero() {
           <div className={styles.blobGreen2}></div>
           
           <div className={styles.content}>
-            <img src="/logo.png" alt="ورشة فن" className={styles.logo} />
+            <img src="/images/figma/1logo.png" alt="ورشة فن" className={styles.logo} />
             <h1 className={styles.title}>المكان المثالي للترفيه عن طريق الفن</h1>
             <p className={styles.subtitle}>و لتعلم مختلف الفنون بأحترافية!</p>
             <Link href="#menu" className={styles.button}>

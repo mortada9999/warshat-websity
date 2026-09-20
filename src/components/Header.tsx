@@ -40,12 +40,14 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className={styles.logo} aria-label="ورشة فن — الرئيسية">
             <Image
-              src="/logo.png"
+              src="/images/figma/1logo.png"
               alt="ورشة فن"
-              width={48}
-              height={48}
+              width={200}
+              height={200}
               className={styles.logoImg}
               priority
+              quality={100}
+              unoptimized
             />
           </Link>
 
