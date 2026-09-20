@@ -73,34 +73,7 @@ export default function ProfilePage() {
         <HoloLoyaltyCard member={member} />
       </motion.section>
 
-      {/* ── Quick Stats ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, delay: 0.25 }}
-        className={styles.statsGrid}
-      >
-        <div className={styles.statCard}>
-          <span className={styles.statNum}>{totalSessions}</span>
-          <span className={styles.statLabel}>جلسة محضورة</span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statNum}>{sessionsToNext5 === 0 ? '✓' : sessionsToNext5}</span>
-          <span className={styles.statLabel}>
-            {sessionsToNext5 === 0 ? 'خصم ٥٠٪ جاهز!' : 'للخصم ٥٠٪'}
-          </span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statNum}>{sessionsToNext10 === 0 ? '✓' : sessionsToNext10}</span>
-          <span className={styles.statLabel}>
-            {sessionsToNext10 === 0 ? 'ورشة مجانية!' : 'للورشة المجانية'}
-          </span>
-        </div>
-        <div className={styles.statCard}>
-          <span className={styles.statNum}>{totalRewards}</span>
-          <span className={styles.statLabel}>مكافآت محصّلة</span>
-        </div>
-      </motion.div>
+
 
       {/* ── Recent Activity ── */}
       <motion.section
