@@ -33,6 +33,7 @@ export default function WorkshopEditorModal() {
     image: '',
     category: (defaultCategory || 'open_activity') as Category,
     sessionsAr: '',
+    sessionsEn: '',
     pattern: 'blueprint',
     sortOrder: 0 as number | string,
     featuresArStr: '',
