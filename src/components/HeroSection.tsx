@@ -110,9 +110,6 @@ export default function HeroSection() {
           end: 'bottom top',
           scrub: 1,
           invalidateOnRefresh: true,
-          onLeaveBack: () => {
-            introTl.restart();
-          }
         },
         immediateRender: false,
       }
