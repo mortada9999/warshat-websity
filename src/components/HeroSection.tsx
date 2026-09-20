@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import gsap from 'gsap';
@@ -18,9 +18,58 @@ export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    
+    // 1. Configure GSAP for mobile URL bar
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    // 2. Wait for fonts and all images to be ready
+    const checkReady = async () => {
+      try {
+        await document.fonts.ready;
+        if (sectionRef.current) {
+          const imgs = Array.from(sectionRef.current.querySelectorAll('img'));
+          await Promise.all(imgs.map(img => {
+            if (img.complete) return Promise.resolve();
+            return new Promise(resolve => {
+              img.onload = resolve;
+              img.onerror = resolve; // Continue on error
+            });
+          }));
+        }
+      } catch (e) {}
+
+      if (mounted) {
+        setIsReady(true);
+        setTimeout(() => ScrollTrigger.refresh(), 50);
+      }
+    };
+
+    checkReady();
+
+    // 3. Fallback timeout to ensure it always reveals
+    const fallback = setTimeout(() => {
+      if (mounted && !isReady) {
+        setIsReady(true);
+        setTimeout(() => ScrollTrigger.refresh(), 50);
+      }
+    }, 1500);
+
+    const handleLoad = () => ScrollTrigger.refresh();
+    window.addEventListener('load', handleLoad);
+
+    return () => {
+      mounted = false;
+      clearTimeout(fallback);
+      window.removeEventListener('load', handleLoad);
+    };
+  }, [isReady]);
 
   useGSAP(() => {
-    if (!handRef.current || !handInnerRef.current || !sectionRef.current) return;
+    if (!isReady || !handRef.current || !handInnerRef.current || !sectionRef.current) return;
 
     // 1. On-Load Presentation: 3D Hand-out reveal
     gsap.fromTo(handInnerRef.current,
@@ -37,7 +86,8 @@ export default function HeroSection() {
         rotateX: 0,
         opacity: 1,
         duration: 1.5,
-        ease: 'back.out(1.5)'
+        ease: 'back.out(1.5)',
+        immediateRender: true,
       }
     );
 
@@ -51,7 +101,9 @@ export default function HeroSection() {
         start: 'top top',
         end: 'bottom top',
         scrub: 1,
+        invalidateOnRefresh: true,
       },
+      immediateRender: false,
     });
 
     // 3. Buttons Peeling Animation
@@ -67,6 +119,7 @@ export default function HeroSection() {
           start: `top ${50 + index * 15}%`, 
           end: `top ${10 - index * 10}%`,
           scrub: 1.5,
+          invalidateOnRefresh: true,
         }
       });
 
@@ -78,7 +131,8 @@ export default function HeroSection() {
         scale: 0.9,
         opacity: 0,
         duration: 1,
-        ease: 'power2.in'
+        ease: 'power2.in',
+        immediateRender: false,
       }, 0);
 
       // Tape flies UP
@@ -89,7 +143,8 @@ export default function HeroSection() {
           rotate: index === 0 ? -45 : 45,
           opacity: 0,
           duration: 1,
-          ease: 'power2.in'
+          ease: 'power2.in',
+          immediateRender: false,
         }, 0);
       }
     });
@@ -102,7 +157,7 @@ export default function HeroSection() {
       });
     }, 500);
 
-  }, { scope: sectionRef });
+  }, { scope: sectionRef, dependencies: [isReady] });
 
   return (
     <section 
@@ -131,7 +186,7 @@ export default function HeroSection() {
         {/* Central Image (The Hand) */}
         <div 
           ref={handRef} 
-          className="relative flex flex-col items-center justify-center w-full max-w-[512px]"
+          className={`relative flex flex-col items-center justify-center w-full max-w-[512px] transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}
         >
           <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
             {/* النص فوق الورقة */}
@@ -154,27 +209,25 @@ export default function HeroSection() {
             </div>
             {/* صورة اليد — طبقة أمام النص مع multiply لإظهار النص من خلال الورقة الفاتحة */}
             <Image
-              src="/images/figma/hero-hand4.png"
+              src="/images/figma/hero-hand4.webp"
               alt={t('يد تمسك ورقة فنية — ورشة فن', 'A hand holding an art paper — Warshat Fan')}
-              width={512}
-              height={684}
+              width={1200}
+              height={1200}
               className="relative z-20 w-full h-auto object-contain"
               style={{
-                width: '100%',
-                height: 'auto',
                 mixBlendMode: 'multiply',
                 maskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
+                filter: 'drop-shadow(0 20px 30px rgba(60,50,30,0.15))'
               }}
               priority
-              quality={100}
               unoptimized
             />
           </div>
         </div>
 
         {/* Navigation Options */}
-        <div className="flex flex-row items-center justify-center gap-6 md:gap-8 mt-8 md:mt-12 z-30" dir="rtl">
+        <div className={`flex flex-row items-center justify-center gap-6 md:gap-8 mt-8 md:mt-12 z-30 transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`} dir="rtl">
           
           {/* About Us Button */}
           <a 
@@ -201,11 +254,12 @@ export default function HeroSection() {
               style={{ transform: 'rotate(2deg)' }}
             >
               <Image 
-                src="/images/figma/paper-about.png" 
+                src="/images/figma/paper-about.webp" 
                 alt="About Us"
-                width={1556} height={1201}
+                width={400} height={308}
                 className="block w-full h-auto"
                 style={{ filter: 'drop-shadow(1px 3px 4px rgba(60,50,30,0.3))' }}
+                priority
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
                 <span 
@@ -243,11 +297,12 @@ export default function HeroSection() {
               style={{ transform: 'rotate(-2deg)' }}
             >
               <Image 
-                src="/images/figma/paper-cafe.png" 
+                src="/images/figma/paper-cafe.webp" 
                 alt="Art Caffe"
-                width={1156} height={873}
+                width={400} height={302}
                 className="block w-full h-auto"
                 style={{ filter: 'drop-shadow(1px 3px 4px rgba(60,50,30,0.3))' }}
+                priority
               />
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
                 <span 
