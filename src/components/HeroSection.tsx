@@ -16,7 +16,6 @@ if (typeof window !== 'undefined') {
 export default function HeroSection() {
   const { t, lang } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
-  const handOuterRef = useRef<HTMLDivElement>(null); // For Load Reveal
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
   const [isReady, setIsReady] = useState(false);
@@ -70,22 +69,10 @@ export default function HeroSection() {
   }, [isReady]);
 
   useGSAP(() => {
-    if (!isReady || !handOuterRef.current || !handRef.current || !handInnerRef.current || !sectionRef.current) return;
+    if (!isReady || !handRef.current || !handInnerRef.current || !sectionRef.current) return;
 
-    // 1. Outer Layer: Load Reveal
-    gsap.to(handOuterRef.current, {
-      opacity: 1,
-      duration: 0.7,
-      onComplete: () => {
-        if (handOuterRef.current) {
-          gsap.set(handOuterRef.current, { clearProps: 'opacity,visibility' });
-        }
-      }
-    });
-
-    // 2. Inner Layer: On-Load Presentation (Timeline)
-    const introTl = gsap.timeline({ paused: true });
-    introTl.fromTo(handInnerRef.current,
+    // 1. On-Load Presentation: 3D Hand-out reveal
+    gsap.fromTo(handInnerRef.current,
       {
         scale: 0.5,
         y: 80,
@@ -103,35 +90,21 @@ export default function HeroSection() {
         immediateRender: true,
       }
     );
-    introTl.play();
 
-    // 3. Middle Layer: Scroll Scrub
-    gsap.fromTo(handRef.current,
-      {
-        scale: 1,
-        y: 0,
-        opacity: 1,
+    // 2. Scroll Scrub: Hand retreats on scroll down
+    gsap.to(handRef.current, {
+      scale: 0.7,
+      y: 150,
+      opacity: 0,
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+        invalidateOnRefresh: true,
       },
-      {
-        scale: 0.7,
-        y: 150,
-        opacity: 0,
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-          invalidateOnRefresh: true,
-          onLeaveBack: () => {
-            if (handRef.current) {
-              gsap.set(handRef.current, { opacity: 1, scale: 1, y: 0 });
-            }
-            introTl.restart();
-          }
-        },
-        immediateRender: false,
-      }
-    );
+      immediateRender: false,
+    });
 
     // 3. Buttons Peeling Animation
     const btns = gsap.utils.toArray('.hero-btn-container') as HTMLElement[];
@@ -212,11 +185,10 @@ export default function HeroSection() {
         
         {/* Central Image (The Hand) */}
         <div 
-          ref={handOuterRef} 
-          className="relative flex flex-col items-center justify-center w-full max-w-[512px] opacity-0"
+          ref={handRef} 
+          className={`relative flex flex-col items-center justify-center w-full max-w-[512px] transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}
         >
-          <div ref={handRef} className="relative w-full">
-            <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
+          <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
             {/* النص فوق الورقة */}
             <div className="absolute top-[32%] left-[18%] w-[55%] h-[32%] flex flex-col items-center justify-between">
               
@@ -237,21 +209,22 @@ export default function HeroSection() {
             </div>
             {/* صورة اليد — طبقة أمام النص مع multiply لإظهار النص من خلال الورقة الفاتحة */}
             <Image
-              src="/images/figma/hero-hand4.webp"
+              src="/images/figma/hero-hand3.png"
               alt={t('يد تمسك ورقة فنية — ورشة فن', 'A hand holding an art paper — Warshat Fan')}
-              width={1200}
-              height={1200}
+              width={512}
+              height={684}
               className="relative z-20 w-full h-auto object-contain"
               style={{
+                width: '100%',
+                height: 'auto',
                 mixBlendMode: 'multiply',
                 maskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
                 WebkitMaskImage: 'linear-gradient(to bottom, #000 78%, transparent 100%)',
-                filter: 'drop-shadow(0 20px 30px rgba(60,50,30,0.15))'
               }}
               priority
+              quality={100}
               unoptimized
             />
-          </div>
           </div>
         </div>
 
