@@ -16,6 +16,7 @@ if (typeof window !== 'undefined') {
 export default function HeroSection() {
   const { t, lang } = useLanguage();
   const sectionRef = useRef<HTMLElement>(null);
+  const handOuterRef = useRef<HTMLDivElement>(null); // For Load Reveal CSS
   const handRef = useRef<HTMLDivElement>(null); // For Scroll Scrub
   const handInnerRef = useRef<HTMLDivElement>(null); // For On-Load Presentation
   const [isReady, setIsReady] = useState(false);
@@ -69,10 +70,11 @@ export default function HeroSection() {
   }, [isReady]);
 
   useGSAP(() => {
-    if (!isReady || !handRef.current || !handInnerRef.current || !sectionRef.current) return;
+    if (!isReady || !handOuterRef.current || !handRef.current || !handInnerRef.current || !sectionRef.current) return;
 
     // 1. On-Load Presentation: 3D Hand-out reveal
-    gsap.fromTo(handInnerRef.current,
+    const introTl = gsap.timeline();
+    introTl.fromTo(handInnerRef.current,
       {
         scale: 0.5,
         y: 80,
@@ -92,19 +94,29 @@ export default function HeroSection() {
     );
 
     // 2. Scroll Scrub: Hand retreats on scroll down
-    gsap.to(handRef.current, {
-      scale: 0.7,
-      y: 150,
-      opacity: 0,
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        invalidateOnRefresh: true,
+    gsap.fromTo(handRef.current, 
+      {
+        scale: 1,
+        y: 0,
+        opacity: 1,
       },
-      immediateRender: false,
-    });
+      {
+        scale: 0.7,
+        y: 150,
+        opacity: 0,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+          invalidateOnRefresh: true,
+          onLeaveBack: () => {
+            introTl.restart();
+          }
+        },
+        immediateRender: false,
+      }
+    );
 
     // 3. Buttons Peeling Animation
     const btns = gsap.utils.toArray('.hero-btn-container') as HTMLElement[];
@@ -185,10 +197,11 @@ export default function HeroSection() {
         
         {/* Central Image (The Hand) */}
         <div 
-          ref={handRef} 
+          ref={handOuterRef} 
           className={`relative flex flex-col items-center justify-center w-full max-w-[512px] transition-opacity duration-700 ${isReady ? 'opacity-100' : 'opacity-0'}`}
         >
-          <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
+          <div ref={handRef} className="relative w-full">
+            <div ref={handInnerRef} className="relative w-full -rotate-1 drop-shadow-xl">
             {/* النص فوق الورقة */}
             <div className="absolute top-[32%] left-[18%] w-[55%] h-[32%] flex flex-col items-center justify-between">
               
@@ -225,6 +238,7 @@ export default function HeroSection() {
               quality={100}
               unoptimized
             />
+          </div>
           </div>
         </div>
 
