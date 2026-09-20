@@ -264,7 +264,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
                 <span 
                   className={`text-center text-[#374A00] leading-tight ${lang === 'ar' ? 'font-bold pt-2' : 'font-bold tracking-wider uppercase pt-1'}`} 
-                  style={{ fontSize: 'clamp(14px, 12cqi, 26px)' }}
+                  style={{ fontSize: lang === 'ar' ? 'clamp(17px, 14cqi, 30px)' : 'clamp(14px, 12cqi, 26px)' }}
                 >
                   {t('من نحن', 'ABOUT US')}
                 </span>
@@ -307,7 +307,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none px-2">
                 <span 
                   className={`text-center text-[#374A00] leading-tight ${lang === 'ar' ? 'font-bold pt-2' : 'font-bold tracking-wider uppercase pt-1'}`} 
-                  style={{ fontSize: 'clamp(14px, 12cqi, 26px)' }}
+                  style={{ fontSize: lang === 'ar' ? 'clamp(17px, 14cqi, 30px)' : 'clamp(14px, 12cqi, 26px)' }}
                 >
                   {t('قهوة فن', 'ART CAFFE')}
                 </span>
