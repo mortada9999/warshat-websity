@@ -51,49 +51,51 @@ export default function HomePage() {
   return (
     <>
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-        {SECTIONS.map(({ Component, bg, torn, isNotebook }, i) => (
-          <div
-            key={i}
-            className="stackable-section relative w-full"
-            style={{ 
-              backgroundColor: bg,
-              // Background image is now handled by a separate absolute div to create a header margin
+        <div className="w-full overflow-hidden">
+          {SECTIONS.map(({ Component, bg, torn, isNotebook }, i) => (
+            <div
+              key={i}
+              className="stackable-section relative w-full"
+              style={{ 
+                backgroundColor: bg,
+                // Background image is now handled by a separate absolute div to create a header margin
 
-              zIndex: (i + 1) * 10,
-              boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
-              minHeight: '100svh',
-              paddingBottom: '60svh',
-            }}
-          >
-            {/* Single continuous red margin line for notebook sections.
-                `right: calc(5% - 0.75px)` centers this 1.5px line on the 5% mark
-                so it lines up exactly with the TornEdge SVG stroke (which is a
-                1.5px stroke centered on 5%) on every breakpoint. */}
-            {isNotebook && (
-              <div 
-                className="absolute z-0 pointer-events-none top-0 bottom-0"
-                style={{ 
-                  right: 'calc(5% - 0.75px)',
-                  width: '1.5px',
-                  backgroundColor: 'rgba(210, 90, 90, 0.4)',
-                }}
-                aria-hidden="true"
-              />
-            )}
-            {/* Horizontal blue lines starting below the header margin */}
-            {isNotebook && (
-              <div 
-                className="absolute left-0 right-0 bottom-0 pointer-events-none z-0 notebook-lines"
-                style={{ 
-                  top: '0',
-                }}
-                aria-hidden="true"
-              />
-            )}
-            {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} />}
-            <Component />
-          </div>
-        ))}
+                zIndex: (i + 1) * 10,
+                boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
+                minHeight: '100svh',
+                paddingBottom: i === SECTIONS.length - 1 ? '0' : '60svh',
+              }}
+            >
+              {/* Single continuous red margin line for notebook sections.
+                  `right: calc(5% - 0.75px)` centers this 1.5px line on the 5% mark
+                  so it lines up exactly with the TornEdge SVG stroke (which is a
+                  1.5px stroke centered on 5%) on every breakpoint. */}
+              {isNotebook && (
+                <div 
+                  className="absolute z-0 pointer-events-none top-0 bottom-0"
+                  style={{ 
+                    right: 'calc(5% - 0.75px)',
+                    width: '1.5px',
+                    backgroundColor: 'rgba(210, 90, 90, 0.4)',
+                  }}
+                  aria-hidden="true"
+                />
+              )}
+              {/* Horizontal blue lines starting below the header margin */}
+              {isNotebook && (
+                <div 
+                  className="absolute left-0 right-0 bottom-0 pointer-events-none z-0 notebook-lines"
+                  style={{ 
+                    top: '0',
+                  }}
+                  aria-hidden="true"
+                />
+              )}
+              {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} />}
+              <Component />
+            </div>
+          ))}
+        </div>
       </main>
       <FooterSection />
     </>
