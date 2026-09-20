@@ -31,38 +31,38 @@ export interface WorkshopItem {
    Hardcoded defaults (the original design placeholders)
    ────────────────────────────────────────────────────────────── */
 const DEFAULT_ACTIVITIES: WorkshopItem[] = [
-  { id: 'act-1', titleAr: 'الرسم على الأكواب الفخارية', titleEn: 'Cup Painting', price: '10,000', image: '/images/figma/pottery.png', category: 'open_activity', isActive: true, sortOrder: 0 },
-  { id: 'act-2', titleAr: 'الرسم على الحقائب القماشية', titleEn: 'Tote Bag Painting', price: '15,000', image: '/images/figma/tote-bag.png', category: 'open_activity', isActive: true, sortOrder: 1 },
-  { id: 'act-3', titleAr: 'الرسم على المرايا', titleEn: 'Mirror Painting', price: '15,000', image: '/images/figma/mirror.png', category: 'open_activity', isActive: true, sortOrder: 2 },
-  { id: 'act-4', titleAr: 'صناعة الاكسسوارات', titleEn: 'Accessory Making', price: '15,000', image: '/images/figma/pottery.png', category: 'open_activity', isActive: true, sortOrder: 3 },
-  { id: 'act-5', titleAr: 'الرسم على القطع الخشبية', titleEn: 'Wood Painting', price: '10,000', image: '/images/figma/tote-bag.png', category: 'open_activity', isActive: true, sortOrder: 4 },
-  { id: 'act-6', titleAr: 'الرسم على اللوحات', titleEn: 'Canvas Painting', price: '15,000', image: '/images/figma/mirror.png', category: 'open_activity', isActive: true, sortOrder: 5 },
-  { id: 'act-7', titleAr: 'الرسم على الزجاج', titleEn: 'Glass Painting', price: '20,000', image: '/images/figma/pottery.png', category: 'open_activity', isActive: true, sortOrder: 6 },
-  { id: 'act-8', titleAr: 'الرسم و الزراعة', titleEn: 'Painting & Planting', price: '15,000', image: '/images/figma/tote-bag.png', category: 'open_activity', isActive: true, sortOrder: 7 },
+  { id: 'act-1', titleAr: 'الرسم على الأكواب الفخارية', titleEn: 'Cup Painting', price: '10,000', image: '/images/cup.avif', category: 'open_activity', isActive: true, sortOrder: 0 },
+  { id: 'act-2', titleAr: 'الرسم على الحقائب القماشية', titleEn: 'Tote Bag Painting', price: '15,000', image: '/images/tote.avif', category: 'open_activity', isActive: true, sortOrder: 1 },
+  { id: 'act-3', titleAr: 'الرسم على المرايا', titleEn: 'Mirror Painting', price: '15,000', image: '/images/mirror.avif', category: 'open_activity', isActive: true, sortOrder: 2 },
+  { id: 'act-4', titleAr: 'صناعة الاكسسوارات', titleEn: 'Accessory Making', price: '15,000', image: '/images/accessory.avif', category: 'open_activity', isActive: true, sortOrder: 3 },
+  { id: 'act-5', titleAr: 'الرسم على القطع الخشبية', titleEn: 'Wood Painting', price: '10,000', image: '/images/wood.avif', category: 'open_activity', isActive: true, sortOrder: 4 },
+  { id: 'act-6', titleAr: 'الرسم على اللوحات', titleEn: 'Canvas Painting', price: '15,000', image: '/images/canvas.avif', category: 'open_activity', isActive: true, sortOrder: 5 },
+  { id: 'act-7', titleAr: 'الرسم على الزجاج', titleEn: 'Glass Painting', price: '20,000', image: '/images/glass.avif', category: 'open_activity', isActive: true, sortOrder: 6 },
+  { id: 'act-8', titleAr: 'الرسم و الزراعة', titleEn: 'Painting & Planting', price: '15,000', image: '/images/planting.avif', category: 'open_activity', isActive: true, sortOrder: 7 },
 ];
 
 const DEFAULT_WORKSHOPS: WorkshopItem[] = [
-  { id: 'ws-1', titleAr: 'ورشة الفخار', titleEn: 'Pottery Workshop', subtitleAr: 'استكشف مهارات تشكيل الطين وتحويله إلى قطع فنية تنبض بالحياة', subtitleEn: 'Explore clay shaping and turn it into lively art pieces', descAr: 'سواء كنتم مبتدئين أو تمتلكون خبرة سابقة، ستجدون في قسم الخزف فرصة للتعبير عن أنفسكم وابتكار أعمال فنية فريدة تحمل لمستكم الخاصة.', descEn: 'Whether you are a beginner or have prior experience, the pottery section gives you a chance to express yourself and create unique works with your own touch.', image: '/images/figma/pottery.png', category: 'workshop', isActive: true, sortOrder: 0 },
-  { id: 'ws-2', titleAr: 'الطباعة باللينو', titleEn: 'Lino Cut Printing', subtitleAr: 'تعلم فن الطباعة البارزة واستخراج التصاميم المعقدة', subtitleEn: 'Learn relief printing and carve intricate designs', descAr: 'مساحة إبداعية للتعرف على أدوات الحفر وإنشاء طبعات فنية بلمساتك الخاصة، لا تتطلب خبرة مسبقة.', descEn: 'A creative space to explore carving tools and create prints with your own touch — no prior experience needed.', image: '/images/figma/mirror.png', category: 'workshop', isActive: true, sortOrder: 1 },
-  { id: 'ws-3', titleAr: 'تلبيد الصوف بالإبرة', titleEn: 'Needle Felting', subtitleAr: 'شكل الصوف واصنع مجسمات ناعمة ودقيقة', subtitleEn: 'Shape wool into soft, detailed figurines', descAr: 'اكتشف متعة التلبيد بالإبرة، مهارة يدوية مريحة للأعصاب تتيح لك تشكيل الصوف الحر إلى شخصيات وأشكال لطيفة.', descEn: 'Discover the joy of needle felting — a relaxing craft that lets you shape loose wool into cute characters and forms.', image: '/images/figma/tote-bag.png', category: 'workshop', isActive: true, sortOrder: 2 },
+  { id: 'ws-1', titleAr: 'ورشة الفخار', titleEn: 'Pottery Workshop', subtitleAr: 'استكشف مهارات تشكيل الطين وتحويله إلى قطع فنية تنبض بالحياة', subtitleEn: 'Explore clay shaping and turn it into lively art pieces', descAr: 'سواء كنتم مبتدئين أو تمتلكون خبرة سابقة، ستجدون في قسم الخزف فرصة للتعبير عن أنفسكم وابتكار أعمال فنية فريدة تحمل لمستكم الخاصة.', descEn: 'Whether you are a beginner or have prior experience, the pottery section gives you a chance to express yourself and create unique works with your own touch.', image: '/images/pottery.jpg', category: 'workshop', isActive: true, sortOrder: 0 },
+  { id: 'ws-2', titleAr: 'الطباعة باللينو', titleEn: 'Lino Cut Printing', subtitleAr: 'تعلم فن الطباعة البارزة واستخراج التصاميم المعقدة', subtitleEn: 'Learn relief printing and carve intricate designs', descAr: 'مساحة إبداعية للتعرف على أدوات الحفر وإنشاء طبعات فنية بلمساتك الخاصة، لا تتطلب خبرة مسبقة.', descEn: 'A creative space to explore carving tools and create prints with your own touch — no prior experience needed.', image: '/images/lino.jpg', category: 'workshop', isActive: true, sortOrder: 1 },
+  { id: 'ws-3', titleAr: 'تلبيد الصوف بالإبرة', titleEn: 'Needle Felting', subtitleAr: 'شكل الصوف واصنع مجسمات ناعمة ودقيقة', subtitleEn: 'Shape wool into soft, detailed figurines', descAr: 'اكتشف متعة التلبيد بالإبرة، مهارة يدوية مريحة للأعصاب تتيح لك تشكيل الصوف الحر إلى شخصيات وأشكال لطيفة.', descEn: 'Discover the joy of needle felting — a relaxing craft that lets you shape loose wool into cute characters and forms.', image: '/images/felting.jpg', category: 'workshop', isActive: true, sortOrder: 2 },
 ];
 
 const DEFAULT_COURSES: WorkshopItem[] = [
-  { id: 'cr-1', titleAr: 'كورس تعليم الرسم', titleEn: 'Fine Art Fundamentals', sessionsAr: '8 جلسات', sessionsEn: '8 Sessions', image: '/images/figma/pottery.png', pattern: 'blueprint', category: 'course', isActive: true, sortOrder: 0 },
-  { id: 'cr-2', titleAr: 'تقنيات الفخار المتقدمة', titleEn: 'Advanced Pottery Techniques', sessionsAr: '12 جلسة', sessionsEn: '12 Sessions', image: '/images/figma/mirror.png', pattern: 'music', category: 'course', isActive: true, sortOrder: 1 },
-  { id: 'cr-3', titleAr: 'كورس الحياكة', titleEn: 'Textile Design', sessionsAr: '6 جلسات', sessionsEn: '6 Sessions', image: '/images/figma/tote-bag.png', pattern: 'crochet', category: 'course', isActive: true, sortOrder: 2 },
+  { id: 'cr-1', titleAr: 'كورس تعليم الرسم', titleEn: 'Fine Art Fundamentals', sessionsAr: '8 جلسات', sessionsEn: '8 Sessions', image: '/images/sketching.jpg', pattern: 'blueprint', category: 'course', isActive: true, sortOrder: 0 },
+  { id: 'cr-2', titleAr: 'تقنيات الفخار المتقدمة', titleEn: 'Advanced Pottery Techniques', sessionsAr: '12 جلسة', sessionsEn: '12 Sessions', image: '/images/pottery.jpg', pattern: 'music', category: 'course', isActive: true, sortOrder: 1 },
+  { id: 'cr-3', titleAr: 'كورس الحياكة', titleEn: 'Textile Design', sessionsAr: '6 جلسات', sessionsEn: '6 Sessions', image: '/images/knitting.jpg', pattern: 'crochet', category: 'course', isActive: true, sortOrder: 2 },
 ];
 
 const DEFAULT_KIDS: WorkshopItem[] = [
   // 3 Courses
-  { id: 'kid-c1', titleAr: 'الرسم الإبداعي', titleEn: 'Creative Drawing', subtitleAr: '٨ جلسات · شهران · للأعمار ٥–١٢', subtitleEn: '8 sessions · 2 months · Ages 5–12', descAr: 'نبدأ من أساسيات الرسم ووصولاً لتقنيات الألوان المائية والزيتية — بجو مرح وآمن للعيال.', descEn: 'From drawing basics to watercolor and oil techniques in a fun, safe environment.', price: '150,000', image: '/images/figma/pottery.png', category: 'kids_course', pattern: 'blueprint', isActive: true, sortOrder: 0 },
-  { id: 'kid-c2', titleAr: 'السيراميك والطين', titleEn: 'Ceramics & Clay', subtitleAr: '١٢ جلسة · ٣ أشهر · للأعمار ٦–١٤', subtitleEn: '12 sessions · 3 months · Ages 6–14', descAr: 'عالم الطين — من التشكيل للتزجيج والحرق — تجربة حلوة تنمّي إبداع ولدك بطريقة ما تنكتاب.', descEn: 'The world of clay from shaping to glazing.', price: '220,000', image: '/images/figma/mirror.png', category: 'kids_course', pattern: 'featured', isActive: true, sortOrder: 1 },
-  { id: 'kid-c3', titleAr: 'فنون متكاملة', titleEn: 'Integrated Arts', subtitleAr: '١٠ جلسات · شهر ونصف · للأعمار ٤–١٢', subtitleEn: '10 sessions · 1.5 months · Ages 4–12', descAr: 'رسم وطين وحرف يدوية بكورس واحد — للطفل اللي يحب يجرب كل شي وما يشبع!', descEn: 'Drawing, clay and handcrafts in one program.', price: '180,000', image: '/images/figma/tote-bag.png', category: 'kids_course', pattern: 'crochet', isActive: true, sortOrder: 2 },
+  { id: 'kid-c1', titleAr: 'الرسم الإبداعي', titleEn: 'Creative Drawing', subtitleAr: '٨ جلسات · شهران · للأعمار ٥–١٢', subtitleEn: '8 sessions · 2 months · Ages 5–12', descAr: 'نبدأ من أساسيات الرسم ووصولاً لتقنيات الألوان المائية والزيتية — بجو مرح وآمن للعيال.', descEn: 'From drawing basics to watercolor and oil techniques in a fun, safe environment.', price: '150,000', image: '/images/kids_drawing.jpg', category: 'kids_course', pattern: 'blueprint', isActive: true, sortOrder: 0 },
+  { id: 'kid-c2', titleAr: 'السيراميك والطين', titleEn: 'Ceramics & Clay', subtitleAr: '١٢ جلسة · ٣ أشهر · للأعمار ٦–١٤', subtitleEn: '12 sessions · 3 months · Ages 6–14', descAr: 'عالم الطين — من التشكيل للتزجيج والحرق — تجربة حلوة تنمّي إبداع ولدك بطريقة ما تنكتاب.', descEn: 'The world of clay from shaping to glazing.', price: '220,000', image: '/images/kids_clay.jpg', category: 'kids_course', pattern: 'featured', isActive: true, sortOrder: 1 },
+  { id: 'kid-c3', titleAr: 'فنون متكاملة', titleEn: 'Integrated Arts', subtitleAr: '١٠ جلسات · شهر ونصف · للأعمار ٤–١٢', subtitleEn: '10 sessions · 1.5 months · Ages 4–12', descAr: 'رسم وطين وحرف يدوية بكورس واحد — للطفل اللي يحب يجرب كل شي وما يشبع!', descEn: 'Drawing, clay and handcrafts in one program.', price: '180,000', image: '/images/kids_handcraft.webp', category: 'kids_course', pattern: 'crochet', isActive: true, sortOrder: 2 },
   
   // 3 Workshops
-  { id: 'kid-w1', titleAr: 'الرسم الأسبوعي', titleEn: 'Weekly Drawing', subtitleAr: 'السبت والأحد · ٥–١٢ سنة', subtitleEn: 'Sat & Sun · 5-12 yrs', descAr: 'جلسات مرنة بدون التزام — جيب ولدك واستمتع.', descEn: 'Flexible sessions with no prior commitment.', price: '25,000', image: '/images/figma/pottery.png', category: 'kids_workshop', isActive: true, sortOrder: 3 },
-  { id: 'kid-w2', titleAr: 'الطين الأسبوعي', titleEn: 'Weekly Clay', subtitleAr: 'الثلاثاء والخميس · ٦–١٤ سنة', subtitleEn: 'Tue & Thu · 6-14 yrs', descAr: 'جلسات لتشكيل الطين واللعب بحرية في بيئة آمنة.', descEn: 'Clay shaping and playing sessions.', price: '30,000', image: '/images/figma/mirror.png', category: 'kids_workshop', isActive: true, sortOrder: 4 },
-  { id: 'kid-w3', titleAr: 'الفن اليدوي', titleEn: 'Handcraft Session', subtitleAr: 'الأحد والأربعاء · ٤–١٠ سنوات', subtitleEn: 'Sun & Wed · 4-10 yrs', descAr: 'جلسات حرف يدوية ممتعة للأطفال تنمي قدراتهم الحركية.', descEn: 'Fun handcraft sessions for kids.', price: '20,000', image: '/images/figma/tote-bag.png', category: 'kids_workshop', isActive: true, sortOrder: 5 },
+  { id: 'kid-w1', titleAr: 'الرسم الأسبوعي', titleEn: 'Weekly Drawing', subtitleAr: 'السبت والأحد · ٥–١٢ سنة', subtitleEn: 'Sat & Sun · 5-12 yrs', descAr: 'جلسات مرنة بدون التزام — جيب ولدك واستمتع.', descEn: 'Flexible sessions with no prior commitment.', price: '25,000', image: '/images/kids_painting.jpg', category: 'kids_workshop', isActive: true, sortOrder: 3 },
+  { id: 'kid-w2', titleAr: 'الطين الأسبوعي', titleEn: 'Weekly Clay', subtitleAr: 'الثلاثاء والخميس · ٦–١٤ سنة', subtitleEn: 'Tue & Thu · 6-14 yrs', descAr: 'جلسات لتشكيل الطين واللعب بحرية في بيئة آمنة.', descEn: 'Clay shaping and playing sessions.', price: '30,000', image: '/images/kids_pottery.jpg', category: 'kids_workshop', isActive: true, sortOrder: 4 },
+  { id: 'kid-w3', titleAr: 'الفن اليدوي', titleEn: 'Handcraft Session', subtitleAr: 'الأحد والأربعاء · ٤–١٠ سنوات', subtitleEn: 'Sun & Wed · 4-10 yrs', descAr: 'جلسات حرف يدوية ممتعة للأطفال تنمي قدراتهم الحركية.', descEn: 'Fun handcraft sessions for kids.', price: '20,000', image: '/images/kids_handcraft.webp', category: 'kids_workshop', isActive: true, sortOrder: 5 },
 ];
 
 const ALL_DEFAULTS: WorkshopItem[] = [
@@ -72,7 +72,7 @@ const ALL_DEFAULTS: WorkshopItem[] = [
   ...DEFAULT_KIDS,
 ];
 
-const STORAGE_KEY = 'warshat_workshops_v3';
+const STORAGE_KEY = 'warshat_workshops_v4';
 
 /* ──────────────────────────────────────────────────────────────
    Context
