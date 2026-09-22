@@ -10,7 +10,7 @@
   --fg-text:         #45483a;  /* body text, nav links */
   --fg-border:       #c5c8b6;  /* borders */
   --fg-bg-main:      #fbfaef;  /* main background */
-  --fg-bg-training:  #f0ebd8;  /* training section bg */
+  --fg-bg-training:  #E8D9B5;  /* training section bg — wood texture base */
   --fg-bg-kids:      #fce4ec;  /* kids section bg (pink) */
   --fg-bg-footer:    #e9e9de;  /* footer bg */
   --fg-tape:         #e3e3d8;  /* decorative tape */
@@ -71,6 +71,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Offset anchor links so sticky header doesn't cover them */
   -webkit-text-size-adjust: 100%;
   background-color: var(--bg);
   /* overflow-x: clip (NOT hidden!) prevents horizontal scroll without

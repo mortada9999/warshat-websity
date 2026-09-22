@@ -3,6 +3,20 @@
    كبسولة معدنية + ورقة إيصال تخرج بالـ scroll
    ═══════════════════════════════════════════════ */
 
+/* Felt Textured Background (Courses Section) */
+.textureSection {
+  background-color: #2a3a1f; /* Dark olive green base */
+  background-image: url('/images/felt.png');
+  background-repeat: repeat;
+  /* Felt texture blends naturally with the background color */
+}
+
+/* Ensure all section content stays above the background */
+.denimSection > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* ── Section ── */
 .coursesSection {
   position: relative;
@@ -51,12 +65,12 @@
 .headingLabel {
   font-family: 'IBM Plex Sans', sans-serif;
   font-size: 0.85rem;
-  color: #374A00;
+  color: #fdfaf5; /* Changed to light color for visibility on dark denim */
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin-bottom: 1.25rem;
   font-weight: 600;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 /* Torn paper heading */
@@ -142,13 +156,24 @@
   width: 100%;
   height: 90px;
   border-radius: 45px;
-  background: linear-gradient(180deg, #FFFFFF 0%, #E6E6E6 15%, #D0D0D0 50%, #B8B8B8 85%, #9E9E9E 100%);
+  /* Smooth matte metal with a subtle ambient bounce light for realism */
+  background: linear-gradient(
+    180deg,
+    #e3e7ec 0%,
+    #ffffff 12%,
+    #eaf0f5 35%,
+    #c4cbcf 60%,
+    #a8b0b5 75%,
+    #dce1e5 82%,
+    #9ba4aa 100%
+  );
   box-shadow:
-    0 8px 25px rgba(0,0,0,0.12),
-    0 2px 6px rgba(0,0,0,0.06),
-    inset 0 4px 6px rgba(255,255,255,0.95),
-    inset 0 -3px 6px rgba(0,0,0,0.25);
-  border: 1px solid rgba(255,255,255,0.6);
+    0 15px 35px rgba(0,0,0,0.18),
+    0 5px 12px rgba(0,0,0,0.12),
+    inset 0 3px 5px rgba(255,255,255,0.9), /* Sharper top highlight */
+    inset 0 -3px 8px rgba(0,0,0,0.25); /* Deeper bottom shadow */
+  border: 1px solid rgba(255,255,255,0.5);
+  border-bottom: 1px solid #8e959c;
 }
 
 /* The dark slit opening in the center of the capsule */
@@ -159,11 +184,11 @@
   right: 6%;
   height: 18px;
   border-radius: 9px;
-  background: #151515;
+  background: #111111;
   box-shadow:
-    inset 0 4px 8px rgba(0,0,0,0.95),
-    inset 0 1px 3px rgba(0,0,0,1),
-    0 1px 1px rgba(255,255,255,0.7); /* Bright bottom highlight on the hole */
+    inset 0 4px 8px rgba(0,0,0,0.8),
+    inset 0 1px 3px rgba(0,0,0,0.9),
+    0 1px 1px rgba(255,255,255,0.9); /* Subtle bottom highlight */
 }
 
 /* Round bolts/screws on left & right of capsule */
@@ -171,15 +196,21 @@
   position: absolute;
   top: 45px; /* Center of the 90px capsule */
   transform: translateY(-50%);
-  width: 14px;
-  height: 14px;
+  width: 15px; 
+  height: 15px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #F5F5F5 0%, #D0D0D0 50%, #A0A0A0 100%);
+  /* Smooth matte screw */
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #d5dadf 50%,
+    #a8b0b8 100%
+  );
   box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.9),
-    inset 0 -1px 2px rgba(0,0,0,0.3),
-    0 2px 4px rgba(0,0,0,0.25),
-    0 -1px 1px rgba(255,255,255,0.6);
+    inset 0 1px 2px rgba(255,255,255,1),
+    inset 0 -1px 2px rgba(0,0,0,0.2),
+    0 2px 4px rgba(0,0,0,0.15),
+    0 -1px 1px rgba(255,255,255,0.8);
 }
 
 .bolt:first-child { left: 24px; }
@@ -217,20 +248,38 @@
     0 10px 35px rgba(0,0,0,0.1), 
     0 2px 8px rgba(0,0,0,0.06);
 
-  /* User requested the bottom to have the same perforations as the horizontal wide ticket 
-     So we add perforations at the BOTTOM edge like teeth */
+  /* Bulletproof edge: tile boundaries pushed 2px OUTSIDE the element to hide WebKit edge bleeding */
   --tooth-r: 8px;
+  --tooth-w: 22px;
+  --tooth-h: 12px;
+  --mask-padding: 2px;
   padding-bottom: 2.5rem; /* extra space for the cut edge */
   
-  -webkit-mask-image: radial-gradient(circle at 50% 100%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
-  -webkit-mask-size: 22px 100%;
-  -webkit-mask-position: bottom left;
-  -webkit-mask-repeat: repeat-x;
-  
-  mask-image: radial-gradient(circle at 50% 100%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
-  mask-size: 22px 100%;
-  mask-position: bottom left;
-  mask-repeat: repeat-x;
+  -webkit-mask-image: 
+    linear-gradient(black, black),
+    radial-gradient(circle at 50% calc(100% - 1px), transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  -webkit-mask-size: 
+    100% calc(100% - var(--tooth-h) + 2px), /* Overlap by 2px */
+    var(--tooth-w) calc(var(--tooth-h) + var(--mask-padding));
+  -webkit-mask-position: 
+    top left,
+    left calc(100% + var(--mask-padding));
+  -webkit-mask-repeat: 
+    no-repeat,
+    repeat-x;
+    
+  mask-image: 
+    linear-gradient(black, black),
+    radial-gradient(circle at 50% calc(100% - 1px), transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  mask-size: 
+    100% calc(100% - var(--tooth-h) + 2px),
+    var(--tooth-w) calc(var(--tooth-h) + var(--mask-padding));
+  mask-position: 
+    top left,
+    left calc(100% + var(--mask-padding));
+  mask-repeat: 
+    no-repeat,
+    repeat-x;
 }
 
 /* ── Course title inside ticket ── */
@@ -262,7 +311,7 @@
   margin: 1.25rem 0;
   border-radius: 8px;
   overflow: hidden;
-  background: #f0ebd8; /* --fg-bg-training */
+  background: #E8D9B5; /* --fg-bg-training */
   border: 1px solid #c5c8b6; /* --fg-border */
 }
 
@@ -281,7 +330,7 @@
   width: calc(100% + 4rem);
   margin: 0 -2rem 1.25rem;
   padding: 0.55rem 2rem;
-  background: #f0ebd8; /* --fg-bg-training */
+  background: #E8D9B5; /* --fg-bg-training */
   color: #374a00; /* --fg-olive-dark */
   border-top: 1px solid #c5c8b6;
   border-bottom: 1px solid #c5c8b6;
@@ -412,21 +461,45 @@
   box-shadow: 0 10px 40px rgba(0,0,0,0.08);
   text-align: center;
   
-  /* Left & Right Perforated Edges */
+  /* Bulletproof edge: tile boundaries pushed 2px OUTSIDE the element to hide WebKit edge bleeding */
   --tooth-r: 8px;
+  --tooth-h: 22px;
+  --tooth-w: 12px;
+  --mask-padding: 2px;
+  
   -webkit-mask-image: 
-    radial-gradient(circle at 0px 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px)), 
-    radial-gradient(circle at 100% 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
-  -webkit-mask-size: 51% 22px;
-  -webkit-mask-position: left center, right center;
-  -webkit-mask-repeat: repeat-y, repeat-y;
+    linear-gradient(black, black),
+    radial-gradient(circle at 1px 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px)), 
+    radial-gradient(circle at calc(100% - 1px) 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  -webkit-mask-size: 
+    calc(100% - var(--tooth-w) * 2 + 4px) 100%,
+    calc(var(--tooth-w) + var(--mask-padding)) var(--tooth-h),
+    calc(var(--tooth-w) + var(--mask-padding)) var(--tooth-h);
+  -webkit-mask-position: 
+    center center,
+    calc(0% - var(--mask-padding)) top, 
+    calc(100% + var(--mask-padding)) top;
+  -webkit-mask-repeat: 
+    no-repeat,
+    repeat-y, 
+    repeat-y;
 
   mask-image: 
-    radial-gradient(circle at 0px 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px)), 
-    radial-gradient(circle at 100% 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
-  mask-size: 51% 22px;
-  mask-position: left center, right center;
-  mask-repeat: repeat-y, repeat-y;
+    linear-gradient(black, black),
+    radial-gradient(circle at 1px 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px)), 
+    radial-gradient(circle at calc(100% - 1px) 50%, transparent var(--tooth-r), black calc(var(--tooth-r) + 0.5px));
+  mask-size: 
+    calc(100% - var(--tooth-w) * 2 + 4px) 100%,
+    calc(var(--tooth-w) + var(--mask-padding)) var(--tooth-h),
+    calc(var(--tooth-w) + var(--mask-padding)) var(--tooth-h);
+  mask-position: 
+    center center,
+    calc(0% - var(--mask-padding)) top, 
+    calc(100% + var(--mask-padding)) top;
+  mask-repeat: 
+    no-repeat,
+    repeat-y, 
+    repeat-y;
 }
 
 .whatsappContent {

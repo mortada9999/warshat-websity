@@ -10,6 +10,7 @@ export interface SessionEntry {
   date: string;
   type: 'session' | 'reward5' | 'reward10';
   note?: string;
+  branch?: 'Zayouna' | 'Al-Yarmouk';
 }
 
 export interface LoyaltyMember {
@@ -28,6 +29,11 @@ export interface LoyaltyMember {
    Helpers
    ────────────────────────────────────────────────────────────── */
 
+export const LOYALTY_CONFIG = {
+  discountThreshold: 5,
+  freeThreshold: 10,
+};
+
 const STORAGE_KEY = 'warshat_loyalty_members';
 
 /** Generate a short unique member code like WF-7X3K */
@@ -42,7 +48,7 @@ function generateCode(): string {
 
 /** Format current date in Arabic-friendly format */
 function nowDate(): string {
-  return new Date().toLocaleDateString('ar-IQ', {
+  return new Date().toLocaleDateString('ar-EG', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

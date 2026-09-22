@@ -94,6 +94,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-shrink: 0;
 }
 
 /* Language Toggle (Figma: pill shape, bg #e3e3d8@0.30, r:9999) */
@@ -179,42 +180,98 @@
   color: var(--fg-olive-dark);
 }
 
+.desktopProfileLabel {
+  display: inline;
+}
+.mobileProfileLabel {
+  display: none;
+}
+
 /* ─── Mobile ──────────────────────────────────────────────────── */
 @media (max-width: 768px) {
+  .header {
+    height: auto;
+    padding-bottom: 8px;
+  }
+  
   .inner {
-    padding: 0 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    padding: 8px 12px;
     gap: 8px;
   }
-
-  .desktopNav {
-    display: flex;
-    gap: 10px;
+  
+  .logo {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
   }
-
-  .navLink {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0;
-    white-space: nowrap;
-  }
-
-  .loyaltyLink {
-    font-size: 11px;
-    padding: 4px 8px;
-  }
-
-  .langBtn {
-    font-size: 10px;
-    padding: 4px 10px;
-  }
-
+  
   .controls {
-    gap: 6px;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    gap: 8px;
+    flex-shrink: 0;
   }
 
   .langSwitch {
-    padding: 2px;
+    flex-direction: row;
+    padding: 4px;
     gap: 0;
+    border-radius: 9999px;
+  }
+  
+  .langBtn {
+    font-size: 11px;
+    padding: 4px 10px;
+    width: auto;
+  }
+
+  .desktopNav {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    width: 100%;
+    overflow-x: visible;
+    padding: 0;
+    /* Reset previous flex/mask overrides */
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .navLink {
+    font-size: clamp(11px, 3.3vw, 14px);
+    white-space: normal;
+    text-align: center;
+    min-width: 0;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loyaltyLink {
+    font-size: clamp(11px, 3.3vw, 14px);
+    padding: 4px;
+    min-width: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: normal;
+    line-height: 1.2;
+  }
+
+  .desktopProfileLabel {
+    display: none;
+  }
+  
+  .mobileProfileLabel {
+    display: inline;
   }
 
   .floatingHamburger {

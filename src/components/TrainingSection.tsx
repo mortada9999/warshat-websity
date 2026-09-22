@@ -22,7 +22,7 @@ export default function TrainingSection() {
   return (
     <section 
       id="training" 
-      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 bg-[#F6F0E2] z-20"
+      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 z-20"
       aria-label={t('الورش التدريبية', 'Training workshops')}
     >
       <HiddenWorkshopsMenu category="workshop" />
@@ -47,6 +47,20 @@ export default function TrainingSection() {
             <feDistantLight azimuth="45" elevation="60" />
           </feDiffuseLighting>
           <feBlend mode="multiply" in="SourceGraphic" />
+        </filter>
+      </svg>
+
+      {/* ── Wood Grain Texture SVG Filter ── */}
+      <svg aria-hidden="true" style={{ position: 'absolute', top: 0, left: 0, width: 0, height: 0, zIndex: -1 }}>
+        <filter id="filter_sandy_texture" x="0%" y="0%" width="100%" height="100%">
+          {/* Stretched noise for wood grain direction */}
+          <feTurbulence type="fractalNoise" baseFrequency="0.02 0.4" numOctaves="5" seed="7" result="wood_grain" />
+          {/* Warm side-lighting to reveal grain depth */}
+          <feDiffuseLighting in="wood_grain" lightingColor="#F2E8CE" surfaceScale="1.2" result="lit_wood">
+            <feDistantLight azimuth="180" elevation="45" />
+          </feDiffuseLighting>
+          {/* Blend with source */}
+          <feBlend mode="multiply" in="SourceGraphic" in2="lit_wood" />
         </filter>
       </svg>
 
@@ -91,7 +105,7 @@ export default function TrainingSection() {
         )}
 
         {/* Section Footer - Booking CTA */}
-        <div className="flex flex-col items-center gap-4 mt-8 md:mt-12 pt-6 md:pt-8 w-full">
+        <div className="flex flex-col items-center gap-4 mt-8 md:mt-12 pt-6 md:pt-8 pb-8 md:pb-0 w-full">
           <div className="w-16 h-[2px] bg-[#A25F00]/30" />
           <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
             {t('احجز مكانك في الورشة القادمة', 'Book your spot in the next workshop')}

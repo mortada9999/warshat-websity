@@ -7,8 +7,8 @@ import { useLanguage } from './LanguageProvider';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
-  { href: '/#entertainment', ar: 'ترفيه', en: 'Entertainment' },
-  { href: '/#training',      ar: 'ورش تدريبية', en: 'Training' },
+  { href: '/#entertainment', ar: 'ترفيه', en: 'Events' },
+  { href: '/#training',      ar: 'ورش تدريبية', en: 'Workshops' },
   { href: '/#courses',       ar: 'كورسات', en: 'Courses' },
   { href: '/kids',           ar: 'أطفال', en: 'Kids' },
 ];
@@ -59,7 +59,8 @@ export default function Header() {
               </Link>
             ))}
             <Link href="/profile" className={styles.loyaltyLink}>
-              {t('الملف الشخصي', 'My Profile')}
+              <span className={styles.desktopProfileLabel}>{t('الملف الشخصي', 'Profile')}</span>
+              <span className={styles.mobileProfileLabel}>{t('حسابي', 'Profile')}</span>
             </Link>
           </nav>
 

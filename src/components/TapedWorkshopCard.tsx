@@ -112,15 +112,14 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
         <article
           ref={cardRef}
           className={`relative ${styles.workshopCard} ${styles.tornpaper} ${index % 2 === 0 ? styles.cardAlt : styles.cardWarm}`}
+          style={{ '--card-mask': `url(#mask_tornpaper_${index})` } as React.CSSProperties}
         >
-        {/* Mask SVG — only first card defines it, all cards reference it via CSS */}
-        {index === 0 && (
-          <svg className={styles.tornpaperMaskSvg}>
-            <mask id="mask_tornpaper">
-              <use href="#symbol_tornpaper" />
-            </mask>
-          </svg>
-        )}
+        {/* Mask SVG — each card gets its own mask so torn-paper edges work for all */}
+        <svg className={styles.tornpaperMaskSvg}>
+          <mask id={`mask_tornpaper_${index}`}>
+            <use href="#symbol_tornpaper" />
+          </mask>
+        </svg>
 
         {/* Image Container */}
         <div className={styles.workshopImageWrap}>

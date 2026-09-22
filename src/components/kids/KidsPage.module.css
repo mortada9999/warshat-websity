@@ -527,3 +527,27 @@
   text-decoration: none;
 }
 .footerLink:hover { color: #F4EFE4; }
+
+/* ── Mobile Responsive Overrides ────────────────────────────────────── */
+@media (max-width: 600px) {
+  .statsStrip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .statItem {
+    padding: 1.25rem 1rem;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .statItem:last-child {
+    border-right: none;
+  }
+  .statItem:nth-child(odd) {
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .statItem:nth-child(3),
+  .statItem:nth-child(4) {
+    border-bottom: none;
+  }
+}

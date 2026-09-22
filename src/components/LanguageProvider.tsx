@@ -23,8 +23,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem('lang') as Lang | null;
     if (saved === 'ar' || saved === 'en') {
-      // الزائر سبق واختار لغة — احترم اختياره
       setLangState(saved);
+      document.documentElement.lang = saved;
+      document.documentElement.dir = saved === 'ar' ? 'rtl' : 'ltr';
+      if (saved === 'en') document.body.classList.add('ltr');
+      else document.body.classList.remove('ltr');
     } else {
       // أول زيارة — اكتشف لغة الجهاز
       const deviceLang = navigator.language || navigator.languages?.[0] || 'ar';

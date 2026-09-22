@@ -582,28 +582,11 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                 </div>
               </div>
 
-              {/* ── Perforation ── */}
-              <div className={styles.perforation} aria-hidden="true">
-                <div className={styles.notchRight} />
-                <div className={styles.dots}>
-                  {Array.from({ length: 20 }).map((_, i) => (
-                    <div key={i} className={styles.dot} />
-                  ))}
-                </div>
-                <div className={styles.notchLeft} />
-              </div>
-
-              {/* ── Bottom stub ── */}
-              <div className={styles.ticketBottom}>
-                <div className={styles.qrWrap}>
-                  {qrSrc && (
-                    <img src={qrSrc} alt="QR Code" className={styles.qrImg} width={56} height={56} />
-                  )}
-                </div>
-                <div className={styles.stubInfo}>
-                  <p className={styles.stubText}>امسح للتحقق من عضويتك</p>
-                  <p className={styles.stubCode}>{member.code}</p>
-                </div>
+              {/* ── Bottom Edge (Cutouts) ── */}
+              <div className={styles.bottomEdge} aria-hidden="true">
+                <div className={styles.bottomNotchRight} />
+                <div className={styles.bottomDots} />
+                <div className={styles.bottomNotchLeft} />
               </div>
             </div>
           </div>

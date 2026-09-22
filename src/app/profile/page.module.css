@@ -162,75 +162,126 @@
   padding: 2rem 0;
 }
 
-.activityList {
-  list-style: none;
+.ticketList {
   display: flex;
   flex-direction: column;
+  gap: 18px;
+  width: 100%;
 }
 
-.activityItem {
+.ticketWrap {
+  transform: rotate(var(--r, 0deg));
+  filter: drop-shadow(0 2px 3px rgba(60,50,30,.28));
+  transition: transform 0.2s ease;
+}
+
+.ticket {
+  --split: 85px;
+  --nr: 9px;
+  display: flex;
+  min-height: 112px;
+  border: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #fdfbf0;
+  background-image:
+    radial-gradient(ellipse at 25% 30%, rgba(150,120,70,.09), transparent 55%),
+    url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .25 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  -webkit-mask:
+    radial-gradient(circle var(--nr) at calc(100% - var(--split)) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--nr) at calc(100% - var(--split)) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+  mask:
+    radial-gradient(circle var(--nr) at calc(100% - var(--split)) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--nr) at calc(100% - var(--split)) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+}
+
+[dir="ltr"] .ticket {
+  -webkit-mask:
+    radial-gradient(circle var(--nr) at var(--split) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--nr) at var(--split) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+  mask:
+    radial-gradient(circle var(--nr) at var(--split) 0, #0000 98%, #000) top / 100% 51% no-repeat,
+    radial-gradient(circle var(--nr) at var(--split) 100%, #0000 98%, #000) bottom / 100% 51% no-repeat;
+}
+
+.neck {
+  width: 84px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(61,74,10,.09);
+}
+
+.neckNum {
+  font-family: var(--font-heading);
+  font-size: 40px;
+  line-height: 1;
+  color: #3d4a0a;
+}
+
+.neckMonth {
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9a5b1f;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid var(--border);
+  gap: 12px;
+  padding: 14px 16px;
+  border-inline-start: 2px dashed #d3c8aa;
 }
 
-.activityLeft {
+.title {
+  font-family: var(--font-heading);
+  font-size: 21px;
+  line-height: 1.3;
+  color: #3d4a0a;
+}
+
+.meta {
+  font-size: 12.5px;
+  color: #6b6a52;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 4px;
 }
 
-.activityIcon {
-  font-size: 1.1rem;
-  flex-shrink: 0;
+.seal {
+  display: inline-block;
+  margin-top: 8px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: #9a5b1f;
+  border: 2px solid #9a5b1f;
+  border-radius: 6px;
+  padding: 0 9px;
+  transform: rotate(-3deg);
+  opacity: .92;
+  background: none;
 }
 
-.activityInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
+.more {
+  display: block;
+  margin: 16px auto 0;
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 2px solid #3d4a0a;
+  background: transparent;
+  color: #3d4a0a;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-.activityLabel {
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  color: var(--text);
-}
 
-.activityDate {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  color: var(--muted);
-}
-
-.activityBadge {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  font-weight: 600;
-  padding: 0.15rem 0.5rem;
-  border-radius: 9999px;
-  white-space: nowrap;
-}
-
-.badgeSession {
-  background: rgba(74, 82, 64, 0.08);
-  color: var(--olive);
-  border: 1px solid rgba(74, 82, 64, 0.15);
-}
-
-.badgeReward5 {
-  background: rgba(162, 95, 0, 0.08);
-  color: #a25f00;
-  border: 1px solid rgba(162, 95, 0, 0.2);
-}
-
-.badgeReward10 {
-  background: rgba(192, 138, 45, 0.1);
-  color: #C08A2D;
-  border: 1px solid rgba(192, 138, 45, 0.25);
-}
 
 /* ── How it works ────────────────────────────────────────────────────── */
 .howSection {

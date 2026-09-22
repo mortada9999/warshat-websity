@@ -12,6 +12,8 @@ import CoursesBannerSection from '@/components/CoursesBannerSection';
 import KidsBannerSection from '@/components/KidsBannerSection';
 import FooterSection from '@/components/FooterSection';
 import TornEdge from '@/components/TornEdge';
+import trainingStyles from '@/components/TrainingSection.module.css';
+import coursesStyles from '@/components/CoursesBannerSection.module.css';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -19,11 +21,11 @@ if (typeof window !== 'undefined') {
 }
 
 const SECTIONS = [
-  { Component: HeroSection,         bg: '#F6F0E2', torn: false, isNotebook: false },
-  { Component: RecreationalSection, bg: '#E8F3E8', torn: true,  isNotebook: false },
-  { Component: TrainingSection,     bg: '#F6F0E2', torn: true,  isNotebook: false },
-  { Component: CoursesBannerSection,bg: '#d4f0ff', torn: true,  isNotebook: false },
-  { Component: KidsBannerSection,   bg: '#FDFBF7', torn: true,  isNotebook: true },
+  { Component: HeroSection,         bg: '#F6F0E2', torn: false, isNotebook: false, wrapperClass: '' },
+  { Component: RecreationalSection, bg: '#E8F3E8', torn: true,  isNotebook: false, wrapperClass: '' },
+  { Component: TrainingSection,     bg: '#E8D9B5', torn: true,  isNotebook: false, wrapperClass: trainingStyles.sandySection },
+  { Component: CoursesBannerSection,bg: '#2a3a1f', torn: true,  isNotebook: false, wrapperClass: coursesStyles.textureSection },
+  { Component: KidsBannerSection,   bg: '#FDFBF7', torn: true,  isNotebook: true,  wrapperClass: '' },
 ];
 
 export default function HomePage() {
@@ -52,14 +54,12 @@ export default function HomePage() {
     <>
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div className="w-full overflow-hidden">
-          {SECTIONS.map(({ Component, bg, torn, isNotebook }, i) => (
+          {SECTIONS.map(({ Component, bg, torn, isNotebook, wrapperClass }, i) => (
             <div
               key={i}
-              className="stackable-section relative w-full"
+              className={`stackable-section relative w-full ${wrapperClass || ''}`}
               style={{ 
-                backgroundColor: bg,
-                // Background image is now handled by a separate absolute div to create a header margin
-
+                backgroundColor: wrapperClass ? undefined : bg,
                 zIndex: (i + 1) * 10,
                 boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
                 minHeight: '100svh',
@@ -91,7 +91,7 @@ export default function HomePage() {
                   aria-hidden="true"
                 />
               )}
-              {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} />}
+              {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} textureClass={wrapperClass} />}
               <Component />
             </div>
           ))}

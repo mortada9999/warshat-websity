@@ -1,12 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/LanguageProvider';
 import { useAdmin } from '@/components/AdminProvider';
 import { useWorkshopStore } from '@/lib/workshopStore';
 import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from '@/components/AdminOverlay';
 import AnimatedUnderline from '@/components/AnimatedUnderline';
+import TornEdge from '@/components/TornEdge';
 import styles from './KidsPage.module.css';
 
 
@@ -14,6 +18,11 @@ import styles from './KidsPage.module.css';
 /* ════════════════════════════════════════════════════════════
    PAGE
 ════════════════════════════════════════════════════════════ */
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  ScrollTrigger.config({ ignoreMobileResize: true });
+}
+
 export default function KidsPage() {
   const { t } = useLanguage();
   const { isAdmin } = useAdmin();
@@ -21,9 +30,29 @@ export default function KidsPage() {
   const kidsCourses = getByCategory('kids_course', false);
   const kidsWorkshops = getByCategory('kids_workshop', false);
 
-  return (
-    <main dir="rtl">
+  const containerRef = useRef<HTMLElement>(null);
 
+  useGSAP(() => {
+    const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
+    sections.forEach((section, index) => {
+      if (index === sections.length - 1) return;
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'bottom bottom',
+        end: 'bottom top',
+        pin: true,
+        pinSpacing: false,
+        invalidateOnRefresh: true,
+      });
+    });
+    ScrollTrigger.refresh();
+  }, { scope: containerRef });
+
+  return (
+    <main dir="rtl" ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <div className="w-full overflow-hidden">
+
+      <div className="stackable-section relative w-full" style={{ backgroundColor: '#F6F0E2', zIndex: 10, minHeight: '100svh' }}>
       {/* ══ HERO ═════════════════════════════════════════════ */}
       <section className={styles.hero}>
         <p className={styles.heroLabel}>
@@ -40,12 +69,7 @@ export default function KidsPage() {
           <AnimatedUnderline variant={2} strokeColor="#374A00" className="mt-2 translate-y-1" />
         </div>
 
-        <p className={styles.heroSub}>
-          {t(
-            'مكان آمن وممتع يكتشف فيه طفلك موهبته الفنية — مع مدربين متخصصين.',
-            'A safe and fun place where your child discovers their artistic talent with expert instructors.',
-          )}
-        </p>
+
 
         <div className={styles.heroBtns}>
           <a href="#workshops" className={styles.btnDark}>
@@ -72,8 +96,8 @@ export default function KidsPage() {
         ))}
       </div>
 
-      {/* ══ WORKSHOPS ═════════════════════════════════════════ */}
-      <section id="workshops" className={styles.sectionWhite}>
+      {/* ══ WORKSHOPS (Connected normally below Stats) ═════════════════════════════════════════ */}
+      <section id="workshops" className={styles.sectionWhite} style={{ paddingBottom: 'calc(4rem + 60svh)' }}>
         <div className={styles.sectionInner}>
           <p className={styles.sectionLabel}>
             {t('الورش الأسبوعية', 'WEEKLY WORKSHOPS')}
@@ -152,8 +176,12 @@ export default function KidsPage() {
           )}
         </div>
       </section>
+      </div>
+      </div>
 
-      {/* ══ COURSES ═════════════════════════════════════════════ */}
+      {/* ══ SECTION 2: COURSES ═════════════════════════════════════════════ */}
+      <div className="stackable-section relative w-full" style={{ backgroundColor: '#F6F0E2', zIndex: 20, minHeight: '100svh', paddingBottom: '0' }}>
+        <TornEdge color="#F6F0E2" seed={4} isNotebook={false} />
       <section id="courses" className={styles.section}>
         <div className={styles.sectionInner}>
 
@@ -254,6 +282,8 @@ export default function KidsPage() {
       </section>
 
 
+
+      </div>
 
       {/* ══ FOOTER ═══════════════════════════════════════════ */}
       <footer className={styles.footer}>
