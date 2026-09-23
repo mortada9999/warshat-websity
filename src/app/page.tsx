@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -30,8 +30,21 @@ const SECTIONS = [
 
 export default function HomePage() {
   const containerRef = useRef<HTMLElement>(null);
+  // Client-only: starts false (matches server HTML), flips true on touch devices.
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0);
+  }, []);
 
   useGSAP(() => {
+    // Stacked pinning is desktop-only. On touch devices the fixed pinned
+    // sections conflict with pinch-to-zoom (visual vs layout viewport) and
+    // break the layout, so we skip pinning and scroll natively on touch.
+    const touch = typeof window !== 'undefined' &&
+      ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    if (touch) return;
+
     const sections = gsap.utils.toArray('.stackable-section') as HTMLElement[];
     
     sections.forEach((section, index) => {
@@ -63,7 +76,7 @@ export default function HomePage() {
                 zIndex: (i + 1) * 10,
                 boxShadow: i > 0 && !torn ? '0 -10px 30px rgba(0,0,0,0.05)' : 'none',
                 minHeight: '100svh',
-                paddingBottom: i === SECTIONS.length - 1 ? '0' : '60svh',
+                paddingBottom: i === SECTIONS.length - 1 ? '0' : (isTouch ? '0' : '60svh'),
               }}
             >
               {/* Single continuous red margin line for notebook sections.

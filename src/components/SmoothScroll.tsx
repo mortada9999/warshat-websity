@@ -36,8 +36,20 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
         window.addEventListener('load', onLoad, { once: true });
       }
 
+      // Pinch-to-zoom fires resize/scroll on window.visualViewport (not window),
+      // so re-measure ScrollTrigger once the zoom gesture settles.
+      let vvTimer: ReturnType<typeof setTimeout>;
+      const onViewportChange = () => {
+        clearTimeout(vvTimer);
+        vvTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+      };
+      window.visualViewport?.addEventListener('resize', onViewportChange);
+      window.visualViewport?.addEventListener('scroll', onViewportChange);
+
       return () => {
         window.removeEventListener('load', onLoad);
+        window.visualViewport?.removeEventListener('resize', onViewportChange);
+        window.visualViewport?.removeEventListener('scroll', onViewportChange);
       };
     }
 
