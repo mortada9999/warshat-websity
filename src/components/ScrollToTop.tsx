@@ -34,7 +34,7 @@ export default function ScrollToTop() {
 
   return (
     <button
-      className={`${styles.scrollToTopBtn} ${styles.glossyBtn} ${isVisible ? styles.visible : ''}`}
+      className={`${styles.scrollToTopBtn} ${isVisible ? styles.visible : ''}`}
       onClick={scrollToTop}
       aria-label="العودة للأعلى"
       title="العودة للأعلى"
