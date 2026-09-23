@@ -7,7 +7,7 @@ import { useLanguage } from './LanguageProvider';
 import styles from './Header.module.css';
 
 const NAV_LINKS = [
-  { href: '/#entertainment', ar: 'ترفيه', en: 'Events' },
+  { href: '/#recreational',  ar: 'ترفيه', en: 'Events' },
   { href: '/#training',      ar: 'ورش تدريبية', en: 'Workshops' },
   { href: '/#courses',       ar: 'كورسات', en: 'Courses' },
   { href: '/kids',           ar: 'أطفال', en: 'Kids' },
