@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useSoundContext } from '@/lib/SoundContext';
+import styles from './ScrollToTop.module.css';
 
 export default function SoundMuteButton() {
   const { isMuted, toggleMute } = useSoundContext();
@@ -9,7 +10,7 @@ export default function SoundMuteButton() {
   return (
     <button
       onClick={toggleMute}
-      className="fixed bottom-6 left-6 z-[100] flex items-center justify-center w-12 h-12 rounded-full bg-[#4A5830] text-[#F6F6F4] shadow-lg hover:bg-[#34401F] hover:scale-110 transition-all duration-300"
+      className={`fixed bottom-6 left-6 z-[100] w-12 h-12 ${styles.glossyBtn}`}
       aria-label={isMuted ? 'تفعيل الصوت' : 'كتم الصوت'}
       title={isMuted ? 'تفعيل الصوت' : 'كتم الصوت'}
     >
