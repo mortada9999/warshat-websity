@@ -48,6 +48,11 @@ export const viewport: Viewport = {
   themeColor: '#F6F6F4',
   width: 'device-width',
   initialScale: 1,
+  // Step 4 (definitive): the decorative layers (backdrop-blur, SVG filters,
+  // drop-shadow, feTurbulence) can't be re-rasterized reliably during fast
+  // pinch-to-zoom on mobile GPUs, so we disable zoom entirely on this site.
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
