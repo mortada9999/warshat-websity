@@ -54,7 +54,7 @@ export default function HomePage() {
     <>
       <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div className="w-full overflow-hidden">
-          {SECTIONS.map(({ Component, bg, torn, isNotebook, wrapperClass }, i) => (
+           {SECTIONS.map(({ Component, bg, torn, isNotebook, wrapperClass }, i) => (
             <div
               key={i}
               className={`stackable-section relative w-full ${wrapperClass || ''}`}
@@ -92,7 +92,10 @@ export default function HomePage() {
                 />
               )}
               {torn && <TornEdge color={bg} seed={i} isNotebook={isNotebook} textureClass={wrapperClass} />}
-              <Component />
+              {/* Content wrapper — keeps section at natural height, not stretched by parent paddingBottom */}
+              <div style={{ minHeight: '100svh', position: 'relative' }}>
+                <Component />
+              </div>
             </div>
           ))}
         </div>

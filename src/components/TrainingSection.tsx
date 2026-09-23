@@ -20,11 +20,11 @@ export default function TrainingSection() {
   const workshops = getByCategory('workshop', false);
 
   return (
-    <section 
-      id="training" 
-      className="relative flex flex-col items-center justify-center w-full h-full px-6 md:px-12 z-20"
-      aria-label={t('الورش التدريبية', 'Training workshops')}
-    >
+    <section
+  id="training"
+  className="relative flex flex-col items-center w-full px-6 md:px-12 pt-2 md:pt-4 z-20"
+  aria-label={t('الورش التدريبية', 'Training workshops')}
+>
       <HiddenWorkshopsMenu category="workshop" />
 
       {/* ── Torn Paper SVG Definitions ── */}
@@ -64,12 +64,12 @@ export default function TrainingSection() {
         </filter>
       </svg>
 
-      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12 mt-8 md:mt-12 h-full">
+      <div className="flex flex-col items-center w-full max-w-[1280px] gap-8 md:gap-12">
         
         {/* Section Heading */}
         <div className="relative flex flex-col items-center justify-center w-full pb-4 z-40">
           <div className="w-fit mx-auto flex flex-col items-center">
-            <h2 className="font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-center leading-loose">
+            <h2 className={`font-amiri font-bold text-3xl md:text-5xl text-[#4D6314] text-center leading-loose ${styles.headingRaised}`}>
               {t('الورش التدريبية', 'Training Workshops')}
             </h2>
             {/* Curved Line under heading — draws itself on scroll */}

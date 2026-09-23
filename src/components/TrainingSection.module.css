@@ -48,11 +48,11 @@
     );
 }
 
-/* Ensure all section content stays above the background */
-.sandySection > * {
-  position: relative;
-  z-index: 1;
-}
+/* NOTE: Do NOT set `position: relative` on all direct children here.
+   The TornEdge strip (first child) relies on `position: absolute; top: -99px`;
+   forcing it to `relative` would push it into flow and add a ~100px gap above
+   the heading. The content wrapper already has inline `position: relative`
+   from the page layout, so no rule is needed. */
 
 .topWave {
   position: absolute;
@@ -76,6 +76,11 @@
   display: flex;
   flex-direction: column;
   gap: 56px;
+}
+
+/* Section heading — sits slightly higher than its natural position */
+.headingRaised {
+  transform: translateY(-12px);
 }
 
 /* Heading (Figma: Amiri/64px w:700 #374a00) */

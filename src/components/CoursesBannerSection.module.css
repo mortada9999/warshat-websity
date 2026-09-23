@@ -8,7 +8,7 @@
   background-color: #2a3a1f; /* Dark olive green base */
   background-image: url('/images/felt.png');
   background-repeat: repeat;
-  /* Felt texture blends naturally with the background color */
+  background-size: 200px; /* High DPI scale for extreme sharpness */
 }
 
 /* Ensure all section content stays above the background */
@@ -54,6 +54,7 @@
   align-items: center;
   padding: 1rem 1rem 3rem;
   text-align: center;
+  transform: translateY(-12px);
 }
 
 @media (min-width: 768px) {
