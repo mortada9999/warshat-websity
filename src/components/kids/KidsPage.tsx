@@ -11,6 +11,7 @@ import { useWorkshopStore } from '@/lib/workshopStore';
 import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from '@/components/AdminOverlay';
 import AnimatedUnderline from '@/components/AnimatedUnderline';
 import TornEdge from '@/components/TornEdge';
+import KidsDoodles from './KidsDoodles';
 import styles from './KidsPage.module.css';
 
 
@@ -55,6 +56,8 @@ export default function KidsPage() {
       <div className="stackable-section relative w-full" style={{ backgroundColor: '#F6F0E2', zIndex: 10, minHeight: '100svh' }}>
       {/* ══ HERO ═════════════════════════════════════════════ */}
       <section className={styles.hero}>
+        {/* Scattered cute doodles on the hero */}
+        <KidsDoodles count={4} seed={33} />
         <p className={styles.heroLabel}>
           {t('ورشة فن — قسم الأطفال', 'WARSHAT FAN — KIDS DEPT')}
         </p>
@@ -98,6 +101,8 @@ export default function KidsPage() {
 
       {/* ══ WORKSHOPS (Connected normally below Stats) ═════════════════════════════════════════ */}
       <section id="workshops" className={styles.sectionWhite} style={{ paddingBottom: 'calc(4rem + 60svh)' }}>
+        {/* Scattered cute doodles on workshops */}
+        <KidsDoodles count={5} seed={55} />
         <div className={styles.sectionInner}>
           <p className={styles.sectionLabel}>
             {t('الورش الأسبوعية', 'WEEKLY WORKSHOPS')}
@@ -183,6 +188,8 @@ export default function KidsPage() {
       <div className="stackable-section relative w-full" style={{ backgroundColor: '#F6F0E2', zIndex: 20, minHeight: '100svh', paddingBottom: '0' }}>
         <TornEdge color="#F6F0E2" seed={4} isNotebook={false} />
       <section id="courses" className={styles.section}>
+        {/* Scattered cute doodles on courses */}
+        <KidsDoodles count={5} seed={99} />
         <div className={styles.sectionInner}>
 
           <p className={styles.sectionLabel}>

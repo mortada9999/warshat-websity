@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
 import AnimatedUnderline from './AnimatedUnderline';
 import { HiddenWorkshopsMenu } from './HiddenWorkshopsMenu';
+import KidsDoodles from './kids/KidsDoodles';
 import styles from './KidsBannerSection.module.css';
 
 export default function KidsBannerSection() {
@@ -20,6 +21,8 @@ export default function KidsBannerSection() {
       <HiddenWorkshopsMenu category="kids_workshop" />
 
       <div className={styles.inner}>
+        {/* Scattered cute kids illustrations */}
+        <KidsDoodles count={5} seed={77} />
 
         {/* Label */}
         <p className={styles.label}>
