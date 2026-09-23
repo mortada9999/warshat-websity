@@ -8,8 +8,7 @@
   background-color: #2a3a1f; /* Dark olive green base */
   background-image: url('/images/felt.png');
   background-repeat: repeat;
-  background-size: 100px; /* Scaled down for high-DPI sharpness */
-  image-rendering: crisp-edges; /* Prevents blurry resampling on zoom */
+  /* Felt texture blends naturally with the background color */
 }
 
 /* Ensure all section content stays above the background */
