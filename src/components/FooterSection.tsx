@@ -14,7 +14,7 @@ export default function FooterSection() {
     <>
       {/* Standard relative footer sitting at the end of the document flow */}
       <footer 
-        className="relative w-full h-[70svh] md:h-[80vh] bg-stone-900 flex flex-col justify-between z-20"
+        className="relative w-full min-h-[70svh] md:min-h-[80vh] bg-stone-900 flex flex-col justify-between z-20"
         aria-label="تذييل الصفحة"
         suppressHydrationWarning
       >

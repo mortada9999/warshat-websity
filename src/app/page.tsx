@@ -52,8 +52,8 @@ export default function HomePage() {
 
   return (
     <>
-      <main ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-        <div className="w-full overflow-hidden">
+      <main ref={containerRef} className="relative z-10 w-full max-w-full bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="w-full max-w-full overflow-x-clip">
            {SECTIONS.map(({ Component, bg, torn, isNotebook, wrapperClass }, i) => (
             <div
               key={i}
