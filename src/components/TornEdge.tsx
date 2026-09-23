@@ -39,26 +39,21 @@ export default function TornEdge({ color, seed, isNotebook = false, textureClass
       aria-hidden="true"
     >
       <div 
-        className={`absolute bottom-0 right-0 h-full w-[200%] sm:w-full ${textureClass || ''}`}
+        className={`absolute bottom-0 right-0 h-full w-full max-sm:[mask-size:200%_100%] max-sm:[-webkit-mask-size:200%_100%] sm:[mask-size:100%_100%] sm:[-webkit-mask-size:100%_100%] ${textureClass || ''}`}
         style={{
           backgroundColor: textureClass ? undefined : color,
           WebkitMaskImage: `url('${encodedSvg}')`,
-          WebkitMaskSize: '100% 100%',
           WebkitMaskPosition: 'bottom right',
           WebkitMaskRepeat: 'no-repeat',
           maskImage: `url('${encodedSvg}')`,
-          maskSize: '100% 100%',
           maskPosition: 'bottom right',
           maskRepeat: 'no-repeat',
         }}
       >
-        {/* Red notebook margin lines that perfectly match the CSS line below (5% right margin) */}
+        {/* Red notebook margin lines (5% from right edge matches the mask styling perfectly) */}
         {isNotebook && (
           <svg className="w-full h-full" preserveAspectRatio="none">
-            {/* Desktop: 5% from right edge -> 95% */}
-            <line className="hidden sm:block" x1="95%" y1="0" x2="95%" y2="100%" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
-            {/* Mobile (w-[200%]): 5vw is 2.5% of SVG width -> 97.5% */}
-            <line className="sm:hidden" x1="97.5%" y1="0" x2="97.5%" y2="100%" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
+            <line x1="95%" y1="0" x2="95%" y2="100%" stroke="rgba(210, 90, 90, 0.4)" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
           </svg>
         )}
       </div>
