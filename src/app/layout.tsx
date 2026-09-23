@@ -52,9 +52,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={`bg-[#F6F6F4] ${dgForsha.variable}`}>
+    <html lang="ar" dir="rtl" className={`bg-[#F6F6F4] w-full max-w-full overflow-x-clip ${dgForsha.variable}`}>
       <head />
-      <body>
+      <body className="w-full max-w-full overflow-x-clip">
         <SoundProvider>
           <WorkshopStoreProvider>
             <LoyaltyProvider>

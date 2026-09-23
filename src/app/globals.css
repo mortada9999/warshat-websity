@@ -74,6 +74,7 @@ html {
   scroll-padding-top: 100px; /* Offset anchor links so sticky header doesn't cover them */
   -webkit-text-size-adjust: 100%;
   background-color: var(--bg);
+  width: 100%;
   /* overflow-x: clip (NOT hidden!) prevents horizontal scroll without
      creating a scroll container. overflow:hidden breaks position:sticky
      on descendant elements (like the footer's sticky bottom-0 reveal). */
@@ -88,6 +89,7 @@ body {
   line-height: 1.7;
   min-height: 100vh;
   direction: rtl;
+  width: 100%;
   /* clip instead of hidden: prevents horizontal overflow without breaking
      position:sticky (footer reveal transition depends on sticky). */
   overflow-x: clip;
