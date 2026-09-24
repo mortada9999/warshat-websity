@@ -14,9 +14,29 @@ export default function KidsBannerSection() {
   return (
     <section
       id="kids"
-      className={styles.section}
+      className={`${styles.section} relative`}
       aria-label={t('ورش الأطفال', 'Kids workshops')}
     >
+      {/* Static Decorative Elements for Manual Positioning */}
+      <img
+        id="prince-deco"
+        src="/images/kids/9.png"
+        alt="Prince"
+        className="absolute top-0 left-0 w-32 h-auto pointer-events-none"
+      />
+      <img
+        id="flower-deco"
+        src="/images/kids/5.png"
+        alt="Flower"
+        className="absolute top-0 left-10 w-32 h-auto pointer-events-none"
+      />
+      <img
+        id="bunnies-deco"
+        src="/images/kids/16.png"
+        alt="Bunnies"
+        className="absolute top-0 right-0 w-32 h-auto pointer-events-none"
+      />
+
       <HiddenWorkshopsMenu category="kids_course" />
       <HiddenWorkshopsMenu category="kids_workshop" />
 

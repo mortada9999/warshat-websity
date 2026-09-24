@@ -323,11 +323,7 @@
   font-weight: 500;
 }
 
-.ltrNum {
-  direction: ltr;
-  unicode-bidi: isolate;
-  display: inline-block;
-}
+
 
 /* ── Perforation ─────────────────────────────────────────────────────── */
 .perforation {

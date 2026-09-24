@@ -3,25 +3,8 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 
-/* ── All 16 kids illustration filenames ───────────────────── */
-const ALL_DOODLES = [
-  'Picsart_26-09-23_21-50-51-480.png',
-  'Picsart_26-09-23_21-51-43-658.png',
-  'Picsart_26-09-23_21-52-28-402.png',
-  'Picsart_26-09-23_21-54-51-519.png',
-  'Picsart_26-09-23_21-55-58-212.png',
-  'Picsart_26-09-23_21-56-43-732.png',
-  'Picsart_26-09-23_21-57-34-123.png',
-  'Picsart_26-09-23_21-58-38-281.png',
-  'Picsart_26-09-23_21-59-46-925.png',
-  'Picsart_26-09-23_22-11-44-786.png',
-  'Picsart_26-09-23_22-13-32-415.png',
-  'Picsart_26-09-23_22-15-13-257.png',
-  'Picsart_26-09-23_22-16-01-724.png',
-  'Picsart_26-09-23_22-23-03-700.png',
-  'Picsart_26-09-23_22-24-17-667.png',
-  'Picsart_26-09-23_22-25-38-499.png',
-];
+/* ── All kids illustration filenames (emptied so user can arrange them manually) ── */
+const ALL_DOODLES: string[] = [];
 
 /* Seeded PRNG for deterministic "random" layout across renders */
 function seededRandom(seed: number) {
@@ -45,7 +28,7 @@ function shuffleWithSeed<T>(arr: T[], seed: number): T[] {
 
 interface DoodlePosition {
   src: string;
-  top: string;
+  bottom: string;
   left: string;
   size: number;
   rotate: number;
@@ -72,22 +55,23 @@ export default function KidsDoodles({ count = 6, seed = 42, className = '' }: Ki
     const selected = shuffled.slice(0, Math.min(count, ALL_DOODLES.length));
 
     return selected.map((file, i) => {
-      // Distribute vertically across the section
-      const verticalSlot = (i / selected.length) * 100;
-      const topOffset = verticalSlot + rand() * (100 / selected.length) * 0.6;
-      // Alternate sides: even → left side (0–25%), odd → right side (75–100%)
+      // Distribute horizontally across the bottom line
+      // Even index -> Left side, Odd index -> Right side to avoid center text overlap
       const isLeft = i % 2 === 0;
       const leftOffset = isLeft
-        ? rand() * 20 + 2   // 2% – 22%
-        : rand() * 20 + 78; // 78% – 98%
+        ? rand() * 35 + 5   // 5% – 40% (left side)
+        : rand() * 35 + 60; // 60% – 95% (right side)
+
+      // Randomize slightly off the exact bottom line (0% to -2% so they overlap the line slightly)
+      const bottomOffset = rand() * -2;
 
       return {
         src: `/images/kids/${file}`,
-        top: `${Math.min(topOffset, 92)}%`,
+        bottom: `${bottomOffset}%`,
         left: `${leftOffset}%`,
-        size: Math.floor(rand() * 40 + 60), // 60px – 100px
+        size: Math.floor(rand() * 100 + 160), // 160px – 260px (Much larger)
         rotate: Math.floor(rand() * 30 - 15), // -15° to +15°
-        opacity: rand() * 0.25 + 0.15, // 0.15 – 0.4
+        opacity: rand() * 0.2 + 0.8, // 0.8 – 1.0 (Much clearer)
       };
     });
   }, [count, seed]);
@@ -109,11 +93,12 @@ export default function KidsDoodles({ count = 6, seed = 42, className = '' }: Ki
           key={i}
           style={{
             position: 'absolute',
-            top: d.top,
+            bottom: d.bottom,
             left: d.left,
             width: d.size,
             height: d.size,
-            transform: `rotate(${d.rotate}deg) translate(-50%, -50%)`,
+            transform: `translateX(-50%) rotate(${d.rotate}deg)`,
+            transformOrigin: 'bottom center',
             opacity: d.opacity,
             transition: 'opacity 0.3s ease',
           }}

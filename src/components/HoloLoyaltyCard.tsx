@@ -18,7 +18,10 @@ import {
   clamp,
 } from '@/lib/holoEngine';
 import type { LoyaltyMember } from '@/lib/loyaltyStore';
+import { useLanguage } from '@/components/LanguageProvider';
 import styles from './HoloLoyaltyCard.module.css';
+
+const toArabic = (num: number | string) => String(num).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[parseInt(d, 10)]);
 
 /* ── Star component ──────────────────────────────────────────────────────── */
 
@@ -48,6 +51,7 @@ interface HoloLoyaltyCardProps {
 }
 
 export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
+  const { t, lang } = useLanguage();
   const hostRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const [qrSrc, setQrSrc] = useState<string>('');
@@ -521,8 +525,10 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
               <div className={styles.ticketTop}>
                 {/* Brand stripe */}
                 <div className={styles.brandStripe}>
-                  <span className={styles.brandName}>ورشة فن</span>
-                  <span className={styles.memberSince}>عضو منذ {member.createdAt}</span>
+                  <span className={styles.brandName}>{t('ورشة فن', 'Warshat Fan')}</span>
+                  <span className={styles.memberSince}>
+                    {t('عضو منذ', 'Member since')} {lang === 'ar' ? toArabic(member.createdAt) : member.createdAt}
+                  </span>
                 </div>
 
                 {/* Member info + cards */}
@@ -530,9 +536,10 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                   {/* Left: name + code */}
                   <div className={styles.memberInfo}>
                     <h2 className={styles.memberName}>{member.name}</h2>
-                    <p className={styles.memberCode}>{member.code}</p>
                     {member.cycle > 1 && (
-                      <span className={styles.cycleBadge}>الدورة {member.cycle}</span>
+                      <span className={styles.cycleBadge}>
+                        {t('الدورة', 'Cycle')} {lang === 'ar' ? toArabic(member.cycle) : member.cycle}
+                      </span>
                     )}
                   </div>
 
@@ -541,7 +548,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                     {/* Card 1: 5 sessions → 50% discount */}
                     <div className={`${styles.rewardCard} ${card5Complete ? styles.rewardComplete : ''}`}>
                       <span className={styles.rewardLabel}>
-                        {card5Complete && member.reward5Claimed ? '✓ تم الصرف' : 'خصم ٥٠٪'}
+                        {card5Complete && member.reward5Claimed
+                          ? t('✓ تم الصرف', '✓ Claimed')
+                          : t('خصم ٥٠٪', '50% Discount')}
                       </span>
                       <div className={styles.gemsRow}>
                         {Array.from({ length: 5 }).map((_, i) => (
@@ -552,13 +561,17 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                           />
                         ))}
                       </div>
-                      <span className={`${styles.rewardProgress} ${styles.ltrNum}`}>{card5Progress} / ٥</span>
+                      <span className={styles.rewardProgress}>
+                        {lang === 'ar' ? `${toArabic(card5Progress)} / ٥` : `${card5Progress} / 5`}
+                      </span>
                     </div>
 
                     {/* Card 2: 10 sessions → free workshop */}
                     <div className={`${styles.rewardCard} ${card10Complete ? styles.rewardComplete : ''}`}>
                       <span className={styles.rewardLabel}>
-                        {card10Complete && member.reward10Claimed ? '✓ تم الصرف' : 'ورشة مجانية'}
+                        {card10Complete && member.reward10Claimed
+                          ? t('✓ تم الصرف', '✓ Claimed')
+                          : t('ورشة مجانية', 'Free Workshop')}
                       </span>
                       <div className={styles.gemsGrid}>
                         {Array.from({ length: 10 }).map((_, i) => (
@@ -569,7 +582,9 @@ export default function HoloLoyaltyCard({ member }: HoloLoyaltyCardProps) {
                           />
                         ))}
                       </div>
-                      <span className={`${styles.rewardProgress} ${styles.ltrNum}`}>{card10Progress} / ١٠</span>
+                      <span className={styles.rewardProgress}>
+                        {lang === 'ar' ? `${toArabic(card10Progress)} / ١٠` : `${card10Progress} / 10`}
+                      </span>
                     </div>
                   </div>
                 </div>
