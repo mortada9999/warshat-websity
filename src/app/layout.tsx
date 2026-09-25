@@ -6,6 +6,7 @@ import { LanguageProvider } from '@/components/LanguageProvider';
 import { WorkshopStoreProvider } from '@/lib/workshopStore';
 import { LoyaltyProvider } from '@/lib/loyaltyStore';
 import { AdminProvider } from '@/components/AdminProvider';
+import { AuthProvider } from '@/components/AuthProvider';
 import { SoundProvider } from '@/lib/SoundContext';
 import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
@@ -57,23 +58,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ar" dir="rtl" className={`bg-[#F6F6F4] w-full max-w-full overflow-x-clip ${dgForsha.variable}`}>
       <head />
       <body className="w-full max-w-full overflow-x-clip">
-        <SoundProvider>
-          <WorkshopStoreProvider>
-            <LoyaltyProvider>
-              <AdminProvider>
-                <LanguageProvider>
-                  <Header />
-                  <SoundMuteButton />
-                  <ScrollToTop />
-                  <SmoothScroll>
-                    {children}
-                  </SmoothScroll>
-                  <WorkshopEditorModal />
-                </LanguageProvider>
-              </AdminProvider>
-            </LoyaltyProvider>
-          </WorkshopStoreProvider>
-        </SoundProvider>
+        <AuthProvider>
+          <SoundProvider>
+            <WorkshopStoreProvider>
+              <LoyaltyProvider>
+                <AdminProvider>
+                  <LanguageProvider>
+                    <Header />
+                    <SoundMuteButton />
+                    <ScrollToTop />
+                    <SmoothScroll>
+                      {children}
+                    </SmoothScroll>
+                    <WorkshopEditorModal />
+                  </LanguageProvider>
+                </AdminProvider>
+              </LoyaltyProvider>
+            </WorkshopStoreProvider>
+          </SoundProvider>
+        </AuthProvider>
       </body>
     </html>
   );

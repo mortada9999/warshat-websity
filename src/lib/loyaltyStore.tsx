@@ -34,7 +34,7 @@ export const LOYALTY_CONFIG = {
   freeThreshold: 10,
 };
 
-const STORAGE_KEY = 'warshat_loyalty_members';
+const STORAGE_KEY = 'warshat_loyalty_members_v2';
 
 /** Generate a short unique member code like WF-7X3K */
 function generateCode(): string {
@@ -61,7 +61,7 @@ function nowDate(): string {
 
 const DEMO_MEMBER: LoyaltyMember = {
   id: 'demo-1',
-  name: 'سارة العزاوي',
+  name: 'داليا نبيل',
   code: 'WF-7X3K',
   sessions: 4,
   cycle: 1,

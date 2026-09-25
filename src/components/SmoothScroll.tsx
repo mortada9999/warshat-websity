@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import { usePathname } from 'next/navigation';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -11,6 +12,15 @@ if (typeof window !== 'undefined') {
 }
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    }
+  }, [pathname]);
+
   useEffect(() => {
     // Skip Lenis on touch devices (Android Chrome + iOS Safari).
     // Touch devices use native scroll — Lenis is for desktop smooth scroll only.

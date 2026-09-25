@@ -177,9 +177,9 @@ export default function CoursesBannerSection() {
                   <hr className={styles.divider} />
 
                   {/* CTA */}
-                  <a href="#book" className={styles.ctaBtn}>
+                  <Link href={`/workshops/${course.id}/book`} className={styles.ctaBtn}>
                     {t('احجز الآن', 'Book Now')}
-                  </a>
+                  </Link>
 
                   <hr className={styles.divider} />
 

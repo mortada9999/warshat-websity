@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import AnimatedTapedButton from './AnimatedTapedButton';
 import AnimatedUnderline from './AnimatedUnderline';
 import TapedWorkshopCard from './TapedWorkshopCard';
@@ -84,7 +85,7 @@ export default function TrainingSection() {
               <AdminCardOverlay workshop={w} />
               <InactiveOverlay workshop={w} />
               <TapedWorkshopCard workshop={{
-                id: index + 1,
+                id: w.id,
                 titleAr: w.titleAr,
                 titleEn: w.titleEn,
                 subtitleAr: w.subtitleAr || '',
@@ -110,12 +111,12 @@ export default function TrainingSection() {
           <p className="font-amiri text-xl md:text-2xl text-[#374A00] text-center">
             {t('احجز مكانك في الورشة القادمة', 'Book your spot in the next workshop')}
           </p>
-          <a
-            href="#book"
+          <Link
+            href="/"
             className="inline-flex items-center gap-2 px-10 py-3 bg-[#A25F00] text-white font-ibm-plex font-semibold text-sm uppercase tracking-widest rounded-sm shadow-md hover:bg-[#7D4A00] transition-colors"
           >
             {t('احجز الآن', 'Book Now')}
-          </a>
+          </Link>
         </div>
       </div>
     </section>

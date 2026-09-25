@@ -2,6 +2,7 @@
 
 import React, { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -31,7 +32,7 @@ if (typeof window !== 'undefined') {
 }
 
 interface Workshop {
-  id: number;
+  id: string | number;
   titleAr: string;
   titleEn: string;
   subtitleAr: string;
@@ -153,7 +154,7 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
           )}
           
           {/* Book Now Button */}
-          <a href="#book" className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</a>
+          <Link href={`/workshops/${w.id}/book`} className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</Link>
         </div>
       </article>
       </div>

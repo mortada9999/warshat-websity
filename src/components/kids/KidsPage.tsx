@@ -50,7 +50,7 @@ export default function KidsPage() {
   }, { scope: containerRef });
 
   return (
-    <main dir={t('rtl', 'ltr')} ref={containerRef} className="relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+    <main dir={t('rtl', 'ltr')} ref={containerRef} className={`relative z-10 bg-[#F6F6F4] shadow-[0_20px_50px_rgba(0,0,0,0.5)] ${styles.kidsWrapper}`}>
       <div className="w-full overflow-hidden">
 
         <div className="stackable-section relative w-full" style={{ backgroundColor: '#F6F0E2', zIndex: 10, minHeight: '100svh' }}>
@@ -95,12 +95,42 @@ export default function KidsPage() {
 
 
             <div className={styles.heroBtns}>
-              <a href="#workshops" className={styles.btnDark}>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById('workshops');
+                  if (el) {
+                    // @ts-ignore
+                    const lenis = window.__lenis;
+                    if (lenis) {
+                      lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+                    } else {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }
+                }}
+                className={styles.btnDark}
+              >
                 {t('الورش الأسبوعية', 'Weekly Workshops')}
-              </a>
-              <a href="#courses" className={styles.btnOutline}>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  const el = document.getElementById('courses');
+                  if (el) {
+                    // @ts-ignore
+                    const lenis = window.__lenis;
+                    if (lenis) {
+                      lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+                    } else {
+                      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }
+                }}
+                className={styles.btnOutline}
+              >
                 {t('الكورسات والاشتراكات', 'Courses')}
-              </a>
+              </button>
             </div>
           </section>
 

@@ -38,6 +38,8 @@ export default function WorkshopEditorModal() {
     sortOrder: 0 as number | string,
     featuresArStr: '',
     featuresEnStr: '',
+    paymentType: 'full' as 'full' | 'deposit' | 'form_only',
+    depositAmount: '',
   });
 
   // Reset form when opening
@@ -60,6 +62,8 @@ export default function WorkshopEditorModal() {
           sortOrder: workshop.sortOrder,
           featuresArStr: workshop.featuresAr?.join('\n') || '',
           featuresEnStr: workshop.featuresEn?.join('\n') || '',
+          paymentType: workshop.paymentType || 'full',
+          depositAmount: workshop.depositAmount || '',
         });
       } else {
         setForm({
@@ -78,6 +82,8 @@ export default function WorkshopEditorModal() {
           sortOrder: 0 as number | string,
           featuresArStr: '',
           featuresEnStr: '',
+          paymentType: 'full',
+          depositAmount: '',
         });
       }
     }
@@ -117,13 +123,13 @@ export default function WorkshopEditorModal() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
-    // Auto-format price with commas
-    if (name === 'price') {
+    // Auto-format price and deposit with commas
+    if (name === 'price' || name === 'depositAmount') {
       const digits = value.replace(/\D/g, ''); // strip non-digits
       if (digits) {
-        setForm(prev => ({ ...prev, price: Number(digits).toLocaleString('en-US') }));
+        setForm(prev => ({ ...prev, [name]: Number(digits).toLocaleString('en-US') }));
       } else {
-        setForm(prev => ({ ...prev, price: '' }));
+        setForm(prev => ({ ...prev, [name]: '' }));
       }
       return;
     }
@@ -153,6 +159,8 @@ export default function WorkshopEditorModal() {
       featuresAr: form.featuresArStr.split('\n').map(s => s.trim()).filter(Boolean),
       featuresEn: form.featuresEnStr.split('\n').map(s => s.trim()).filter(Boolean),
       pattern: form.pattern || undefined,
+      paymentType: form.paymentType,
+      depositAmount: form.depositAmount || undefined,
       isActive: true,
       sortOrder: Number(form.sortOrder) || 0,
     };
@@ -225,11 +233,28 @@ export default function WorkshopEditorModal() {
             </div>
           </div>
 
-          {/* Price */}
-          <div>
-            <label style={labelStyle}>السعر (مثل: 10,000)</label>
-            <input name="price" value={form.price} onChange={handleChange} style={inputStyle} placeholder="10,000" />
+          {/* Price & Payment Type */}
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <div style={{ flex: 1 }}>
+              <label style={labelStyle}>السعر (مثل: 10,000)</label>
+              <input name="price" value={form.price} onChange={handleChange} style={inputStyle} placeholder="10,000" />
+            </div>
+            <div style={{ flex: 1 }}>
+              <label style={labelStyle}>آلية الدفع للحجز</label>
+              <select name="paymentType" value={form.paymentType} onChange={handleChange} style={inputStyle}>
+                <option value="full">دفع كامل المبلغ</option>
+                <option value="deposit">عربون (جزء من المبلغ)</option>
+                <option value="form_only">حجز فقط (بدون دفع)</option>
+              </select>
+            </div>
           </div>
+
+          {form.paymentType === 'deposit' && (
+            <div>
+              <label style={labelStyle}>مبلغ العربون (مثل: 5,000)</label>
+              <input name="depositAmount" value={form.depositAmount} onChange={handleChange} style={inputStyle} placeholder="5,000" />
+            </div>
+          )}
 
           {/* Image Upload */}
           <div>

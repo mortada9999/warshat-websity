@@ -6,7 +6,7 @@
    ═══════════════════════════════════════════════════════════════ */
 
 /* ── CSS Variables ─────────────────────────────────────────── */
-:root {
+.kidsWrapper {
   --kids-bg:       #F6F0E2;
   --kids-line:     #DDD5C0;
   --kids-white:    #FDFBF7;
@@ -77,10 +77,10 @@
 
 /* Yellow highlight pill — same as NOP */
 .hl {
-  display: inline;
+  display: inline-block;
   background-color: var(--kids-yellow);
-  border-radius: 6px;
-  padding: 0 8px;
+  border-radius: 100px;
+  padding: 0 16px;
 }
 
 .heroSub {

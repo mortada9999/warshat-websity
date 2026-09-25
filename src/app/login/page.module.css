@@ -1,0 +1,93 @@
+.main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--clr-paper);
+  background-image: url('/images/paper-texture.webp');
+  background-size: cover;
+  background-attachment: fixed;
+  position: relative;
+}
+
+.loginCard {
+  background: white;
+  max-width: 420px;
+  width: 100%;
+  padding: 3rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Tape effect at the top of the card */
+.loginCard::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 120px;
+  height: 35px;
+  background-color: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border-radius: 2px;
+  z-index: 10;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  color: var(--clr-olive);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+.googleBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  background-color: white;
+  border: 2px solid #E5E7EB;
+  color: #374151;
+  padding: 0.875rem 1.5rem;
+  border-radius: 4px;
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.googleBtn:hover {
+  background-color: #F9FAFB;
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transform: translateY(-1px);
+}
+
+.googleBtn:active {
+  transform: translateY(1px);
+}
+
+.googleIcon {
+  width: 24px;
+  height: 24px;
+}

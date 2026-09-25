@@ -1,0 +1,603 @@
+/* ═══════════════════════════════════════════════════════════════
+   Booking Page — Warshat Fan design system
+   Olive/Amber palette · DG Forsha · Paper texture feel
+   ═══════════════════════════════════════════════════════════════ */
+
+.main {
+  min-height: 100vh;
+  background: var(--fg-bg-main);
+  padding: 2rem 1.25rem 4rem;
+}
+
+.content {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+/* ── Back link ──────────────────────────────────────────────── */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--clr-text-muted);
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  transition: color var(--transition);
+}
+.back:hover { color: var(--clr-text); }
+
+/* ── Stepper ────────────────────────────────────────────────── */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 2.5rem;
+  padding: 0 1rem;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.stepCircle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: 2px solid var(--clr-border);
+  background: var(--clr-surface);
+  color: var(--clr-text-muted);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.stepCircle.active {
+  background: var(--fg-olive-dark);
+  color: #fff;
+  border-color: var(--fg-olive-dark);
+  box-shadow: 0 2px 8px rgba(55, 74, 0, 0.25);
+}
+
+.stepCircle.done {
+  background: var(--fg-olive-mid);
+  color: #fff;
+  border-color: var(--fg-olive-mid);
+}
+
+.stepLine {
+  width: 48px;
+  height: 2px;
+  background: var(--clr-border);
+  transition: background 0.3s ease;
+}
+
+.stepLine.active {
+  background: var(--fg-olive-mid);
+}
+
+.stepLabel {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .stepLabel {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--clr-text-muted);
+    text-align: center;
+    margin-top: 0.35rem;
+    letter-spacing: 0.04em;
+  }
+  .stepLabel.active {
+    color: var(--fg-olive-dark);
+  }
+  .stepItem {
+    flex-direction: column;
+    gap: 0;
+  }
+  .stepper {
+    gap: 0;
+  }
+  .stepLine {
+    align-self: flex-start;
+    margin-top: 18px;
+  }
+}
+
+/* ── Card / Panel ───────────────────────────────────────────── */
+.card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  padding: 1.75rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(44, 24, 16, 0.04);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fg-olive-dark);
+  margin-bottom: 1.25rem;
+  line-height: 1.3;
+}
+
+/* ── Workshop info bar ──────────────────────────────────────── */
+.workshopInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(55, 74, 0, 0.04);
+  border: 1px solid rgba(55, 74, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.workshopName {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--fg-olive-dark);
+}
+
+.workshopMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--clr-text-muted);
+}
+
+.workshopMeta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* ── Seat counter ───────────────────────────────────────────── */
+.seatCounter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.seatLabel {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg-olive-dark);
+  flex: 1;
+}
+
+.counterControls {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--clr-border);
+}
+
+.counterBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--clr-surface);
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--fg-olive-dark);
+  transition: background 0.15s ease;
+  font-family: var(--font-body);
+}
+
+.counterBtn:hover {
+  background: rgba(55, 74, 0, 0.08);
+}
+
+.counterBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.counterValue {
+  width: 48px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--fg-olive-dark);
+  border-left: 1px solid var(--clr-border);
+  border-right: 1px solid var(--clr-border);
+}
+
+/* ── Attendee cards ─────────────────────────────────────────── */
+.attendeeCard {
+  background: rgba(55, 74, 0, 0.03);
+  border: 1px dashed var(--clr-border);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.attendeeHeader {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-orange);
+  margin-bottom: 0.75rem;
+}
+
+.attendeeFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.attendeeFields .fullWidth {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 480px) {
+  .attendeeFields {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Form controls ──────────────────────────────────────────── */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.label {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+}
+
+.input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  background: #fff;
+  border: 1px solid var(--clr-border);
+  color: var(--fg-olive-dark);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--fg-olive-dark);
+  box-shadow: 0 0 0 3px rgba(55, 74, 0, 0.08);
+}
+
+.input::placeholder {
+  color: #B0A898;
+}
+
+.inputError {
+  border-color: #d94040;
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: #d94040;
+  margin-top: 0.15rem;
+}
+
+/* ── Payment options ────────────────────────────────────────── */
+.optionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 1.25rem;
+}
+
+.optionCard {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.875rem 1rem;
+  border: 1.5px solid var(--clr-border);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.optionCard:hover {
+  border-color: var(--fg-olive-mid);
+}
+
+.optionCard.selected {
+  border-color: var(--fg-olive-dark);
+  background: rgba(55, 74, 0, 0.04);
+}
+
+.optionRadio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--clr-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.optionRadio.checked {
+  border-color: var(--fg-olive-dark);
+}
+
+.optionRadio.checked::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--fg-olive-dark);
+}
+
+.optionLabel {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--fg-olive-dark);
+}
+
+.optionSub {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  color: var(--clr-text-muted);
+  margin-top: 0.1rem;
+}
+
+/* ── Summary ────────────────────────────────────────────────── */
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--fg-olive-dark);
+}
+
+.summaryRow + .summaryRow {
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.summaryTotal {
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--fg-orange);
+  padding-top: 0.75rem;
+  border-top: 2px solid var(--clr-border);
+  margin-top: 0.5rem;
+}
+
+.summaryLabel {
+  color: var(--clr-text-muted);
+  font-weight: 500;
+}
+
+.summaryValue {
+  font-weight: 600;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btnRow {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.btnPrimary {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  background: var(--fg-olive-dark);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnPrimary:hover {
+  background: #2a3800;
+  transform: translateY(-1px);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btnSecondary {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.75rem;
+  background: transparent;
+  color: var(--fg-olive-dark);
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: 1px solid var(--clr-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnSecondary:hover {
+  border-color: var(--fg-olive-dark);
+}
+
+/* ── Payment method icons ───────────────────────────────────── */
+.payIcon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+/* ── Divider ────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--clr-border);
+  margin: 1.25rem 0;
+}
+
+/* ── Success screen ─────────────────────────────────────────── */
+.successWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
+
+.successIcon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(55, 74, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  animation: scaleIn 0.4s ease;
+}
+
+.successTitle {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--fg-olive-dark);
+  margin-bottom: 0.5rem;
+}
+
+.successSub {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  color: var(--clr-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.bookingCode {
+  display: inline-block;
+  background: rgba(55, 74, 0, 0.06);
+  border: 1px solid rgba(55, 74, 0, 0.15);
+  padding: 0.5rem 1.25rem;
+  font-family: 'IBM Plex Sans', monospace;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--fg-olive-dark);
+  letter-spacing: 0.1em;
+  margin: 1rem 0 1.5rem;
+}
+
+.successBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: var(--fg-olive-dark);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.successBtn:hover {
+  background: #2a3800;
+}
+
+/* ── Skeleton ───────────────────────────────────────────────── */
+.skeleton {
+  width: 100%;
+  height: 320px;
+  background: linear-gradient(90deg, var(--clr-surface) 25%, var(--clr-surface-2) 50%, var(--clr-surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.notFound {
+  text-align: center;
+  padding: 4rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notFoundIcon {
+  font-size: 3rem;
+  opacity: 0.2;
+}
+
+/* ── Dev badge ──────────────────────────────────────────────── */
+.devBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: rgba(162, 95, 0, 0.08);
+  border: 1px solid rgba(162, 95, 0, 0.2);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg-orange);
+  margin-top: 0.75rem;
+}
+
+/* ── Animations ─────────────────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fadeIn {
+  animation: fadeUp 0.35s ease both;
+}

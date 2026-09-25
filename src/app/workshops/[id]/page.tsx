@@ -143,6 +143,13 @@ export default function WorkshopDetailPage() {
                     ))}
                   </div>
                 )}
+
+                {/* Book Now Button */}
+                <div style={{ marginTop: '1.5rem' }}>
+                  <Link href={`/workshops/${id}/book`} className="btn btn-primary" style={{ width: '100%', fontSize: '1.125rem', padding: '0.875rem' }}>
+                    {t('احجز الآن', 'Book Now')}
+                  </Link>
+                </div>
               </div>
             </article>
           )}

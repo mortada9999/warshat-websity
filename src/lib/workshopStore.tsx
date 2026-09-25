@@ -23,6 +23,8 @@ export interface WorkshopItem {
   featuresAr?: string[];
   featuresEn?: string[];
   pattern?: string;
+  paymentType?: 'full' | 'deposit' | 'form_only';
+  depositAmount?: string;
   isActive: boolean;     // true = visible to visitors
   sortOrder: number;
 }

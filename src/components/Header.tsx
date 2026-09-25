@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSession, signOut } from 'next-auth/react';
 import { useLanguage } from './LanguageProvider';
 import styles from './Header.module.css';
 
@@ -15,6 +16,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   const { lang, setLang, t } = useLanguage();
+  const { data: session } = useSession();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -58,10 +60,17 @@ export default function Header() {
                 {t(link.ar, link.en)}
               </Link>
             ))}
-            <Link href="/profile" className={styles.loyaltyLink}>
-              <span className={styles.desktopProfileLabel}>{t('الملف الشخصي', 'Profile')}</span>
-              <span className={styles.mobileProfileLabel}>{t('حسابي', 'Profile')}</span>
-            </Link>
+            {session ? (
+              <Link href="/profile" className={styles.loyaltyLink}>
+                <span className={styles.desktopProfileLabel}>{t('الملف الشخصي', 'Profile')}</span>
+                <span className={styles.mobileProfileLabel}>{t('حسابي', 'Profile')}</span>
+              </Link>
+            ) : (
+              <Link href="/login" className={styles.loyaltyLink}>
+                <span className={styles.desktopProfileLabel}>{t('تسجيل الدخول', 'Login')}</span>
+                <span className={styles.mobileProfileLabel}>{t('دخول', 'Login')}</span>
+              </Link>
+            )}
           </nav>
 
           {/* Controls: lang switch + mobile hamburger */}
