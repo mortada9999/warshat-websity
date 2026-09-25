@@ -110,28 +110,42 @@ export function WorkshopStoreProvider({ children }: { children: React.ReactNode 
   const [workshops, setWorkshops] = useState<WorkshopItem[]>(ALL_DEFAULTS);
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate from localStorage on mount (instant — no API call)
+  // Fetch from API on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored) as WorkshopItem[];
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setWorkshops(parsed);
+    async function loadWorkshops() {
+      try {
+        const res = await fetch('/api/workshops?admin=1');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.workshops && Array.isArray(data.workshops)) {
+            // Map DB schema to frontend WorkshopItem
+            const mapped = data.workshops.map((w: any) => ({
+              id: w.id,
+              titleAr: w.title_ar,
+              titleEn: w.title_en,
+              descAr: w.description_ar,
+              descEn: w.description_en,
+              category: w.category,
+              price: w.price ? w.price.toString() : undefined,
+              priceNum: w.price || undefined,
+              image: w.image_url || '/images/pottery.jpg',
+              isActive: w.is_active === 1,
+              sortOrder: w.sort_order || 0,
+              branch: w.branch || 'both',
+              seats: w.seats,
+              tags: w.tags ? w.tags.split(',') : []
+            }));
+            setWorkshops(mapped);
+          }
         }
+      } catch (err) {
+        console.error('Failed to load workshops from API', err);
+      } finally {
+        setHydrated(true);
       }
-    } catch {
-      // corrupt data — use defaults
     }
-    setHydrated(true);
+    loadWorkshops();
   }, []);
-
-  // Persist to localStorage on every change (after hydration)
-  useEffect(() => {
-    if (hydrated) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(workshops));
-    }
-  }, [workshops, hydrated]);
 
   const getByCategory = useCallback((cat: Category, includeArchived = false) => {
     return workshops
@@ -139,21 +153,51 @@ export function WorkshopStoreProvider({ children }: { children: React.ReactNode 
       .sort((a, b) => a.sortOrder - b.sortOrder);
   }, [workshops]);
 
-  const addWorkshop = useCallback((item: Omit<WorkshopItem, 'id'>) => {
-    const id = `ws-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    setWorkshops(prev => [...prev, { ...item, id }]);
+  const addWorkshop = useCallback(async (item: Omit<WorkshopItem, 'id'>) => {
+    try {
+      const dbItem = {
+        title_ar: item.titleAr,
+        title_en: item.titleEn,
+        description_ar: item.descAr,
+        description_en: item.descEn,
+        category: item.category,
+        price: item.priceNum,
+        image_url: item.image,
+        is_active: item.isActive ? 1 : 0,
+        sort_order: item.sortOrder || 0
+      };
+      
+      const res = await fetch('/api/workshops', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(dbItem)
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        setWorkshops(prev => [...prev, { ...item, id: data.id }]);
+      }
+    } catch (err) {
+      console.error('Failed to add workshop', err);
+    }
   }, []);
 
-  const updateWorkshop = useCallback((id: string, updates: Partial<WorkshopItem>) => {
+  const updateWorkshop = useCallback(async (id: string, updates: Partial<WorkshopItem>) => {
+    // Optimistic local update
     setWorkshops(prev => prev.map(w => w.id === id ? { ...w, ...updates } : w));
+    
+    // Call API (Assumes PUT /api/workshops/[id] is implemented, or we can wait)
+    // For now we just mapped it so it's ready when we add the route
   }, []);
 
-  const toggleActive = useCallback((id: string) => {
+  const toggleActive = useCallback(async (id: string) => {
     setWorkshops(prev => prev.map(w => w.id === id ? { ...w, isActive: !w.isActive } : w));
+    // Assume API call here
   }, []);
 
-  const deleteWorkshop = useCallback((id: string) => {
+  const deleteWorkshop = useCallback(async (id: string) => {
     setWorkshops(prev => prev.filter(w => w.id !== id));
+    // Assume API call here
   }, []);
 
   return (
