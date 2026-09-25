@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect, useMemo } from 'react';
+import { useSession } from 'next-auth/react';
 
 /* ──────────────────────────────────────────────────────────────
    Types
@@ -59,22 +60,17 @@ function nowDate(): string {
    Demo member (for profile preview before real auth)
    ────────────────────────────────────────────────────────────── */
 
-const DEMO_MEMBER: LoyaltyMember = {
-  id: 'demo-1',
-  name: 'داليا نبيل',
-  code: 'WF-7X3K',
-  sessions: 4,
+const createDefaultMember = (name: string, email: string): LoyaltyMember => ({
+  id: email, // Use email as unique ID for now
+  name: name,
+  code: 'WF-' + Math.random().toString(36).substring(2, 6).toUpperCase(),
+  sessions: 0,
   cycle: 1,
   reward5Claimed: false,
   reward10Claimed: false,
-  history: [
-    { date: 'يوليو ٢٠٢٥', type: 'session', note: 'تلوين الفخار' },
-    { date: 'يونيو ٢٠٢٥', type: 'session', note: 'ورشة التطريز' },
-    { date: 'يونيو ٢٠٢٥', type: 'session', note: 'صناعة الأساور' },
-    { date: 'مايو ٢٠٢٥', type: 'session', note: 'تلوين اللوحات' },
-  ],
-  createdAt: '٢٠٢٥',
-};
+  history: [],
+  createdAt: nowDate(),
+});
 
 /* ──────────────────────────────────────────────────────────────
    Context
@@ -99,9 +95,9 @@ interface LoyaltyContextType {
 
 const LoyaltyContext = createContext<LoyaltyContextType>({
   members: [],
-  currentMember: DEMO_MEMBER,
+  currentMember: createDefaultMember('زائر', 'guest'),
   findByCode: () => undefined,
-  addMember: () => DEMO_MEMBER,
+  addMember: () => createDefaultMember('زائر', 'guest'),
   addSession: () => {},
   claimReward5: () => {},
   claimReward10: () => {},
@@ -112,7 +108,8 @@ const LoyaltyContext = createContext<LoyaltyContextType>({
    ────────────────────────────────────────────────────────────── */
 
 export function LoyaltyProvider({ children }: { children: React.ReactNode }) {
-  const [members, setMembers] = useState<LoyaltyMember[]>([DEMO_MEMBER]);
+  const { data: session } = useSession();
+  const [members, setMembers] = useState<LoyaltyMember[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
   // Hydrate from localStorage
@@ -221,8 +218,32 @@ export function LoyaltyProvider({ children }: { children: React.ReactNode }) {
     );
   }, []);
 
-  // Demo member is always the first one
-  const currentMember = members[0] || DEMO_MEMBER;
+  // Current member dynamically derived from session
+  const currentMember = useMemo(() => {
+    if (!session?.user) return createDefaultMember('زائر', 'guest');
+    
+    const email = session.user.email || 'guest';
+    const name = session.user.name || 'مستخدم جديد';
+    
+    // Find if member exists in state
+    let member = members.find(m => m.id === email);
+    
+    if (!member) {
+      member = createDefaultMember(name, email);
+    }
+    return member;
+  }, [session, members]);
+
+  // Auto-register session users if they don't exist
+  useEffect(() => {
+    if (session?.user?.email) {
+      const email = session.user.email;
+      const exists = members.some(m => m.id === email);
+      if (!exists && hydrated) {
+        setMembers(prev => [...prev, createDefaultMember(session.user?.name || 'مستخدم', email)]);
+      }
+    }
+  }, [session, members, hydrated]);
 
   return (
     <LoyaltyContext.Provider
