@@ -32,7 +32,7 @@ async function queryD1(sql: string, params: any[] = []) {
     throw new Error('D1 Query Failed');
   }
 
-  const json = await res.json();
+  const json = (await res.json()) as any;
   if (json.success && json.result?.[0]?.results) {
     return json.result[0].results;
   }
