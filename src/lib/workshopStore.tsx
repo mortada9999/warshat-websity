@@ -116,7 +116,7 @@ export function WorkshopStoreProvider({ children }: { children: React.ReactNode 
       try {
         const res = await fetch('/api/workshops?admin=1');
         if (res.ok) {
-          const data = await res.json();
+          const data = (await res.json()) as any;
           if (data.workshops && Array.isArray(data.workshops)) {
             // Map DB schema to frontend WorkshopItem
             const mapped = data.workshops.map((w: any) => ({
@@ -174,7 +174,7 @@ export function WorkshopStoreProvider({ children }: { children: React.ReactNode 
       });
       
       if (res.ok) {
-        const data = await res.json();
+        const data = (await res.json()) as any;
         setWorkshops(prev => [...prev, { ...item, id: data.id }]);
       }
     } catch (err) {
