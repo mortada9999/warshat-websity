@@ -8,6 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { useLanguage } from './LanguageProvider';
 import { useSoundContext } from '@/lib/SoundContext';
+import { useBooking } from './BookingProvider';
 import styles from './TrainingSection.module.css';
 
 const TAPE_CONFIGS = [
@@ -49,6 +50,7 @@ interface Props {
 
 export default function TapedWorkshopCard({ workshop: w, index }: Props) {
   const { lang, t } = useLanguage();
+  const { openBooking } = useBooking();
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLElement>(null);
 
@@ -154,7 +156,7 @@ export default function TapedWorkshopCard({ workshop: w, index }: Props) {
           )}
           
           {/* Book Now Button */}
-          <Link href={`/workshops/${w.id}/book`} className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</Link>
+          <button onClick={() => openBooking(w as any)} className={styles.bookBtn}>{t('احجز الآن', 'Book Now')}</button>
         </div>
       </article>
       </div>

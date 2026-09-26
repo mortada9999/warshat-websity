@@ -12,6 +12,7 @@ import { AdminCardOverlay, AdminAddButton, InactiveOverlay } from '@/components/
 import AnimatedUnderline from '@/components/AnimatedUnderline';
 import TornEdge from '@/components/TornEdge';
 import KidsDoodles from './KidsDoodles';
+import { useBooking } from '@/components/BookingProvider';
 import styles from './KidsPage.module.css';
 
 
@@ -26,6 +27,7 @@ if (typeof window !== 'undefined') {
 
 export default function KidsPage() {
   const { t } = useLanguage();
+  const { openBooking } = useBooking();
   const { isAdmin } = useAdmin();
   const { getByCategory } = useWorkshopStore();
   const kidsCourses = getByCategory('kids_course', false);
@@ -240,14 +242,12 @@ export default function KidsPage() {
                         <span className={styles.cardPrice}>
                           {c.price ? `${c.price.toLocaleString()} د.ع` : t('تواصل معنا', 'Contact Us')}
                         </span>
-                        <a
-                          href="https://wa.me/9647705874761"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          onClick={() => openBooking(c)}
                           className={styles.cardBtn}
                         >
                           {t('سجّل الآن', 'Enroll Now')}
-                        </a>
+                        </button>
                       </div>
                     </article>
                   </div>
@@ -328,14 +328,12 @@ export default function KidsPage() {
                       <span className={styles.cardPrice}>
                         {c.price ? `${c.price.toLocaleString()} د.ع` : t('تواصل معنا', 'Contact Us')}
                       </span>
-                      <a
-                        href="https://wa.me/9647705874761"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => openBooking(c)}
                         className={styles.cardBtn}
                       >
                         {t('سجّل الآن', 'Enroll Now')}
-                      </a>
+                      </button>
                     </div>
                   </article>
                 </div>

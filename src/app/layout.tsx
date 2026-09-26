@@ -8,6 +8,7 @@ import { LoyaltyProvider } from '@/lib/loyaltyStore';
 import { AdminProvider } from '@/components/AdminProvider';
 import { AuthProvider } from '@/components/AuthProvider';
 import { SoundProvider } from '@/lib/SoundContext';
+import { BookingProvider } from '@/components/BookingProvider';
 import WorkshopEditorModal from '@/components/WorkshopEditorModal';
 import SmoothScroll from '@/components/SmoothScroll';
 import Header from '@/components/Header';
@@ -62,17 +63,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SoundProvider>
             <WorkshopStoreProvider>
               <LoyaltyProvider>
-                <AdminProvider>
-                  <LanguageProvider>
-                    <Header />
-                    <SoundMuteButton />
-                    <ScrollToTop />
-                    <SmoothScroll>
-                      {children}
-                    </SmoothScroll>
-                    <WorkshopEditorModal />
-                  </LanguageProvider>
-                </AdminProvider>
+                <BookingProvider>
+                  <AdminProvider>
+                    <LanguageProvider>
+                      <Header />
+                      <SoundMuteButton />
+                      <ScrollToTop />
+                      <SmoothScroll>
+                        {children}
+                      </SmoothScroll>
+                      <WorkshopEditorModal />
+                    </LanguageProvider>
+                  </AdminProvider>
+                </BookingProvider>
               </LoyaltyProvider>
             </WorkshopStoreProvider>
           </SoundProvider>
