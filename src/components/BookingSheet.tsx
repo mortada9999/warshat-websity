@@ -140,19 +140,25 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
                 <div className={styles.dragBar} />
               </motion.div>
 
-              <div className={styles.scrollArea}>
+              <div className={styles.scrollArea} data-lenis-prevent="true">
                 <div className={styles.header}>
                   <h2 className={styles.title}>{workshop.titleAr}</h2>
-                  <div className={styles.meta}>
-                    <span>الفرع المفضل:</span>
-                    <select 
-                      value={branch}
-                      onChange={(e) => setBranch(e.target.value as any)}
-                      className="mr-2 bg-transparent border-b border-gray-300 font-bold text-[#374A00] outline-none"
-                    >
-                      <option value="Zayouna">فرع الزيونة</option>
-                      <option value="Al-Yarmouk">فرع اليرموك</option>
-                    </select>
+                  <div className={styles.meta} style={{ flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                    <span style={{ fontSize: '14px', color: '#888' }}>الفرع المفضل</span>
+                    <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                      <button 
+                        onClick={() => setBranch('Zayouna')}
+                        className={`${styles.branchPill} ${branch === 'Zayouna' ? styles.branchPillActive : ''}`}
+                      >
+                        📍 فرع الزيونة
+                      </button>
+                      <button 
+                        onClick={() => setBranch('Al-Yarmouk')}
+                        className={`${styles.branchPill} ${branch === 'Al-Yarmouk' ? styles.branchPillActive : ''}`}
+                      >
+                        📍 فرع اليرموك
+                      </button>
+                    </div>
                   </div>
                   <div className={styles.brushSeparator} />
                 </div>
