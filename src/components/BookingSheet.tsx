@@ -16,8 +16,9 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
   const { data: session } = useSession();
   
   const [seats, setSeats] = useState(1);
-  const [guests, setGuests] = useState([{ name: '', phone: '' }]);
-  const [paymentType, setPaymentType] = useState<'full' | 'deposit'>('full');
+  const [guests, setGuests] = useState([{ name: '', phone: '', age: '' }]);
+  const [branch, setBranch] = useState<'Zayouna' | 'Al-Yarmouk'>('Zayouna');
+  const [paymentType, setPaymentType] = useState<string>('at_workshop');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Pre-fill user data if logged in
@@ -29,18 +30,32 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
         return newGuests;
       });
     }
-  }, [isOpen, session]);
+    
+    // Set default payment type based on workshop allowed options
+    if (isOpen && workshop) {
+      const allowed = (workshop as any).paymentOptions || ['at_workshop'];
+      if (allowed.length > 0) {
+        setPaymentType(allowed[0]);
+      }
+    }
+  }, [isOpen, session, workshop]);
 
   // Reset when opened/closed
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => {
         setSeats(1);
-        setGuests([{ name: session?.user?.name || '', phone: '' }]);
-        setPaymentType('full');
+        setGuests([{ name: session?.user?.name || '', phone: '', age: '' }]);
+        setPaymentType('at_workshop');
         setIsSubmitting(false);
       }, 300);
+    } else {
+      // Prevent body scroll when open
+      document.body.style.overflow = 'hidden';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen, session]);
 
   if (!workshop) return null;
@@ -51,7 +66,7 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
       setGuests((currentGuests) => {
         const newGuests = [...currentGuests];
         while (newGuests.length < newVal) {
-          newGuests.push({ name: '', phone: '' });
+          newGuests.push({ name: '', phone: '', age: '' });
         }
         return newGuests.slice(0, newVal);
       });
@@ -59,7 +74,7 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
     });
   };
 
-  const handleGuestChange = (index: number, field: 'name' | 'phone', value: string) => {
+  const handleGuestChange = (index: number, field: 'name' | 'phone' | 'age', value: string) => {
     setGuests((prev) => {
       const newGuests = [...prev];
       newGuests[index][field] = value;
@@ -69,14 +84,27 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
 
   const handleBook = () => {
     setIsSubmitting(true);
+    // TODO: Send to API
     setTimeout(() => {
       setIsSubmitting(false);
-    }, 2000);
+      alert('تم إرسال الحجز بنجاح!');
+      onClose();
+    }, 1500);
   };
 
   const priceNum = workshop.priceNum || 0;
   const totalPrice = priceNum * seats;
   const depositPrice = Math.floor(totalPrice * 0.5); // Example 50% deposit
+
+  // Map of available payment options
+  const paymentLabels: Record<string, { label: string, desc: string }> = {
+    'online_full': { label: 'دفع إلكتروني بالكامل', desc: `${totalPrice.toLocaleString()} د.ع` },
+    'deposit': { label: 'الدفع بعربون', desc: `${depositPrice.toLocaleString()} د.ع` },
+    'cash_full': { label: 'دفع كامل', desc: `${totalPrice.toLocaleString()} د.ع (كاش / تحويل)` },
+    'at_workshop': { label: 'الدفع في الورشة', desc: 'التسجيل الآن والدفع عند الحضور' },
+  };
+
+  const allowedOptions = (workshop as any).paymentOptions || ['at_workshop', 'deposit', 'cash_full', 'online_full']; // fallback if admin didn't set
 
   return (
     <AnimatePresence>
@@ -96,24 +124,35 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
-              drag="y"
-              dragConstraints={{ top: 0 }}
-              dragElastic={0.2}
-              onDragEnd={(e, { offset, velocity }) => {
-                if (offset.y > 150 || velocity.y > 500) {
-                  onClose();
-                }
-              }}
             >
-              <div className={styles.dragHandle}>
+              {/* Drag handle ONLY controls closing */}
+              <motion.div 
+                className={styles.dragHandle}
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(e, { offset, velocity }) => {
+                  if (offset.y > 50 || velocity.y > 100) {
+                    onClose();
+                  }
+                }}
+              >
                 <div className={styles.dragBar} />
-              </div>
+              </motion.div>
 
               <div className={styles.scrollArea}>
                 <div className={styles.header}>
                   <h2 className={styles.title}>{workshop.titleAr}</h2>
                   <div className={styles.meta}>
-                    <span>📍 {(workshop as any).branch === 'Zayouna' ? 'فرع الزيونة' : (workshop as any).branch === 'Al-Yarmouk' ? 'فرع اليرموك' : 'فرع الزيونة / اليرموك'}</span>
+                    <span>الفرع المفضل:</span>
+                    <select 
+                      value={branch}
+                      onChange={(e) => setBranch(e.target.value as any)}
+                      className="mr-2 bg-transparent border-b border-gray-300 font-bold text-[#374A00] outline-none"
+                    >
+                      <option value="Zayouna">فرع الزيونة</option>
+                      <option value="Al-Yarmouk">فرع اليرموك</option>
+                    </select>
                   </div>
                   <div className={styles.brushSeparator} />
                 </div>
@@ -152,47 +191,62 @@ export default function BookingSheet({ isOpen, onClose, workshop }: BookingSheet
                           value={guest.name}
                           onChange={(e) => handleGuestChange(idx, 'name', e.target.value)}
                         />
-                        <input
-                          type="tel"
-                          placeholder="رقم الهاتف (مثال: 077xxxxxxxx)"
-                          className={styles.input}
-                          dir="ltr"
-                          value={guest.phone}
-                          onChange={(e) => handleGuestChange(idx, 'phone', e.target.value)}
-                        />
+                        <div style={{ display: 'flex', gap: '0.75rem' }}>
+                          <input
+                            type="tel"
+                            placeholder="الهاتف (077...)"
+                            className={styles.input}
+                            dir="ltr"
+                            style={{ flex: 2 }}
+                            value={guest.phone}
+                            onChange={(e) => handleGuestChange(idx, 'phone', e.target.value)}
+                          />
+                          <input
+                            type="number"
+                            placeholder="العمر"
+                            className={styles.input}
+                            style={{ flex: 1 }}
+                            value={guest.age}
+                            onChange={(e) => handleGuestChange(idx, 'age', e.target.value)}
+                          />
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
 
                 <h3 className={styles.sectionTitle}>طريقة الدفع</h3>
-                <div className={styles.paymentTypes}>
-                  <div 
-                    className={`${styles.paymentOption} ${paymentType === 'full' ? styles.selected : ''}`}
-                    onClick={() => setPaymentType('full')}
-                  >
-                    <span className={styles.paymentLabel}>دفع كامل</span>
-                    <span className={styles.paymentDesc}>{totalPrice.toLocaleString()} د.ع</span>
-                  </div>
-                  <div 
-                    className={`${styles.paymentOption} ${paymentType === 'deposit' ? styles.selected : ''}`}
-                    onClick={() => setPaymentType('deposit')}
-                  >
-                    <span className={styles.paymentLabel}>عربون فقط</span>
-                    <span className={styles.paymentDesc}>{depositPrice.toLocaleString()} د.ع</span>
-                  </div>
+                <div className={styles.paymentTypes} style={{ flexWrap: 'wrap' }}>
+                  {allowedOptions.map((opt: string) => {
+                    if (!paymentLabels[opt]) return null;
+                    return (
+                      <div 
+                        key={opt}
+                        className={`${styles.paymentOption} ${paymentType === opt ? styles.selected : ''}`}
+                        onClick={() => setPaymentType(opt)}
+                        style={{ flexBasis: allowedOptions.length > 2 ? '45%' : '100%' }}
+                      >
+                        <span className={styles.paymentLabel}>{paymentLabels[opt].label}</span>
+                        {priceNum > 0 && (
+                          <span className={styles.paymentDesc}>{paymentLabels[opt].desc}</span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
               <div className={styles.footer}>
-                <div className={styles.totalRow}>
-                  <span className={styles.totalLabel}>المبلغ الإجمالي</span>
-                  <span className={styles.totalPrice}>
-                    {(paymentType === 'full' ? totalPrice : depositPrice).toLocaleString()} د.ع
-                  </span>
-                </div>
-                <button className={styles.submitBtn} onClick={handleBook}>
-                  {isSubmitting ? 'قيد التطوير 🔜' : 'احجز مقعدك'}
+                {priceNum > 0 && (
+                  <div className={styles.totalRow}>
+                    <span className={styles.totalLabel}>المبلغ الإجمالي</span>
+                    <span className={styles.totalPrice}>
+                      {(paymentType === 'deposit' ? depositPrice : totalPrice).toLocaleString()} د.ع
+                    </span>
+                  </div>
+                )}
+                <button className={styles.submitBtn} onClick={handleBook} disabled={isSubmitting}>
+                  {isSubmitting ? 'جاري الإرسال...' : 'احجز مقعدك'}
                 </button>
               </div>
             </motion.div>

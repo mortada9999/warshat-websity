@@ -39,6 +39,7 @@ export default function WorkshopEditorModal() {
     featuresArStr: '',
     featuresEnStr: '',
     paymentType: 'full' as 'full' | 'deposit' | 'form_only',
+    paymentOptions: [] as string[],
     depositAmount: '',
   });
 
@@ -63,6 +64,7 @@ export default function WorkshopEditorModal() {
           featuresArStr: workshop.featuresAr?.join('\n') || '',
           featuresEnStr: workshop.featuresEn?.join('\n') || '',
           paymentType: workshop.paymentType || 'full',
+          paymentOptions: workshop.paymentOptions || ['at_workshop', 'deposit', 'cash_full', 'online_full'],
           depositAmount: workshop.depositAmount || '',
         });
       } else {
@@ -83,6 +85,7 @@ export default function WorkshopEditorModal() {
           featuresArStr: '',
           featuresEnStr: '',
           paymentType: 'full',
+          paymentOptions: ['at_workshop', 'deposit', 'cash_full', 'online_full'],
           depositAmount: '',
         });
       }
@@ -160,6 +163,7 @@ export default function WorkshopEditorModal() {
       featuresEn: form.featuresEnStr.split('\n').map(s => s.trim()).filter(Boolean),
       pattern: form.pattern || undefined,
       paymentType: form.paymentType,
+      paymentOptions: form.paymentOptions,
       depositAmount: form.depositAmount || undefined,
       isActive: true,
       sortOrder: Number(form.sortOrder) || 0,
@@ -234,22 +238,39 @@ export default function WorkshopEditorModal() {
           </div>
 
           {/* Price & Payment Type */}
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <div style={{ flex: 1 }}>
-              <label style={labelStyle}>السعر (مثل: 10,000)</label>
-              <input name="price" value={form.price} onChange={handleChange} style={inputStyle} placeholder="10,000" />
-            </div>
-            <div style={{ flex: 1 }}>
-              <label style={labelStyle}>آلية الدفع للحجز</label>
-              <select name="paymentType" value={form.paymentType} onChange={handleChange} style={inputStyle}>
-                <option value="full">دفع كامل المبلغ</option>
-                <option value="deposit">عربون (جزء من المبلغ)</option>
-                <option value="form_only">حجز فقط (بدون دفع)</option>
-              </select>
+          <div>
+            <label style={labelStyle}>السعر (مثل: 10,000)</label>
+            <input name="price" value={form.price} onChange={handleChange} style={inputStyle} placeholder="10,000" />
+          </div>
+
+          <div>
+            <label style={{...labelStyle, marginBottom: '8px'}}>خيارات الدفع المتاحة للمستخدم (اختر ما يناسب هذه الورشة)</label>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', background: '#FAFAFA', padding: '12px', borderRadius: '8px', border: '1px solid #E5E5E5' }}>
+              {[
+                { id: 'online_full', label: 'دفع إلكتروني بالكامل' },
+                { id: 'deposit', label: 'الدفع بعربون' },
+                { id: 'cash_full', label: 'دفع كامل (كاش/تحويل)' },
+                { id: 'at_workshop', label: 'التسجيل والدفع في الورشة' }
+              ].map(opt => (
+                <label key={opt.id} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', cursor: 'pointer' }}>
+                  <input 
+                    type="checkbox" 
+                    checked={form.paymentOptions.includes(opt.id)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setForm(prev => ({ ...prev, paymentOptions: [...prev.paymentOptions, opt.id] }));
+                      } else {
+                        setForm(prev => ({ ...prev, paymentOptions: prev.paymentOptions.filter(id => id !== opt.id) }));
+                      }
+                    }}
+                  />
+                  {opt.label}
+                </label>
+              ))}
             </div>
           </div>
 
-          {form.paymentType === 'deposit' && (
+          {form.paymentOptions.includes('deposit') && (
             <div>
               <label style={labelStyle}>مبلغ العربون (مثل: 5,000)</label>
               <input name="depositAmount" value={form.depositAmount} onChange={handleChange} style={inputStyle} placeholder="5,000" />

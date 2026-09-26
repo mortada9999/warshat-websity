@@ -24,6 +24,7 @@ export interface WorkshopItem {
   featuresEn?: string[];
   pattern?: string;
   paymentType?: 'full' | 'deposit' | 'form_only';
+  paymentOptions?: string[]; // E.g., ['online_full', 'deposit', 'cash_full', 'at_workshop']
   depositAmount?: string;
   isActive: boolean;     // true = visible to visitors
   sortOrder: number;
@@ -133,7 +134,8 @@ export function WorkshopStoreProvider({ children }: { children: React.ReactNode 
               sortOrder: w.sort_order || 0,
               branch: w.branch || 'both',
               seats: w.seats,
-              tags: w.tags ? w.tags.split(',') : []
+              tags: w.tags ? w.tags.split(',') : [],
+              paymentOptions: w.payment_options ? JSON.parse(w.payment_options) : ['at_workshop', 'deposit', 'cash_full', 'online_full']
             }));
             setWorkshops(mapped);
           }
@@ -164,7 +166,8 @@ export function WorkshopStoreProvider({ children }: { children: React.ReactNode 
         price: item.priceNum,
         image_url: item.image,
         is_active: item.isActive ? 1 : 0,
-        sort_order: item.sortOrder || 0
+        sort_order: item.sortOrder || 0,
+        payment_options: item.paymentOptions ? JSON.stringify(item.paymentOptions) : JSON.stringify(['at_workshop', 'deposit', 'cash_full', 'online_full'])
       };
       
       const res = await fetch('/api/workshops', {

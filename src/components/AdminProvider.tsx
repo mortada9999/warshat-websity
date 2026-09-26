@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import type { Category } from '@/lib/types';
 import type { WorkshopItem } from '@/lib/workshopStore';
+import Link from 'next/link';
 
 /* ──────────────────────────────────────────────────────────────
    Admin Context
@@ -102,6 +103,12 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
           }}
         >
           <span style={{ opacity: 0.7 }}>✏️ وضع التعديل المباشر</span>
+
+          <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.2)' }} />
+
+          <Link href="/admin/bookings" style={{ color: 'white', textDecoration: 'underline', fontSize: '13px', fontWeight: 600 }}>
+            إدارة الحجوزات 📋
+          </Link>
 
           <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.2)' }} />
 
